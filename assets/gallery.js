@@ -7,6 +7,7 @@ function fetchProjects(){
     fetch("http://localhost:5678/api/works").then(
         response => response.json().then(
             data => {
+                // TODO => Re-write this loop with 'for... of'
                 for (let i = 0; i < data.length; i++){
                     let newCategory = new Category(data[i].category.id, data[i].category.name);
                     let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
@@ -17,7 +18,8 @@ function fetchProjects(){
                 }
     
                 console.log("Array of projects :"); console.log(projects);
-    
+                
+                // TODO => Re-write this loop with 'for... of'
                 for (let i = 0; i < projects.length; i++){
                     createProjectDiv(projects[i]);
                 }

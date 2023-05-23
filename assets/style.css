@@ -123,8 +123,50 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
+
+
+/* Gallery buttons */
+.filters-container {
+	display: flex;
+	justify-content: center;
+	column-gap: 10px;
+
+	margin: 51px 0px;
+}
+
+.filter {
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	padding: 9px 20px;
+
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Syne';
+	text-decoration: none;
+
+	/* Transitions */
+	transform: scale(1);
+	color: #1D6154;
+	background-color: white;
+
+	transition: transform 300ms, background-color 300ms, color 300ms;
+}
+
+.filter:hover {
+	transform: scale(1.05);
+	color: #1D6154;
+	background-color: white;
+}
+
+.filter:active {
+	transform: scale(1);
+	color: white;
+	background-color: #1D6154;
+}
+
+
+/* Gallery  */
 .gallery {
 	width: 100%;
 	display: grid;
