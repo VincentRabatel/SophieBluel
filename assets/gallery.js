@@ -6,31 +6,59 @@ let displayedProjects = [];
 
 fetchAllProjects();
 
+// Fetch all projects from backend and update the gallery for the first time
 function fetchAllProjects() {
-  fetch("http://localhost:5678/api/works").then(
-    response => response.json().then(
-      data => {
-        // Looping through backend data to get all the projects 
-        let fetchedProjects = [];
-        for (let i = 0; i < data.length; i++){
-            let newCategory = new Category(data[i].category.id, data[i].category.name);
-            let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
+	fetch("http://localhost:5678/api/works").then(
+		response => response.json().then(
+			data => {
+				// Looping through backend data to get all the projects 
+				let fetchedProjects = [];
+				for (let i = 0; i < data.length; i++){
+					let newCategory = new Category(data[i].category.id, data[i].category.name);
+					let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
 
-            fetchedProjects.push(newProject);
-        }
+					fetchedProjects.push(newProject);
+				}
 
-        console.log("Array of all projects :"); console.log(fetchedProjects);
+				console.log("Array of all projects :"); console.log(fetchedProjects);
 
-        // Update global arrays with backend data
-        allProjects = fetchedProjects;
-        displayedProjects = allProjects;
+				// Update global arrays with backend data
+				allProjects = fetchedProjects;
+				displayedProjects = allProjects;
 
-        // Update the gallery for the first time
-        updateGallery(displayedProjects);
-      }
-    )
-  )   
+				// Update the gallery for the first time
+				updateGallery(displayedProjects);
+			}
+		)
+	)   
 }
+
+// Create empty array for all categories
+let categories = [];
+
+fetchCategories();
+
+function fetchCategories(){
+	fetch("http://localhost:5678/api/categories").then(
+		response => response.json().then(
+			data => {
+				// Looping through backend data to get all categories 
+				let fetchCategories = [];
+				for (let i = 0; i < data.length; i++){
+					let newCategory = new Category(data[i].id, data[i].name);
+
+					fetchCategories.push(newCategory);
+				}
+
+				console.log("Array of all categories :"); console.log(fetchCategories);
+
+				// Update global array with backend data
+				categories = fetchCategories;
+			}
+		)
+	)
+}
+
 
 // Get filters buttons
 const filterAll = document.getElementById("filter-all");
@@ -42,60 +70,48 @@ const filterHostels = document.getElementById("filter-hostels");
 let currentFilterValue = "Tous";
 
 filterAll.addEventListener('click', function(){
-  currentFilterValue = "Tous";
-  filterGallery(currentFilterValue, 0);
+	currentFilterValue = "Tous";
+	filterGallery(currentFilterValue, 0);
 }, false);
 
 filterObjects.addEventListener('click', function(){
-  currentFilterValue = "Objets";
-  filterGallery(currentFilterValue, 1);
+	currentFilterValue = "Objets";
+	filterGallery(currentFilterValue, 1);
 }, false);
 
 filterApartments.addEventListener('click', function(){
-  currentFilterValue = "Appartements";
-  filterGallery(currentFilterValue, 2);
+	currentFilterValue = "Appartements";
+	filterGallery(currentFilterValue, 2);
 }, false);
 
 filterHostels.addEventListener('click', function(){
-  currentFilterValue = "Hotels & restaurants";
-  filterGallery(currentFilterValue, 3);
+	currentFilterValue = "Hotels & restaurants";
+	filterGallery(currentFilterValue, 3);
 }, false);
 
 
 // This function is called when clicking on a filter button
 function filterGallery(filterCategory, filterCategoryId){
-  //console.log("Filtering gallery with objects of the category \"" + filterCategory + "\" with the id " + filterCategoryId);
+	//console.log("Filtering gallery with objects of the category \"" + filterCategory + "\" with the id " + filterCategoryId);
 
-  displayedProjects = [];
-  
-  if(filterCategoryId === 0) {
-    displayedProjects = allProjects;
-  } else {
-    for(let project of allProjects){
-      
-      //console.log("Trying the project named " + project.title + " with the id " + project.categoryId);
-      
-      if(project.categoryId == filterCategoryId){
-        displayedProjects.push(project);
-      }
-    }
-  }
+	displayedProjects = [];
 
-  emptyGallery();
-  updateGallery(displayedProjects);
+	if(filterCategoryId === 0) {
+	displayedProjects = allProjects;
+	} else {
+	for(let project of allProjects){
+		
+		//console.log("Trying the project named " + project.title + " with the id " + project.categoryId);
+		
+		if(project.categoryId == filterCategoryId){
+			displayedProjects.push(project);
+		}
+	}
+	}
+
+	emptyGallery();
+	updateGallery(displayedProjects);
 }
-
-
-// TODO
-// function fetchCategrories(){
-//   fetch("http://localhost:5678/api/categories").then(
-//     response => response.json().then(
-//       catagories => {
-
-//       }
-//     )
-//   )
-// }
 
 
 // Get gallery main div
@@ -103,27 +119,27 @@ const gallery = document.getElementById('gallery');
 
 // Get rid of everything in the gallery
 function emptyGallery() {
-  gallery.innerHTML = "";
+	gallery.innerHTML = "";
 }
 
 // Updade the gallery with a new array of projects
 function updateGallery(projects){
-  for(let project of projects){
-    createProjectDiv(project);
-  }
+	for(let project of projects){
+		createProjectDiv(project);
+	}
 }
 
 // Create a div with given project values
 function createProjectDiv(project){
-    newProject = document.createElement('figure');
-    newProjectImg = document.createElement('img');
-    newProjectCaption = document.createElement('figcaption');
-        
-    newProjectImg.src = project.imageUrl;
-    newProjectCaption.innerHtml = project.title; 
-    newProject.appendChild(newProjectImg, newProjectCaption);
+	newProject = document.createElement('figure');
+	newProjectImg = document.createElement('img');
+	newProjectCaption = document.createElement('figcaption');
+		
+	newProjectImg.src = project.imageUrl;
+	newProjectCaption.innerHtml = project.title; 
+	newProject.appendChild(newProjectImg, newProjectCaption);
 
-    gallery.appendChild(newProject);
+	gallery.appendChild(newProject);
 }
 
 // Category class
