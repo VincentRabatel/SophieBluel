@@ -28,6 +28,51 @@ function fetchProjects(){
     )
 }
 
+
+// Get buttons
+const filterAll = document.getElementById("filter-all");
+const filterObjects = document.getElementById("filter-objects");
+const filterApartments = document.getElementById("filter-apartments");
+const filterHostels = document.getElementById("filter-hostels");
+
+// Create events
+let currentFilterValue = "Tous";
+
+filterAll.addEventListener('click', function(){
+  currentFilterValue = "Tous";
+  updatefilters(currentFilterValue);
+}, false);
+
+filterObjects.addEventListener('click', function(){
+  currentFilterValue = "Objets";
+  updatefilters(currentFilterValue);
+}, false);
+
+filterApartments.addEventListener('click', function(){
+  currentFilterValue = "Appartements";
+  updatefilters(currentFilterValue);
+}, false);
+
+filterHostels.addEventListener('click', function(){
+  currentFilterValue = "Hotels & restaurants";
+  updatefilters(currentFilterValue);
+}, false);
+
+
+function updatefilters(filterValueUpdated){
+  console.log(filterValueUpdated);
+}
+
+// function fetchCategrories(){
+//   fetch("http://localhost:5678/api/categories").then(
+//     response => response.json().then(
+//       catagories => {
+
+//       }
+//     )
+//   )
+// }
+
 // Get gallery main div
 const gallery = document.getElementById('gallery');
 
