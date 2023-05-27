@@ -129,7 +129,8 @@ filterAll.addEventListener('click', function(){
 }, false);
 /**************************************************************/
 
-
+// Create empty array for all filter buttons 
+let allFilterButtons = [];
 
 // Get filters main div
 const filtersContainer = document.getElementById("filters");
@@ -137,7 +138,8 @@ const filtersContainer = document.getElementById("filters");
 // For each categories we create a new filter button
 function createFiltersButtons() {
 	for(let category of categories){
-		let filterButton = createFilterButton(category.id, category.name);
+		let btn = createFilterButton(category.id, category.name);
+		allFilterButtons.push(btn);
 	}
 }
 
@@ -156,7 +158,10 @@ function createFilterButton(id, name){
 		filterGallery(id);
 	}, false);
 
+	console.log("Adding filter button for categroy named \" " + name+ "\"");
 	filtersContainer.appendChild(newFilterButton);
+
+	return newFilterButton;
 }
 
 
@@ -179,6 +184,21 @@ function filterGallery(filterCategoryId){
 		}
 	}
 
+	updateFilterButtonsColor(filterCategoryId);
+
 	emptyGallery();
 	updateGallery(displayedProjects);
+}
+
+function updateFilterButtonsColor(selectedID){
+	for(let i = 1; i <= allFilterButtons.length; i++){
+		console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
+		let btn = document.getElementById("filter-" + i.toString());
+
+		if(i == selectedID){
+			btn.classList.add("selected");
+		} else {
+			btn.classList.remove("selected");
+		}
+	}
 }

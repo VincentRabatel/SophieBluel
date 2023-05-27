@@ -23,6 +23,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -46,7 +47,8 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/** end reset css**/
+/*************** end reset css ******************/
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -162,7 +164,7 @@ li:hover {
 	text-decoration: none;
 
 	cursor: pointer;
-	
+
 	/* Transitions */
 	transform: scale(1);
 	color: #1D6154;
@@ -179,6 +181,10 @@ li:hover {
 
 .filter:active {
 	transform: scale(1);
+
+}
+
+.filter.selected {
 	color: white;
 	background-color: #1D6154;
 }
@@ -242,6 +248,11 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover{
+	background-color: #0E2F28;
 }
 
 /************************** FOOTER **************************/
