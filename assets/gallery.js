@@ -35,7 +35,7 @@ function createProjectElement(project){
 
 /************************** CATEGORIES FETCH **************************/
 const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesResponse.json();
+const categories = await categoriesResponse.json(); //console.log(categories);
 const filters = [];
 
 function generateFilters(categories){
