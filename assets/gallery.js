@@ -1,30 +1,9 @@
-// Category class
-class Category {
-    constructor(id, name){
-        this.id = id;
-        this.name = name;
-    }
-}
-
-// Project class
-class Project {
-    constructor(id, title, imageUrl, categoryId, userId, category) {
-        this.id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.categoryId = categoryId;
-        this.userId = userId;
-        this.category = category;
-    }
-}
-
 // Get HTML elements
-const galleryElement = document.querySelector("#gallery");
-const filtersElement = document.querySelector("#filters");
+const galleryElement = document.querySelector(".gallery");
+const filtersElement = document.querySelector(".filters");
 
 
-
-/************************** PROJECTS **************************/
+/************************** PROJECTS FETCH **************************/
 const projectsResponse = await fetch("http://localhost:5678/api/works");
 const projects = await projectsResponse.json(); //console.log(projects);
 let displayedProjects = projects;
@@ -36,23 +15,9 @@ function generateGallery(projects){
 }
 
 generateGallery(projects);
-/****************************************************************/
 
 
-
-// Get rid of everything in the gallery
-function emptyGallery() {
-	gallery.innerHTML = "";
-}
-
-// Update the gallery with a new array of projects
-function updateGallery(projects) {
-	for(let project of displayedProjects){
-		createProjectElement(project);
-	}
-}
-
-// Create a project HTML element
+// Create a project HTML element //
 function createProjectElement(project){
 	// Create HTML
 	const newProjectElement = document.createElement('figure');
@@ -68,37 +33,27 @@ function createProjectElement(project){
 }
 
 
-/************************** CATEGORIES **************************/
+/************************** CATEGORIES FETCH **************************/
 const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesResponse.json(); //console.log(categories);
+const categories = await categoriesResponse.json();
 const filters = [];
 
-
-/*************** SPECIFIC CASE FOR 'Tous' filter **************/
-/***************     TRY TO CLEAN THIS LATER     **************/
-const filterAll = document.querySelector("#filter-0");
-filterAll.addEventListener('click', function(){
-	filterGallery(0);
-}, false);
-
-filters.push(filterAll); //console.log(filterAll); console.log(filters);
-/**************************************************************/
-
-
 function generateFilters(categories){
+	// Create the first filter for all projects
+	const filterAll = createFilterButton(0, "Tous");
+	filters.push(filterAll);
+
+	// Create filters depending of the backend categories 
 	for(let category of categories){
-		const filter = createFilterButton(category.id, category.name); //console.log(filter);
+		const filter = createFilterButton(category.id, category.name);
 		filters.push(filter);
 	}
 }
 
 generateFilters(categories);
-/****************************************************************/
 
 
 function createFilterButton(id, name){
-	console.log("Adding filter button for category named \" " + name+ "\" with the id " + id);
-
 	// Create HTML
 	const newFilterButtonElement = document.createElement('input');
 	newFilterButtonElement.id = "filter-" + id.toString();
@@ -119,21 +74,17 @@ function createFilterButton(id, name){
 }
 
 
-// This function is called when clicking on a filter button
+// This function is called when clicking on a filter button //
 function filterGallery(filterCategoryId){
 	displayedProjects = [];
 
 	if(filterCategoryId === 0) {
-		console.log("Filtering the gallery with all projects");
-
+		//console.log("Filtering the gallery with all projects");
 		displayedProjects = projects;
 
 	} else {
-		console.log("Filtering the gallery with projects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
-
+		//console.log("Filtering the gallery with projects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
 		for(let project of projects){
-			//console.log("Trying the project named \"" + project.title + "\" with the id " + project.categoryId );
-			
 			if(project.categoryId == filterCategoryId){
 				displayedProjects.push(project);
 			}
@@ -158,3 +109,38 @@ function updateFilterButtonsColor(selectedID){
 		}
 	}
 }
+
+// Get rid of everything in the gallery //
+function emptyGallery() {
+	galleryElement.innerHTML = "";
+}
+
+// Update the gallery with a new array of projects //
+function updateGallery(projects) {
+	for(let project of projects){
+		createProjectElement(project);
+	}
+}
+
+
+/*
+// Category class
+class Category {
+    constructor(id, name){
+        this.id = id;
+        this.name = name;
+    }
+}
+
+// Project class
+class Project {
+    constructor(id, title, imageUrl, categoryId, userId, category) {
+        this.id = id;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.categoryId = categoryId;
+        this.userId = userId;
+        this.category = category;
+    }
+}
+*/
