@@ -20,13 +20,14 @@ class Project {
 
 // Get HTML elements
 const galleryElement = document.querySelector("#gallery");
-const filtersElement = document.getElementById("filters");
+const filtersElement = document.querySelector("#filters");
+
 
 
 /************************** PROJECTS **************************/
-const response = await fetch("http://localhost:5678/api/works"); console.log(response);
-const projects = await response.json(); console.log(projects);
-const displayedProjects = projects; console.log(displayedProjects);
+const projectsResponse = await fetch("http://localhost:5678/api/works");
+const projects = await projectsResponse.json(); //console.log(projects);
+const displayedProjects = projects;
 
 function generateGallery(projects){
 	for(let project of projects){
@@ -35,6 +36,9 @@ function generateGallery(projects){
 }
 
 generateGallery(projects);
+/****************************************************************/
+
+
 
 // Get rid of everything in the gallery
 function emptyGallery() {
@@ -48,6 +52,7 @@ function updateGallery(projects) {
 
 // Create a project HTML element
 function createProjectElement(project){
+	// Create HTML
 	const newProjectElement = document.createElement('figure');
 	const newProjectElementImg = document.createElement('img');
 	const newProjectElementCaption = document.createElement('figcaption');
@@ -62,39 +67,24 @@ function createProjectElement(project){
 
 
 /************************** CATEGORIES **************************/
-// Create empty array for all categories
-let categories = [];
+const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+const categories = await categoriesResponse.json(); //console.log(categories);
+const filters = [];
 
-//fetchCategories();
-
-function fetchCategories(){
-	fetch("http://localhost:5678/api/categories").then(
-		response => response.json().then(
-			data => {
-				// Looping through backend data to get all categories 
-				let fetchCategories = [];
-				for (let i = 0; i < data.length; i++){
-					let newCategory = new Category(data[i].id, data[i].name);
-
-					fetchCategories.push(newCategory);
-				}
-
-				console.log("Array of all categories :"); console.log(fetchCategories);
-
-				// Update global array with backend data
-				categories = fetchCategories;
-
-				// Update the filters container for the first time
-				createFiltersButtons();
-			}
-		)
-	)
+function generateFilters(categories){
+	for(let category of categories){
+		const filter = createFilterButton(category.id, category.name); //console.log(filter);
+		filters.push(filter);
+	}
 }
+
+generateFilters(categories);
+/****************************************************************/
 
 
 /*************** SPECIFIC CASE FOR 'Tous' filter **************/
 /***************     TRY TO CLEAN THIS LATER     **************/
-const filterAll = document.getElementById("filter-all");
+const filterAll = document.querySelector("#filter-all");
 
 filterAll.addEventListener('click', function(){
 	currentFilterValue = "Tous";
@@ -104,20 +94,9 @@ filterAll.addEventListener('click', function(){
 /**************************************************************/
 
 
-// Create empty array for all filter buttons 
-let allFilterButtons = [];
-
-// For each categories we create a new filter button
-function createFiltersButtons() {
-	for(let category of categories){
-		let btn = createFilterButton(category.id, category.name);
-		allFilterButtons.push(btn);
-	}
-}
-
 function createFilterButton(id, name){
-	// Create HTML button
-	newFilterButtonElement = document.createElement('input');
+	// Create HTML
+	const newFilterButtonElement = document.createElement('input');
 	newFilterButtonElement.id = "filter-" + id.toString();
 	newFilterButtonElement.type = "button";
 	newFilterButtonElement.value = name;
@@ -130,7 +109,8 @@ function createFilterButton(id, name){
 		filterGallery(id);
 	}, false);
 
-	console.log("Adding filter button for categroy named \" " + name+ "\"");
+	//console.log("Adding filter button for category named \" " + name+ "\" with the id " + id);
+
 	filtersElement.appendChild(newFilterButtonElement);
 
 	return newFilterButtonElement;
@@ -139,16 +119,16 @@ function createFilterButton(id, name){
 
 // This function is called when clicking on a filter button
 function filterGallery(filterCategoryId){
-	console.log("Filtering gallery with objects of the category \"" + "..." + "\" with the id " + filterCategoryId);
+	console.log("Filtering gallery with objects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
 
-	displayedProjects = [];
+	displayedProjects.splice(0, displayedProjects.length); // Empty the displayed project array
 
 	if(filterCategoryId === 0) {
-		displayedProjects = allProjects;
+		displayedProjects = projects;
 
 	} else {
-		for(let project of allProjects){
-			//console.log("Trying the project named " + project.title + " with the id " + project.categoryId);
+		for(let project of projects){
+			console.log("Trying the project named " + project.title + " with the id " + project.categoryId);
 			
 			if(project.categoryId == filterCategoryId){
 				displayedProjects.push(project);
@@ -163,7 +143,7 @@ function filterGallery(filterCategoryId){
 }
 
 function updateFilterButtonsColor(selectedID){
-	for(let i = 1; i <= allFilterButtons.length; i++){
+	for(let i = 1; i <= filters.length; i++){
 		console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
 		let btn = document.getElementById("filter-" + i.toString());
 
