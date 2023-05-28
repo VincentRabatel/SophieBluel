@@ -21,7 +21,7 @@ class Project {
 /************************** PROJECTS **************************/
 
 // Create empty array for all projects
-let allProjects = [];
+let projects = [];
 
 // Create empty array for projects to display
 let displayedProjects = [];
@@ -73,16 +73,16 @@ function updateGallery(projects){
 // Create a div with given project values
 function createProjectDiv(project){
 	// Create HTML
-	newProject = document.createElement('figure');
-	newProjectImg = document.createElement('img');
-	newProjectCaption = document.createElement('figcaption');
+	newProjectElement = document.createElement('figure');
+	newProjectElementImg = document.createElement('img');
+	newProjectElementCaption = document.createElement('figcaption');
 
-	newProjectImg.src = project.imageUrl;
-	newProjectCaption.innerHtml = project.title;
+	newProjectElementImg.src = project.imageUrl;
+	newProjectElementCaption.innerHtml = project.title;
 
-	newProject.appendChild(newProjectImg, newProjectCaption);
+	newProjectElement.appendChild(newProjectElementImg, newProjectElementCaption);
 
-	gallery.appendChild(newProject);
+	gallery.appendChild(newProjectElement);
 }
 
 
@@ -145,23 +145,23 @@ function createFiltersButtons() {
 
 function createFilterButton(id, name){
 	// Create HTML button
-	newFilterButton = document.createElement('input');
-	newFilterButton.id = "filter-" + id.toString();
-	newFilterButton.type = "button";
-	newFilterButton.value = name;
+	newFilterButtonElement = document.createElement('input');
+	newFilterButtonElement.id = "filter-" + id.toString();
+	newFilterButtonElement.type = "button";
+	newFilterButtonElement.value = name;
 
 	// Add CSS
-	newFilterButton.classList.add("filter");
+	newFilterButtonElement.classList.add("filter");
 	
 	// Add event listnener
-	newFilterButton.addEventListener('click', function(){
+	newFilterButtonElement.addEventListener('click', function(){
 		filterGallery(id);
 	}, false);
 
 	console.log("Adding filter button for categroy named \" " + name+ "\"");
-	filtersContainer.appendChild(newFilterButton);
+	filtersContainer.appendChild(newFilterButtonElement);
 
-	return newFilterButton;
+	return newFilterButtonElement;
 }
 
 
