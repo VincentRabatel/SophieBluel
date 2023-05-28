@@ -19,41 +19,11 @@ class Project {
 }
 
 /************************** PROJECTS **************************/
+const response = await fetch("http://localhost:5678/api/works");  
+const projects = await response.json();
+const displayedProjects = projects;
 
-// Create empty array for all projects
-let projects = [];
-
-// Create empty array for projects to display
-let displayedProjects = [];
-
-fetchAllProjects();
-
-// Fetch all projects from backend and update the gallery for the first time
-function fetchAllProjects() {
-	fetch("http://localhost:5678/api/works").then(
-		response => response.json().then(
-			data => {
-				// Looping through backend data to get all the projects 
-				let fetchedProjects = [];
-				for (let i = 0; i < data.length; i++){
-					let newCategory = new Category(data[i].category.id, data[i].category.name);
-					let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
-
-					fetchedProjects.push(newProject);
-				}
-
-				console.log("Array of all projects :"); console.log(fetchedProjects);
-
-				// Update global arrays with backend data
-				allProjects = fetchedProjects;
-				displayedProjects = allProjects;
-
-				// Update the gallery for the first time
-				updateGallery(displayedProjects);
-			}
-		)
-	)   
-}
+updateGallery(displayedProjects);
 
 // Get gallery main div
 const gallery = document.getElementById('gallery');
@@ -128,6 +98,8 @@ filterAll.addEventListener('click', function(){
 	filterGallery(0);
 }, false);
 /**************************************************************/
+/**************************************************************/
+
 
 // Create empty array for all filter buttons 
 let allFilterButtons = [];
@@ -202,3 +174,43 @@ function updateFilterButtonsColor(selectedID){
 		}
 	}
 }
+
+
+/****************************** SAVE *****************************/
+
+/*
+// Create empty array for all projects
+//let projects = [];
+
+// Create empty array for projects to display
+let displayedProjects = [];
+
+fetchAllProjects();
+
+// Fetch all projects from backend and update the gallery for the first time
+function fetchAllProjects() {
+	fetch("http://localhost:5678/api/works").then(
+		response => response.json().then(
+			data => {
+				// Looping through backend data to get all the projects 
+				let fetchedProjects = [];
+				for (let i = 0; i < data.length; i++){
+					let newCategory = new Category(data[i].category.id, data[i].category.name);
+					let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
+
+					fetchedProjects.push(newProject);
+				}
+
+				console.log("Array of all projects :"); console.log(fetchedProjects);
+
+				// Update global arrays with backend data
+				allProjects = fetchedProjects;
+				displayedProjects = allProjects;
+
+				// Update the gallery for the first time
+				updateGallery(displayedProjects);
+			}
+		)
+	)   
+}
+*/
