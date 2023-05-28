@@ -27,7 +27,7 @@ const filtersElement = document.querySelector("#filters");
 /************************** PROJECTS **************************/
 const projectsResponse = await fetch("http://localhost:5678/api/works");
 const projects = await projectsResponse.json(); //console.log(projects);
-const displayedProjects = projects;
+let displayedProjects = projects;
 
 function generateGallery(projects){
 	for(let project of projects){
@@ -47,7 +47,9 @@ function emptyGallery() {
 
 // Update the gallery with a new array of projects
 function updateGallery(projects) {
-	// rework todo
+	for(let project of displayedProjects){
+		createProjectElement(project);
+	}
 }
 
 // Create a project HTML element
@@ -71,6 +73,18 @@ const categoriesResponse = await fetch("http://localhost:5678/api/categories");
 const categories = await categoriesResponse.json(); //console.log(categories);
 const filters = [];
 
+
+/*************** SPECIFIC CASE FOR 'Tous' filter **************/
+/***************     TRY TO CLEAN THIS LATER     **************/
+const filterAll = document.querySelector("#filter-0");
+filterAll.addEventListener('click', function(){
+	filterGallery(0);
+}, false);
+
+filters.push(filterAll); //console.log(filterAll); console.log(filters);
+/**************************************************************/
+
+
 function generateFilters(categories){
 	for(let category of categories){
 		const filter = createFilterButton(category.id, category.name); //console.log(filter);
@@ -82,19 +96,9 @@ generateFilters(categories);
 /****************************************************************/
 
 
-/*************** SPECIFIC CASE FOR 'Tous' filter **************/
-/***************     TRY TO CLEAN THIS LATER     **************/
-const filterAll = document.querySelector("#filter-all");
-
-filterAll.addEventListener('click', function(){
-	currentFilterValue = "Tous";
-	filterGallery(0);
-}, false);
-/**************************************************************/
-/**************************************************************/
-
-
 function createFilterButton(id, name){
+	console.log("Adding filter button for category named \" " + name+ "\" with the id " + id);
+
 	// Create HTML
 	const newFilterButtonElement = document.createElement('input');
 	newFilterButtonElement.id = "filter-" + id.toString();
@@ -109,8 +113,6 @@ function createFilterButton(id, name){
 		filterGallery(id);
 	}, false);
 
-	//console.log("Adding filter button for category named \" " + name+ "\" with the id " + id);
-
 	filtersElement.appendChild(newFilterButtonElement);
 
 	return newFilterButtonElement;
@@ -119,16 +121,18 @@ function createFilterButton(id, name){
 
 // This function is called when clicking on a filter button
 function filterGallery(filterCategoryId){
-	console.log("Filtering gallery with objects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
-
-	displayedProjects.splice(0, displayedProjects.length); // Empty the displayed project array
+	displayedProjects = [];
 
 	if(filterCategoryId === 0) {
+		console.log("Filtering the gallery with all projects");
+
 		displayedProjects = projects;
 
 	} else {
+		console.log("Filtering the gallery with projects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
+
 		for(let project of projects){
-			console.log("Trying the project named " + project.title + " with the id " + project.categoryId);
+			//console.log("Trying the project named \"" + project.title + "\" with the id " + project.categoryId );
 			
 			if(project.categoryId == filterCategoryId){
 				displayedProjects.push(project);
@@ -143,14 +147,14 @@ function filterGallery(filterCategoryId){
 }
 
 function updateFilterButtonsColor(selectedID){
-	for(let i = 1; i <= filters.length; i++){
-		console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
-		let btn = document.getElementById("filter-" + i.toString());
+	for(let i = 0; i <= filters.length - 1; i++){
+		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
+		let filter = document.getElementById("filter-" + i.toString());
 
 		if(i == selectedID){
-			btn.classList.add("selected");
+			filter.classList.add("selected");
 		} else {
-			btn.classList.remove("selected");
+			filter.classList.remove("selected");
 		}
 	}
 }
