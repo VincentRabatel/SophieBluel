@@ -18,50 +18,54 @@ class Project {
     }
 }
 
+// Get HTML elements
+const galleryElement = document.querySelector("#gallery");
+const filtersElement = document.getElementById("filters");
+
+
 /************************** PROJECTS **************************/
-const response = await fetch("http://localhost:5678/api/works");  
-const projects = await response.json();
-const displayedProjects = projects;
+const response = await fetch("http://localhost:5678/api/works"); console.log(response);
+const projects = await response.json(); console.log(projects);
+const displayedProjects = projects; console.log(displayedProjects);
 
-updateGallery(displayedProjects);
+function generateGallery(projects){
+	for(let project of projects){
+		createProjectElement(project);
+	}
+}
 
-// Get gallery main div
-const gallery = document.getElementById('gallery');
+generateGallery(projects);
 
 // Get rid of everything in the gallery
 function emptyGallery() {
 	gallery.innerHTML = "";
 }
 
-// Updade the gallery with a new array of projects
-function updateGallery(projects){
-	for(let project of projects){
-		createProjectDiv(project);
-	}
+// Update the gallery with a new array of projects
+function updateGallery(projects) {
+	// rework todo
 }
 
-// Create a div with given project values
-function createProjectDiv(project){
-	// Create HTML
-	newProjectElement = document.createElement('figure');
-	newProjectElementImg = document.createElement('img');
-	newProjectElementCaption = document.createElement('figcaption');
+// Create a project HTML element
+function createProjectElement(project){
+	const newProjectElement = document.createElement('figure');
+	const newProjectElementImg = document.createElement('img');
+	const newProjectElementCaption = document.createElement('figcaption');
 
 	newProjectElementImg.src = project.imageUrl;
 	newProjectElementCaption.innerHtml = project.title;
 
 	newProjectElement.appendChild(newProjectElementImg, newProjectElementCaption);
 
-	gallery.appendChild(newProjectElement);
+	galleryElement.appendChild(newProjectElement);
 }
 
 
 /************************** CATEGORIES **************************/
-
 // Create empty array for all categories
 let categories = [];
 
-fetchCategories();
+//fetchCategories();
 
 function fetchCategories(){
 	fetch("http://localhost:5678/api/categories").then(
@@ -88,7 +92,6 @@ function fetchCategories(){
 }
 
 
-
 /*************** SPECIFIC CASE FOR 'Tous' filter **************/
 /***************     TRY TO CLEAN THIS LATER     **************/
 const filterAll = document.getElementById("filter-all");
@@ -103,9 +106,6 @@ filterAll.addEventListener('click', function(){
 
 // Create empty array for all filter buttons 
 let allFilterButtons = [];
-
-// Get filters main div
-const filtersContainer = document.getElementById("filters");
 
 // For each categories we create a new filter button
 function createFiltersButtons() {
@@ -131,7 +131,7 @@ function createFilterButton(id, name){
 	}, false);
 
 	console.log("Adding filter button for categroy named \" " + name+ "\"");
-	filtersContainer.appendChild(newFilterButtonElement);
+	filtersElement.appendChild(newFilterButtonElement);
 
 	return newFilterButtonElement;
 }
@@ -174,43 +174,3 @@ function updateFilterButtonsColor(selectedID){
 		}
 	}
 }
-
-
-/****************************** SAVE *****************************/
-
-/*
-// Create empty array for all projects
-//let projects = [];
-
-// Create empty array for projects to display
-let displayedProjects = [];
-
-fetchAllProjects();
-
-// Fetch all projects from backend and update the gallery for the first time
-function fetchAllProjects() {
-	fetch("http://localhost:5678/api/works").then(
-		response => response.json().then(
-			data => {
-				// Looping through backend data to get all the projects 
-				let fetchedProjects = [];
-				for (let i = 0; i < data.length; i++){
-					let newCategory = new Category(data[i].category.id, data[i].category.name);
-					let newProject = new Project(data[i].id, data[i].title, data[i].imageUrl, data[i].categoryId, data[i].userId, newCategory);
-
-					fetchedProjects.push(newProject);
-				}
-
-				console.log("Array of all projects :"); console.log(fetchedProjects);
-
-				// Update global arrays with backend data
-				allProjects = fetchedProjects;
-				displayedProjects = allProjects;
-
-				// Update the gallery for the first time
-				updateGallery(displayedProjects);
-			}
-		)
-	)   
-}
-*/
