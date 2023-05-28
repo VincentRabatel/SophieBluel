@@ -144,6 +144,16 @@ li:hover {
 }
 
 
+/************************** PORTFOLIO H **************************/
+.portfolio__header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	column-gap: 31px;
+}
+
+
 /************************** FILTERS **************************/
 .filters {
 	display: flex;
@@ -272,3 +282,77 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/************************ EDIT MODE ************************/
+.edit-top-bar {
+	height: 59px;
+	background-color: black;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 21px;
+}
+
+.edit-top-bar .edit-top-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 9px;
+}
+
+.edit-top-bar .fa-pen-to-square {
+	color: white;
+	font-size: 19px;
+}
+
+.edit-top-bar span{
+	color: white;
+	font-size: 16px;
+	font-weight: 400;
+	font-family: 'Work Sans';
+}
+
+.publish-button {
+	width: 216px;
+	height: 38px;
+
+	color: black;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-weight: 500;
+
+	border: none;
+	border-radius: 60px;
+	background: #FFFFFF;
+
+	cursor: pointer;
+}
+
+
+.edit-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	column-gap: 8px;
+
+	border: none;
+	background-color: transparent;
+
+	cursor: pointer;
+}
+
+.edit-button span {
+	font-size: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans';
+}
+
+.edit-button .fa-pen-to-square {
+	font-size: 18px;
+}
+
+
+/* .edit-mode {
+	display: none;
+} */

@@ -29,11 +29,11 @@ async function logIn(logInInfo){
         break;
     
         case 401 :
-            console.log("LOGIN: Not Authorized");
+            window.alert("Not Authorized");
         break;
     
         case 404 :
-            console.log("LOGIN: User not found");
+            window.alert("User not found");
         break;
     }
 }

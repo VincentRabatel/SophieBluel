@@ -25,9 +25,11 @@ function createProjectElement(project){
 	const newProjectElementCaption = document.createElement('figcaption');
 
 	newProjectElementImg.src = project.imageUrl;
-	newProjectElementCaption.innerHtml = project.title;
+	newProjectElementCaption.innerText = project.title;
 
-	newProjectElement.appendChild(newProjectElementImg, newProjectElementCaption);
+	newProjectElement.appendChild(newProjectElementImg);
+	newProjectElement.appendChild(newProjectElementCaption);
+
 
 	galleryElement.appendChild(newProjectElement);
 }

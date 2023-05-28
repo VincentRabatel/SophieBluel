@@ -4,15 +4,37 @@
 		<meta charset="UTF-8">
 		<title>Sophie Bluel - Architecte d'intérieur</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+
+		<!-- Link to CSS styling -->
+		<link rel="stylesheet" href="./assets/style.css">
+
+		<!-- Link to gallery script -->
+		<script type="module" src="./assets/edit.js"></script>
+		<script type="module" src="./assets/gallery.js"></script>
+
+		<!-- Link to Google Font - Syne - Work Sans -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-		<meta name="description" content="">
-		<link rel="stylesheet" href="./assets/style.css">
-		<script type="module" src="./assets/gallery.js"></script>
+
+		<!-- Link to Awesome Font -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 	</head>
 
 	<body>
+		<div class="edit-top-bar">
+			<div class="edit-top-title">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<span>Mode édition</span>
+			</div>
+			<button class="publish-button" type="button">
+				publier les changements
+			</button>
+		</div>
+
 		<!-- Header -->
 		<header>
 			<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
@@ -43,7 +65,14 @@
 
 			<!-- Section - Portfolio -->
 			<section id="portfolio">
-				<h2>Mes Projets</h2>
+
+				<div class="portfolio__header">
+					<h2>Mes Projets</h2>
+					<button class="edit-button" type="button">
+						<i class="fa-regular fa-pen-to-square"></i>
+						<span>modifier</span>
+					</button>
+				</div>
 
 				<form class="filters">
 				</form>
