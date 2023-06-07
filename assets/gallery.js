@@ -75,7 +75,7 @@ function createFilterButton(id, name){
 	return newFilterButtonElement;
 }
 
-
+// TO DO : use filter() ? 
 // This function is called when clicking on a filter button //
 function filterGallery(filterCategoryId){
 	displayedProjects = [];
