@@ -164,6 +164,7 @@ li:hover {
 /**************************** FILTERS ****************************/
 .filters {
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	column-gap: 10px;
 
@@ -171,6 +172,8 @@ li:hover {
 }
 
 .filter {
+	height: 39px;
+	box-shadow: none;
 	border: 1px solid #1D6154;
 	border-radius: 60px;
 	padding: 9px 20px;
@@ -222,54 +225,92 @@ li:hover {
 }
 
 /************************** FORMS **************************/
-#contact, #login{
+.form-section {
 	width: 50%;
+	max-width: 379px;
 	margin: auto;
-}
-#contact, #login> * {
 	text-align: center;
 }
 
-#contact h2, #login h2{
-	margin-bottom: 20px;
+.form-section#login {
+	margin-top: 150px;
 }
 
-#contact form, #login form {
+form {
 	text-align: left;
-	margin-top:30px;
+	/* margin-top: 38px; */
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input, #login input {
+/*** Form title ***/
+#contact h2 {
+	margin-bottom: 9px;
+}
+
+#contact p {
+	margin-bottom: 38px;
+}
+
+#login h2 {
+	margin-bottom: 37px;
+}
+
+/*** Forms' inputs ***/
+form input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label, #login label {
-	margin: 2em 0 1em 0;
+
+#contact input {
+	margin-bottom: 40px;
 }
 
-#contact textarea, #login textarea {
+#login input {
+	margin-bottom: 30px;
+}
+
+/*** Forms' labels ***/
+form label {
+	text-align: left;
+	margin-bottom: 7px;
+}
+
+/*** Forms' text areas ***/
+textarea {
+	min-width: 379px;
+	max-width: 379px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+/*** Submit inputs ***/
 input[type="submit"]{
-	font-family: 'Syne';
+	width: 179px;
+	height: 36px;
+
+	font-size: 14px;;
 	font-weight: 700;
+	font-family: 'Syne';
+	text-align: center;
+
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px ;
+	
+
+	margin : 40px auto 45px auto;
+	border-radius: 60px;
 	cursor: pointer;
 }
 
 input[type="submit"]:hover{
 	background-color: #0E2F28;
+}
+
+#login input[type="submit"]{
+	margin : 7px auto 28px auto;
 }
 
 /************************** FOOTER **************************/
