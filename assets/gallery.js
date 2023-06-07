@@ -75,6 +75,48 @@ function createFilterButton(id, name){
 	return newFilterButtonElement;
 }
 
+/*************************** LOG IN STATUS ***************************/
+// First check when loading the page
+checkLogInStatus();
+
+// Check the loggin status
+function checkLogInStatus(){
+	const logInStatus = window.localStorage.getItem("logInStatus");
+	const editModeblocks = fetchEditModeObjects();
+
+	updateEditModeBlocks(logInStatus, editModeblocks);
+}
+
+// Return all HTML blocks affected by Edit Mode status
+function fetchEditModeObjects(){
+	const editModeblocks = document.querySelectorAll(".edit-block");
+	return editModeblocks;
+}
+
+// Update CCS classes of Edit Mode blocks depending of Log in status 
+function updateEditModeBlocks(logInStatus, editModeblocks){
+	if(logInStatus == "true"){
+		//console.log("Logged in !");
+		editModeblocks.forEach(block => {
+			block.classList.remove("edit-hidden");
+		});
+
+	} else {
+		//console.log("User not logged in yet");
+		editModeblocks.forEach(block => {
+			block.classList.add("edit-hidden");
+		});
+	}
+}
+
+// Clear all local storage (for debug)
+//clearLocalStorage();
+function clearLocalStorage(){
+	window.localStorage.clear();
+}
+
+
+/*************************** FILTERS BUTTONS ***************************/
 // TO DO : use filter() ? 
 // This function is called when clicking on a filter button //
 function filterGallery(filterCategoryId){

@@ -1,3 +1,5 @@
+/*
+
 // Get edit mode HTML elements and create event listeners
 const editButtonElement = document.querySelector(".edit-button"); console.log(editButtonElement);
 const publishButtonElement = document.querySelector(".publish-button"); console.log(publishButtonElement);
@@ -22,3 +24,5 @@ closeButtonElement.addEventListener('click', function(){
 backButtonElement.addEventListener('click', function(){
     console.log("Back button clicked !");
 }, false);
+
+*/

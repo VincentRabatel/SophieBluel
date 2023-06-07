@@ -10,10 +10,10 @@ logInForm.addEventListener("submit", function (event) {
         password: event.target.querySelector("[name=password]").value
     };
 
-    logInTest(logInInfo); //console.log(logInInfo);
+    logInSubmit(logInInfo); //console.log(logInInfo);
 });
 
-async function logInTest(logInInfo){
+async function logInSubmit(logInInfo){
 
     const logInResponse = await fetch("http://localhost:5678/api/users/login", {
         method: 'POST',
@@ -25,6 +25,7 @@ async function logInTest(logInInfo){
     
     switch(logInResponse.status){
         case 200 :
+            window.localStorage.setItem("logInStatus", "true");
             window.location = "index.html";
         break;
     
