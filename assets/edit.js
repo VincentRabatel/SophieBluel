@@ -1,12 +1,12 @@
-/*
-
 // Get edit mode HTML elements and create event listeners
 const editButtonElement = document.querySelector(".edit-button"); console.log(editButtonElement);
 const publishButtonElement = document.querySelector(".publish-button"); console.log(publishButtonElement);
 
 
 editButtonElement.addEventListener('click', function(){
-    console.log("Edit button clicked !");
+    //console.log("Edit button clicked !");
+    const modal = document.querySelector(".modal-container");
+    showElement(modal);
 }, false);
 
 publishButtonElement.addEventListener('click', function(){
@@ -18,11 +18,20 @@ const closeButtonElement = document.querySelector(".close-button"); console.log(
 const backButtonElement = document.querySelector(".back-button"); console.log(backButtonElement);
 
 closeButtonElement.addEventListener('click', function(){
-    console.log("Close button clicked !");
+    //console.log("Close button clicked !");
+    const modal = document.querySelector(".modal-container");
+    hideElement(modal);
 }, false);
 
 backButtonElement.addEventListener('click', function(){
     console.log("Back button clicked !");
 }, false);
 
-*/
+
+function showElement(element){
+    element.classList.remove("edit-hidden");
+}
+
+function hideElement(element){
+    element.classList.add("edit-hidden");
+}

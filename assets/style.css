@@ -151,6 +151,29 @@ li:hover {
 }
 
 
+/**************************** COMMONS ****************************/
+/* Round green buttons */
+.rnd-green-button {
+	width: 179px;
+	height: 36px;
+
+	font-size: 14px;;
+	font-weight: 700;
+	font-family: 'Syne';
+	text-align: center;
+
+	color: white;
+	background-color: #1D6154;
+	
+	border-radius: 60px;
+	cursor: pointer;
+}
+
+.rnd-green-button:hover {
+	background-color: #0E2F28;
+}
+
+
 /************************** PORTFOLIO H **************************/
 .portfolio__header {
 	display: flex;
@@ -159,7 +182,6 @@ li:hover {
 
 	column-gap: 31px;
 }
-
 
 /**************************** FILTERS ****************************/
 .filters {
@@ -287,29 +309,17 @@ textarea {
 }
 
 /*** Submit inputs ***/
-input[type="submit"]{
-	width: 179px;
+#contact .rnd-green-button {
 	height: 36px;
-
-	font-size: 14px;;
-	font-weight: 700;
-	font-family: 'Syne';
-	text-align: center;
-
-	color: white;
-	background-color: #1D6154;
+	width: 179px;
 	
-
 	margin : 40px auto 45px auto;
-	border-radius: 60px;
-	cursor: pointer;
 }
 
-input[type="submit"]:hover{
-	background-color: #0E2F28;
-}
+#login .rnd-green-button {
+	height: 36px;
+	width: 179px;
 
-#login input[type="submit"]{
 	margin : 7px auto 28px auto;
 }
 
@@ -333,6 +343,7 @@ footer nav ul {
 }
 
 /************************ EDIT MODE ************************/
+/* Edit mode top bar */
 .edit-top-bar {
 	height: 59px;
 	background-color: black;
@@ -362,6 +373,7 @@ footer nav ul {
 	font-family: 'Work Sans';
 }
 
+/* Edit mode publish button */
 .publish-button {
 	width: 216px;
 	height: 38px;
@@ -420,7 +432,7 @@ footer nav ul {
 }
 
 .modal {
-	width: 50%;
+	width: 30%;
 	min-width: 300px;
 	max-width: 630px;
 
@@ -442,6 +454,8 @@ footer nav ul {
 	justify-items: space-between;
 }
 
+
+/* Modal window top buttons */
 .modal .back-button {
 	position: absolute;
 	top: 35px; left: 35px;
@@ -462,7 +476,16 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/* Modal window galery */
+.modal-galery {
+	margin: 0px 105px;
+}
+
+
+/* Modal window titles */
 .modal h2 {
+	margin-bottom: 46px;
+
 	font-family: Work Sans;
 	font-size: 26px;
 	font-weight: 400;
@@ -471,12 +494,42 @@ footer nav ul {
 	color: black;
 }
 
-.modal input {
-	width: 237px;
-	height: 36px;
-
-	border: none;
+.grey-line {
+	width: 420px;
+	height: 0px;
+	color: #B3B3B3;
+	border: 1px solid #B3B3B3;
 }
+
+/* Modal form to add a picture to the gallery */
+.modal form {
+	align-items: flex-end;
+}
+
+.modal input[value="Ajouter une photo"] {
+	height: 36px;
+	width: 237px;
+
+	margin : 48px auto 0px auto;
+}
+
+/* Delete the gallery */
+.modal input[value="Supprimer la galerie"] {
+	height: 17px;
+	margin : 23px auto 48px auto;
+
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 400;
+
+	text-align: center;
+	
+	color: #D65353;
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
 
 
 .edit-hidden {

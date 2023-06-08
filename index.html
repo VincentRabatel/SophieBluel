@@ -96,7 +96,7 @@
 					<input type="email" name="email" id="email">
 					<label for="message">Message</label>
 					<textarea name="message" id="message" cols="30" rows="10"></textarea>
-					<input type="submit" value="Envoyer">
+					<input type="submit" value="Envoyer" class="rnd-green-button">
 				</form>
 			</section>
 		</main>
@@ -110,24 +110,44 @@
 			</nav>
 		</footer>
 
-		<!-- <div class="modal-container">
+		<!-- Modal - Overlay -->
+		<div class="modal-container edit-hidden">
 			<div class="overlay modal-trigger">
 	
 			</div>
+			
+			<!-- Modal - Gallery -->
 			<div class="modal">
-				<button class="back-button" type="button">
+
+				<button class="back-button edit-hidden" type="button">
 					<i class="fa-solid fa-arrow-left-long"></i>
 				</button>
+
 				<button class="close-button" type="button">
 					<i class="fa-solid fa-xmark"></i>
 				</button>
+
 				<h2>
 					Galerie photo
 				</h2>
+
+				<div class="modal-galery">
+					<!-- Gallery projects added by JavaScript here -->
+				</div>
+
+				<div class="grey-line"></div>
+
 				<form action="#" method="post">
-					<input type="submit" value="Envoyer une photo">
+					<input type="button" value="Ajouter une photo" class="rnd-green-button">
+					<input type="button" value="Supprimer la galerie">
 				</form>
 			</div>
-		</div> -->
+
+			<!-- Modal - Add a project -->
+			<div>
+
+			</div>
+
+		</div>
 	</body>
 </html>
