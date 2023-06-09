@@ -1,5 +1,7 @@
+// Get log in form
 const logInForm = document.querySelector(".login-form"); // console.log(logInForm);
 
+// Add event listener to log in form
 logInForm.addEventListener("submit", function (event) {
     // Disable default behaviour of the web browser
     event.preventDefault();

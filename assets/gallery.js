@@ -116,6 +116,41 @@ function clearLocalStorage(){
 }
 
 
+/**************************** MODAL WINDOW *****************************/
+
+// Get modal gallery
+const modalGallery = document.querySelector(".modal-galery"); console.log(modalGallery);
+
+updateModalGallery();
+
+function updateModalGallery(){
+	projects.forEach(project => {
+		//projectImagesURLs.push(project.imageUrl);
+
+		modalGallery.appendChild(createModalGalleryProject(project));
+	})
+}
+
+
+function createModalGalleryProject(project){
+	// Create container element
+	const newProjectElement = document.createElement("figure");
+	newProjectElement.classList.add("modal-gallery-project");
+
+	// Create back image element
+	const newProjectImg = document.createElement("img");
+	newProjectImg.src = project.imageUrl;
+
+	// Create edit element
+	const newProjectElementEdit = document.createElement("span");
+	newProjectElementEdit.innerText = "éditer";
+
+	newProjectElement.appendChild(newProjectImg);
+	newProjectElement.appendChild(newProjectElementEdit);
+
+	return newProjectElement;
+}
+
 /*************************** FILTERS BUTTONS ***************************/
 // TO DO : use filter() ? 
 // This function is called when clicking on a filter button //
