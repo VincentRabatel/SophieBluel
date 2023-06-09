@@ -1,23 +1,88 @@
-// Get HTML elements
+/**************************** HTML FETCH ****************************/
 const galleryElement = document.querySelector(".gallery");
 const filtersElement = document.querySelector(".filters");
 
-
 /************************** PROJECTS FETCH **************************/
-const projectsResponse = await fetch("http://localhost:5678/api/works");
-const projects = await projectsResponse.json(); //console.log(projects);
-let displayedProjects = projects;
+async function fetchProjects(){
+	console.log("Fetching projects form the API...");
+	const projectsResponse = await fetch("http://localhost:5678/api/works");
+	const projects = await projectsResponse.json(); 
+	//let displayedProjects = projects; // DEPRECATED ?
+	
+	console.log(projects);
+	return projects;
+}
 
-function generateGallery(projects){
+/************************** CATEGORIES FETCH **************************/
+async function fetchCategories(){
+	console.log("Fetching categories form the API...");
+	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+	const categories = await categoriesResponse.json(); 
+	//const filters = []; // DEPRECATED ?
+
+	console.log(categories);
+	return categories;
+}
+
+
+// ----------------------------------- //
+// First initialisation of the gallery // => TODO save to local storage
+// ----------------------------------- //
+export async function initGallery(){
+	/* TODO : only fetch projects if there is nothing in the localStorage
+	// Try to find a project list in localStorage
+	const projectsJSON = localStorage.getItem("projects");	//console.log(projectsJSON);
+	const projects = JSON.parse(projectsJSON);
+
+	if(projects === null){
+		
+	}
+	*/
+
+	// First 'projects' fetch from the API
+	const projects = await fetchProjects();
+
+	// Store the project array in the local storage
+	window.localStorage.setItem("projects", JSON.stringify(projects));
+	window.localStorage.setItem("displayedProjects", JSON.stringify(projects));
+
+	// Generate the gallery with an array of projects
+	createGallery(projects);
+
+
+	// First 'categories' fetch from the API
+	const categories = await fetchCategories();
+
+	// Store the project array in the local storage
+	window.localStorage.setItem("categories", JSON.stringify(categories));
+
+	// Generate the filters buttons with an array of categories
+	createFilters(categories);
+}
+
+
+// ------------------------------ //
+// Update the gallery when needed // => TODO use the local storage
+// ------------------------------ // => TODO use the map() function
+export async function updateGallery(projects){
+	emptyGallery();
+
+	for(let project of projects){
+		createProjectElement(project);
+	}
+
+	window.localStorage.setItem("displayedProjects", JSON.stringify(projects));
+}
+
+
+// Generate the gallery with an array of projects
+function createGallery(projects){
 	for(let project of projects){
 		createProjectElement(project);
 	}
 }
 
-generateGallery(projects);
-
-
-// Create a project HTML element //
+// Create a project HTML element
 function createProjectElement(project){
 	// Create HTML
 	const newProjectElement = document.createElement('figure');
@@ -35,26 +100,65 @@ function createProjectElement(project){
 }
 
 
-/************************** CATEGORIES FETCH **************************/
-const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesResponse.json(); //console.log(categories);
-const filters = [];
+// --------------------- //
+// Filters buttons logic // => TO DO : use filter() 
+// --------------------- //
 
-function generateFilters(categories){
+// This function is called when clicking on a filter button //
+function filterGallery(filterCategoryId){
+	const projects = JSON.parse(localStorage.getItem("projects"));						//console.log(projects);
+	const displayedProjects = JSON.parse(localStorage.getItem("displayedProjects"));	//console.log(displayedProjects);
+
+	// Check if a different filter is activated
+	if (projects != displayedProjects) {
+		// If the filter 'all' is activated
+		if (filterCategoryId === 0) {
+			console.log("Filtering the gallery with all projects");
+			// Empty the displayed project array
+			displayedProjects.splice(0,displayedProjects.length);
+
+			// Refill the displayed projects array with new projects
+			for(let project of projects){
+				displayedProjects.push(project);
+			}
+
+		// If it's another filter
+		} else {
+			console.log("Filtering the gallery with projects of the category number \"" + "\" and id == " + filterCategoryId);
+			// Empty the displayed project array
+			displayedProjects.splice(0,displayedProjects.length);
+
+			// Refill the displayed projects array with new projects
+			for(let project of projects){
+				if(project.categoryId == filterCategoryId){
+					displayedProjects.push(project);
+				}
+			}
+		}
+	} else {
+		console.log("Gallery is already correctly filtered");
+		return;
+	}
+
+	updateFilterButtonsColor(filterCategoryId);
+
+	updateGallery(displayedProjects);
+}
+
+// Generate all filters buttons with an array of categories
+function createFilters(categories){
 	// Create the first filter for all projects
 	const filterAll = createFilterButton(0, "Tous");
-	filters.push(filterAll);
+	//filters.push(filterAll); // DEPRECATED ?
 
 	// Create filters depending of the backend categories 
 	for(let category of categories){
 		const filter = createFilterButton(category.id, category.name);
-		filters.push(filter);
+		//filters.push(filter); // DEPRECATED ?
 	}
 }
 
-generateFilters(categories);
-
-
+// Create filter button HTML element
 function createFilterButton(id, name){
 	// Create HTML
 	const newFilterButtonElement = document.createElement('input');
@@ -75,109 +179,10 @@ function createFilterButton(id, name){
 	return newFilterButtonElement;
 }
 
-/*************************** LOG IN STATUS ***************************/
-// First check when loading the page
-checkLogInStatus();
-
-// Check the loggin status
-function checkLogInStatus(){
-	const logInStatus = window.localStorage.getItem("logInStatus");
-	const editModeblocks = fetchEditModeObjects();
-
-	updateEditModeBlocks(logInStatus, editModeblocks);
-}
-
-// Return all HTML blocks affected by Edit Mode status
-function fetchEditModeObjects(){
-	const editModeblocks = document.querySelectorAll(".edit-block");
-	return editModeblocks;
-}
-
-// Update CCS classes of Edit Mode blocks depending of Log in status 
-function updateEditModeBlocks(logInStatus, editModeblocks){
-	if(logInStatus == "true"){
-		//console.log("Logged in !");
-		editModeblocks.forEach(block => {
-			block.classList.remove("edit-hidden");
-		});
-
-	} else {
-		//console.log("User not logged in yet");
-		editModeblocks.forEach(block => {
-			block.classList.add("edit-hidden");
-		});
-	}
-}
-
-// Clear all local storage (for debug)
-//clearLocalStorage();
-function clearLocalStorage(){
-	window.localStorage.clear();
-}
-
-
-/**************************** MODAL WINDOW *****************************/
-
-// Get modal gallery
-const modalGallery = document.querySelector(".modal-galery"); console.log(modalGallery);
-
-updateModalGallery();
-
-function updateModalGallery(){
-	projects.forEach(project => {
-		//projectImagesURLs.push(project.imageUrl);
-
-		modalGallery.appendChild(createModalGalleryProject(project));
-	})
-}
-
-
-function createModalGalleryProject(project){
-	// Create container element
-	const newProjectElement = document.createElement("figure");
-	newProjectElement.classList.add("modal-gallery-project");
-
-	// Create back image element
-	const newProjectImg = document.createElement("img");
-	newProjectImg.src = project.imageUrl;
-
-	// Create edit element
-	const newProjectElementEdit = document.createElement("span");
-	newProjectElementEdit.innerText = "éditer";
-
-	newProjectElement.appendChild(newProjectImg);
-	newProjectElement.appendChild(newProjectElementEdit);
-
-	return newProjectElement;
-}
-
-/*************************** FILTERS BUTTONS ***************************/
-// TO DO : use filter() ? 
-// This function is called when clicking on a filter button //
-function filterGallery(filterCategoryId){
-	displayedProjects = [];
-
-	if(filterCategoryId === 0) {
-		//console.log("Filtering the gallery with all projects");
-		displayedProjects = projects;
-
-	} else {
-		//console.log("Filtering the gallery with projects of the category \"" + categories[filterCategoryId - 1].name + "\" with the id " + categories[filterCategoryId - 1].id);
-		for(let project of projects){
-			if(project.categoryId == filterCategoryId){
-				displayedProjects.push(project);
-			}
-		}
-	}
-
-	updateFilterButtonsColor(filterCategoryId);
-
-	emptyGallery();
-	updateGallery(displayedProjects);
-}
-
+// Update filters buttons colors when clicked
 function updateFilterButtonsColor(selectedID){
-	for(let i = 0; i <= filters.length - 1; i++){
+	const categories = JSON.parse(localStorage.getItem("categories"));	
+	for(let i = 0; i <= categories.length - 1; i++){
 		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
 		let filter = document.getElementById("filter-" + i.toString());
 
@@ -193,14 +198,6 @@ function updateFilterButtonsColor(selectedID){
 function emptyGallery() {
 	galleryElement.innerHTML = "";
 }
-
-// Update the gallery with a new array of projects //
-function updateGallery(projects) {
-	for(let project of projects){
-		createProjectElement(project);
-	}
-}
-
 
 /*
 // Category class
