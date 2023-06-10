@@ -176,19 +176,45 @@ function initModalDeleteGalleryButton(){
 
     deleteGalleryButton.addEventListener('click', function(){
 		//console.log("'Delete gallery' button clicked !");
-		// TO DO
+		clearModalGallery();
     }, false);
 }
 
 
 /*************************** MODAL GALLERY ***************************/
+// Initialize the modal gallery from the local storage data
 export function initModalGallery(){
-	const projectsJSON = window.localStorage.getItem("projects");	// to do : maybe this should be
-	const projects = JSON.parse(projectsJSON);						// a function
+	// Get the 'projects' array from the local storage
+	const projectsJSON = window.localStorage.getItem("projects");			// to do : maybe this should be
+	const projects = JSON.parse(projectsJSON);								// a function
 
+	// Create HTML for every project in 'projects'
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
+
+	// Set the 'projectsEditMode' array in the local storage, that will be used during edit mode
+	window.localStorage.setItem("projectsEditMode", JSON.stringify(projects));
+}
+
+// Update the modal gallery from the local storage data
+function updateModalGallery(){
+	// Get the 'projectsEditMode' array from the local storage
+	const projectsJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
+	const projects = JSON.parse(projectsJSON);								// a function
+	
+	// Create HTML for every project in 'projectEditMode'
+	projects.forEach(project => {
+		modalGallery.appendChild(createModalGalleryProject(project));
+	})
+}
+
+function clearModalGallery(){
+	// Empty the local storage
+	window.localStorage.setItem("projectsEditMode", "");
+
+	// Empty the modal gallery HTML element
+	modalGallery.innerHTML = "";
 }
 
 

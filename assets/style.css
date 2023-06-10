@@ -548,13 +548,14 @@ footer nav ul {
 	font-style: normal;
 	font-size: 14px;
 	font-weight: 400;
-
 	text-align: center;
 	
 	color: #D65353;
 	background: none;
 	border: none;
 	box-shadow: none;
+
+	cursor: pointer;
 }
 
 
