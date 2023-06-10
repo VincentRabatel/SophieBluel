@@ -176,6 +176,10 @@ function initModalDeleteGalleryButton(){
 
     deleteGalleryButton.addEventListener('click', function(){
 		//console.log("'Delete gallery' button clicked !");
+
+		// Empty the local storage
+		window.localStorage.setItem("projectsEditMode", "");
+
 		clearModalGallery();
     }, false);
 }
@@ -185,8 +189,8 @@ function initModalDeleteGalleryButton(){
 // Initialize the modal gallery from the local storage data
 export function initModalGallery(){
 	// Get the 'projects' array from the local storage
-	const projectsJSON = window.localStorage.getItem("projects");			// to do : maybe this should be
-	const projects = JSON.parse(projectsJSON);								// a function
+	const projectsJSON = window.localStorage.getItem("projects");					// to do : maybe this should be
+	const projects = JSON.parse(projectsJSON);										// a function
 
 	// Create HTML for every project in 'projects'
 	projects.forEach(project => {
@@ -197,26 +201,40 @@ export function initModalGallery(){
 	window.localStorage.setItem("projectsEditMode", JSON.stringify(projects));
 }
 
+
 // Update the modal gallery from the local storage data
 function updateModalGallery(){
 	// Get the 'projectsEditMode' array from the local storage
-	const projectsJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
-	const projects = JSON.parse(projectsJSON);								// a function
-	
+	const projectsEditModeJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
+	const projectsEditMode = JSON.parse(projectsEditModeJSON);						// a function
+
+	clearModalGallery();
+
 	// Create HTML for every project in 'projectEditMode'
-	projects.forEach(project => {
+	projectsEditMode.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 }
 
-function deleteModalGalleryProject(){
-	console.log("here");
+
+function deleteModalGalleryProject(projectIdToDelete){
+	console.log("Delete project number " + projectIdToDelete + " during edit mode");
+
+	// Get the 'projectsEditMode' array from the local storage
+	const projectsEditModeJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
+	const projectsEditMode = JSON.parse(projectsEditModeJSON);						// a function
+
+	// Filter the project array with the project to delete
+	const newProjectsEditMode = projectsEditMode.filter(project => project.id != projectIdToDelete);
+
+	// Update the localStorage with the new project array
+	window.localStorage.setItem("projectsEditMode", JSON.stringify(newProjectsEditMode));
+
+	updateModalGallery();
 }
 
-function clearModalGallery(){
-	// Empty the local storage
-	window.localStorage.setItem("projectsEditMode", "");
 
+function clearModalGallery(){
 	// Empty the modal gallery HTML element
 	modalGallery.innerHTML = "";
 }
@@ -236,7 +254,7 @@ function createModalGalleryProject(project){
 	newProjectElementEdit.innerText = "éditer";
 
 	// Create 'Delete Project' button
-	newProjectElement.appendChild(createDeleteButton());
+	newProjectElement.appendChild(createDeleteButton(project.id));
 
 	newProjectElement.appendChild(newProjectImg);
 	newProjectElement.appendChild(newProjectElementEdit);
@@ -244,7 +262,7 @@ function createModalGalleryProject(project){
 	return newProjectElement;
 }
 
-function createDeleteButton(){
+function createDeleteButton(projectId){
 	// Create delete button background element
 	const newDeleteButton = document.createElement("div");
 	newDeleteButton.classList.add("delete-icon-bkg");
@@ -255,7 +273,7 @@ function createDeleteButton(){
 
 	newDeleteButton.addEventListener('click', function(){
 		//console.log("'Delete project' button clicked !");
-		deleteModalGalleryProject();
+		deleteModalGalleryProject(projectId);
 	}, false);
 
 	newDeleteButton.appendChild(newDeleteButtonIcon);
