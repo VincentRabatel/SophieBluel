@@ -1,36 +1,65 @@
 /*************************** LOG IN STATUS ***************************/
-// First check when loading the page
-checkLogInStatus();
-
 // Check the loggin status
-function checkLogInStatus(){
+export function checkLogInStatus(){
 	const logInStatus = window.localStorage.getItem("logInStatus");
-	const editModeblocks = fetchEditModeObjects();
-
-	updateEditModeBlocks(logInStatus, editModeblocks);
+	return logInStatus;
 }
 
-// Return all HTML blocks affected by Edit Mode status
-function fetchEditModeObjects(){
-	const editModeblocks = document.querySelectorAll(".edit-block");
-	return editModeblocks;
+/***************************** EDIT MODE ******************************/
+// Initialize edit mode
+export function initEditMode(){
+	const editModeElements = fetchEditModeElements();
+	updateEditModeElements(true, editModeElements);
 }
 
-// Update CCS classes of Edit Mode blocks depending of Log in status 
-function updateEditModeBlocks(logInStatus, editModeblocks){
-	if(logInStatus == "true"){
+// Return all HTML elements affected by Edit Mode status
+function fetchEditModeElements(){
+	const editModeElements = document.querySelectorAll(".edit-block");
+	return editModeElements;
+}
+
+// Update CCS classes of Edit Mode elements depending of Log in status 
+function updateEditModeElements(logInStatus, editModeElements){
+	if(logInStatus == true){
 		//console.log("Logged in !");
-		editModeblocks.forEach(block => {
-			block.classList.remove("edit-hidden");
+		editModeElements.forEach(element => {
+			showElement(element);
 		});
 
 	} else {
 		//console.log("User not logged in yet");
-		editModeblocks.forEach(block => {
-			block.classList.add("edit-hidden");
+		editModeElements.forEach(element => {
+			hideElement(element);
 		});
 	}
 }
+
+function showElement(element){
+    element.classList.remove("edit-hidden");
+}
+
+function hideElement(element){
+    element.classList.add("edit-hidden");
+}
+
+/**************************** EDIT TOP BAR *****************************/
+// Get 'publish' button element
+const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
+
+// Create event listener for top bar 'publish' button
+publishButtonElement.addEventListener('click', function(){
+    console.log("Publish button clicked !");
+}, false);
+
+
+/**************************** EDIT BUTTON ******************************/
+const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
+
+editButtonElement.addEventListener('click', function(){
+    //console.log("Edit button clicked !");
+    const modal = document.querySelector(".modal-container");
+    showElement(modal);
+}, false);
 
 // Clear all local storage (for debug)
 //clearLocalStorage();
@@ -144,31 +173,3 @@ function createModalGalleryProject(project){
 
 	return newProjectElement;
 }
-
-
-/**************************** EDIT TOP BAR *****************************/
-// Get 'publish' button element
-const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
-
-// Create event listener for top bar 'publish' button
-publishButtonElement.addEventListener('click', function(){
-    console.log("Publish button clicked !");
-}, false);
-
-function showElement(element){
-    element.classList.remove("edit-hidden");
-}
-
-function hideElement(element){
-    element.classList.add("edit-hidden");
-}
-
-
-/**************************** EDIT BUTTON ******************************/
-const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
-
-editButtonElement.addEventListener('click', function(){
-    //console.log("Edit button clicked !");
-    const modal = document.querySelector(".modal-container");
-    showElement(modal);
-}, false);
