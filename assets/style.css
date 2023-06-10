@@ -507,6 +507,30 @@ footer nav ul {
 	font-weight: 400;
 }
 
+.modal-gallery-project .delete-icon-bkg {
+	width: 17px; height: 17px;
+
+	position: relative;
+	top: 22px; right: -55px;
+
+	background: #000000;
+	border-radius: 2px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+}
+
+.modal-gallery-project .delete-icon-bkg i {
+	color: #FFFFFF;
+	font-size: 9px;
+}
+
+.modal-gallery-project .move-icon {
+	/* TO DO */
+}
 
 /* Modal window titles */
 .modal h2 {

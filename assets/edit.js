@@ -158,7 +158,7 @@ function initModalCloseButton(){
 // Initialize 'add project' modal button
 function initModalAddProjectButton(){
 	// Get modal window's 'add project' button element
-    const addProjectButton = document.querySelector('input[value="Ajouter une photo"]'); console.log(addProjectButton);
+    const addProjectButton = document.querySelector('input[value="Ajouter une photo"]'); //console.log(addProjectButton);
 
     addProjectButton.addEventListener('click', function(){
 		//console.log("'Add project' button clicked !");
@@ -172,7 +172,7 @@ function initModalAddProjectButton(){
 // Initialize 'delete gallery' modal button
 function initModalDeleteGalleryButton(){
 	// Get modal window's 'delete gallery' button element
-    const deleteGalleryButton = document.querySelector('input[value="Supprimer la galerie"]'); console.log(deleteGalleryButton);
+    const deleteGalleryButton = document.querySelector('input[value="Supprimer la galerie"]'); //console.log(deleteGalleryButton);
 
     deleteGalleryButton.addEventListener('click', function(){
 		//console.log("'Delete gallery' button clicked !");
@@ -209,6 +209,10 @@ function updateModalGallery(){
 	})
 }
 
+function deleteModalGalleryProject(){
+	console.log("here");
+}
+
 function clearModalGallery(){
 	// Empty the local storage
 	window.localStorage.setItem("projectsEditMode", "");
@@ -231,10 +235,32 @@ function createModalGalleryProject(project){
 	const newProjectElementEdit = document.createElement("span");
 	newProjectElementEdit.innerText = "éditer";
 
+	// Create 'Delete Project' button
+	newProjectElement.appendChild(createDeleteButton());
+
 	newProjectElement.appendChild(newProjectImg);
 	newProjectElement.appendChild(newProjectElementEdit);
 
 	return newProjectElement;
+}
+
+function createDeleteButton(){
+	// Create delete button background element
+	const newDeleteButton = document.createElement("div");
+	newDeleteButton.classList.add("delete-icon-bkg");
+
+	// Create delete button icon element
+	const newDeleteButtonIcon = document.createElement("i");
+	newDeleteButtonIcon.classList.add("fa-solid", "fa-trash-can");
+
+	newDeleteButton.addEventListener('click', function(){
+		//console.log("'Delete project' button clicked !");
+		deleteModalGalleryProject();
+	}, false);
+
+	newDeleteButton.appendChild(newDeleteButtonIcon);
+
+	return newDeleteButton;
 }
 
 // Clear all local storage (for debug)
