@@ -4,23 +4,19 @@ const filtersElement = document.querySelector(".filters");
 
 /************************** PROJECTS FETCH **************************/
 async function fetchProjects(){
-	console.log("Fetching projects form the API...");
+	//console.log("Fetching projects form the API...");
 	const projectsResponse = await fetch("http://localhost:5678/api/works");
-	const projects = await projectsResponse.json(); 
-	//let displayedProjects = projects; // DEPRECATED ?
+	const projects = await projectsResponse.json(); //console.log(projects);
 	
-	console.log(projects);
 	return projects;
 }
 
 /************************** CATEGORIES FETCH **************************/
 async function fetchCategories(){
-	console.log("Fetching categories form the API...");
+	//console.log("Fetching categories form the API...");
 	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-	const categories = await categoriesResponse.json(); 
-	//const filters = []; // DEPRECATED ?
+	const categories = await categoriesResponse.json(); //console.log(categories);
 
-	console.log(categories);
 	return categories;
 }
 

@@ -38,6 +38,7 @@ function clearLocalStorage(){
 	window.localStorage.clear();
 }
 
+
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
 const modal = document.querySelector(".modal-container"); //console.log(modal);
@@ -146,7 +147,7 @@ function initModalGalleryProject(project){
 
 /**************************** EDIT TOP BAR *****************************/
 // Get 'publish' button element
-const publishButtonElement = document.querySelector(".publish-button"); console.log(publishButtonElement);
+const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
 
 // Create event listener for top bar 'publish' button
 publishButtonElement.addEventListener('click', function(){
@@ -163,7 +164,7 @@ function hideElement(element){
 
 
 /**************************** EDIT BUTTON ******************************/
-const editButtonElement = document.querySelector(".edit-button"); console.log(editButtonElement);
+const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
 
 editButtonElement.addEventListener('click', function(){
     //console.log("Edit button clicked !");
