@@ -49,6 +49,7 @@ let modalId = 0;
 export function initModal(){
     initModalPreviousButtonElement();
     initModalCloseButtonElement();
+	initModalGallery();
 
     openModal();
 }
@@ -87,7 +88,6 @@ function initModalPreviousButtonElement(){
     }, false);
 }
 
-
 // Get top 'previous' modal button => USELESS RIGHT NOW //
 // function getModalPreviousButtonElement(){
 //     const previousButtonElement = document.querySelector(".back-button"); //console.log(previousButtonElement);
@@ -116,16 +116,17 @@ function initModalCloseButtonElement(){
 
 
 /*************************** MODAL GALLERY ***************************/
-export function initModalGallery(projects){
-	projects.forEach(project => {
-		//projectImagesURLs.push(project.imageUrl);
+export function initModalGallery(){
+	const projectsJSON = window.localStorage.getItem("projects");
+	const projects = JSON.parse(projectsJSON);
 
-		modalGallery.appendChild(initModalGalleryProject(project));
+	projects.forEach(project => {
+		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 }
 
 
-function initModalGalleryProject(project){
+function createModalGalleryProject(project){
 	// Create container element
 	const newProjectElement = document.createElement("figure");
 	newProjectElement.classList.add("modal-gallery-project");
