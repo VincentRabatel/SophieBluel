@@ -84,9 +84,12 @@ const modalGallery = document.querySelector(".modal-galery"); //console.log(moda
 let modalId = 0;
 
 export function initModal(){
-    initModalPreviousButtonElement();
-    initModalCloseButtonElement();
+    initModalPreviousButton();
+    initModalCloseButton();
+	
 	initModalGallery();
+	initModalAddProjectButton();
+	initModalDeleteGalleryButton();
 }
 
 function openModal(){
@@ -113,12 +116,12 @@ function previousModal(){
 
 /************************ PREVIOUS MODAL BUTTON *************************/
 // Initialize top 'previous' modal button
-function initModalPreviousButtonElement(){
+function initModalPreviousButton(){
 	// Get modal window's 'previous' button element
     const previousButton = document.querySelector(".back-button"); //console.log(previousButtonElement);
 
     previousButton.addEventListener('click', function(){
-        //console.log("Previous button clicked !");
+        //console.log("'Previous button' clicked !");
         previousModal();
     }, false);
 }
@@ -133,12 +136,12 @@ function initModalPreviousButtonElement(){
 
 /************************** CLOSE MODAL BUTTON **************************/
 // Initialize top 'close' modal button
-function initModalCloseButtonElement(){
+function initModalCloseButton(){
 	// Get modal window's 'close' button element
     const closeButton = document.querySelector(".close-button"); //console.log(closeButtonElement);
 
     closeButton.addEventListener('click', function(){
-        //console.log("Close button clicked !");
+        //console.log("'Close button' clicked !");
         closeModal();
     }, false);
 }
@@ -149,6 +152,33 @@ function initModalCloseButtonElement(){
 //     return closeButtonElement;
 // }
 
+
+
+/************************** ADD PROJECT BUTTON **************************/
+// Initialize 'add project' modal button
+function initModalAddProjectButton(){
+	// Get modal window's 'add project' button element
+    const addProjectButton = document.querySelector('input[value="Ajouter une photo"]'); console.log(addProjectButton);
+
+    addProjectButton.addEventListener('click', function(){
+		//console.log("'Add project' button clicked !");
+		// TO DO
+    }, false);
+}
+
+
+
+/************************** DELETE GALLERY BUTTON **************************/
+// Initialize 'delete gallery' modal button
+function initModalDeleteGalleryButton(){
+	// Get modal window's 'delete gallery' button element
+    const deleteGalleryButton = document.querySelector('input[value="Supprimer la galerie"]'); console.log(deleteGalleryButton);
+
+    deleteGalleryButton.addEventListener('click', function(){
+		//console.log("'Delete gallery' button clicked !");
+		// TO DO
+    }, false);
+}
 
 
 /*************************** MODAL GALLERY ***************************/
