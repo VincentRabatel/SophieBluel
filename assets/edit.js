@@ -57,15 +57,8 @@ const editButtonElement = document.querySelector(".edit-button"); //console.log(
 
 editButtonElement.addEventListener('click', function(){
     //console.log("Edit button clicked !");
-    const modal = document.querySelector(".modal-container");
-    showElement(modal);
+    openModal();
 }, false);
-
-// Clear all local storage (for debug)
-//clearLocalStorage();
-function clearLocalStorage(){
-	window.localStorage.clear();
-}
 
 
 /**************************** MODAL WINDOW *****************************/
@@ -79,18 +72,15 @@ export function initModal(){
     initModalPreviousButtonElement();
     initModalCloseButtonElement();
 	initModalGallery();
-
-    openModal();
 }
 
 function openModal(){
-
+	showElement(modal);
     modalId = 1;
 }
 
 function closeModal(){
-    hideElement(modal); // TO RE-CONNECT
-
+    hideElement(modal);
     modalId = 0;
 }
 
@@ -172,4 +162,10 @@ function createModalGalleryProject(project){
 	newProjectElement.appendChild(newProjectElementEdit);
 
 	return newProjectElement;
+}
+
+// Clear all local storage (for debug)
+//clearLocalStorage();
+function clearLocalStorage(){
+	window.localStorage.clear();
 }
