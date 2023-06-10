@@ -5,9 +5,14 @@ export function checkLogInStatus(){
 	return logInStatus;
 }
 
+
+
 /***************************** EDIT MODE ******************************/
-// Initialize edit mode
+// Initialize edit mode if user logged in
 export function initEditMode(){
+	initPublishButton();
+	initEditButton();
+	
 	const editModeElements = fetchEditModeElements();
 	updateEditModeElements(true, editModeElements);
 }
@@ -42,23 +47,33 @@ function hideElement(element){
     element.classList.add("edit-hidden");
 }
 
-/**************************** EDIT TOP BAR *****************************/
-// Get 'publish' button element
-const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
 
-// Create event listener for top bar 'publish' button
-publishButtonElement.addEventListener('click', function(){
-    console.log("Publish button clicked !");
-}, false);
+
+/**************************** EDIT TOP BAR *****************************/
+function initPublishButton(){
+	// Get 'publish' button element
+	const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
+
+	// Create event listener for top bar 'publish' button
+	publishButtonElement.addEventListener('click', function(){
+		console.log("Publish button clicked !");
+	}, false);
+}
+
 
 
 /**************************** EDIT BUTTON ******************************/
-const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
+function initEditButton(){
+	// Get 'publish' button element
+	const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
 
-editButtonElement.addEventListener('click', function(){
-    //console.log("Edit button clicked !");
-    openModal();
-}, false);
+	// Create event listener for 'edit' button
+	editButtonElement.addEventListener('click', function(){
+		//console.log("Edit button clicked !");
+		openModal();
+	}, false);
+}
+
 
 
 /**************************** MODAL WINDOW *****************************/
@@ -85,12 +100,12 @@ function closeModal(){
 }
 
 function nextModal(){
-
+	// to do
     modalId += 1;
 }
 
 function previousModal(){
-    
+    // to do
     modalId -= 1;
 }
 
@@ -99,6 +114,7 @@ function previousModal(){
 /************************ PREVIOUS MODAL BUTTON *************************/
 // Initialize top 'previous' modal button
 function initModalPreviousButtonElement(){
+	// Get modal window's 'previous' button element
     const previousButton = document.querySelector(".back-button"); //console.log(previousButtonElement);
 
     previousButton.addEventListener('click', function(){
@@ -107,7 +123,7 @@ function initModalPreviousButtonElement(){
     }, false);
 }
 
-// Get top 'previous' modal button => USELESS RIGHT NOW //
+// Get modal window's 'previous' button element => USELESS RIGHT NOW //
 // function getModalPreviousButtonElement(){
 //     const previousButtonElement = document.querySelector(".back-button"); //console.log(previousButtonElement);
 //     return previousButtonElement;
@@ -118,6 +134,7 @@ function initModalPreviousButtonElement(){
 /************************** CLOSE MODAL BUTTON **************************/
 // Initialize top 'close' modal button
 function initModalCloseButtonElement(){
+	// Get modal window's 'close' button element
     const closeButton = document.querySelector(".close-button"); //console.log(closeButtonElement);
 
     closeButton.addEventListener('click', function(){
@@ -126,7 +143,7 @@ function initModalCloseButtonElement(){
     }, false);
 }
 
-// Get top 'close' modal button => USELESS RIGHT NOW
+// Get modal window's 'close' button element => USELESS RIGHT NOW
 // function getModalCloseButtonElement(){
 //     const closeButtonElement = document.querySelector(".close-button"); //console.log(closeButtonElement);
 //     return closeButtonElement;
@@ -136,8 +153,8 @@ function initModalCloseButtonElement(){
 
 /*************************** MODAL GALLERY ***************************/
 export function initModalGallery(){
-	const projectsJSON = window.localStorage.getItem("projects");
-	const projects = JSON.parse(projectsJSON);
+	const projectsJSON = window.localStorage.getItem("projects");	// to do : maybe this should be
+	const projects = JSON.parse(projectsJSON);						// a function
 
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
