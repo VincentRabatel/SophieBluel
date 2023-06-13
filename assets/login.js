@@ -40,8 +40,3 @@ async function logInSubmit(logInInfo){
         break;
     }
 }
-
-// let user = {
-//     email: 'sophie.bluel@test.tld',
-//     password: 'S0phie'
-// };
