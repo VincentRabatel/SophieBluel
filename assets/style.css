@@ -173,6 +173,17 @@ li:hover {
 	background-color: #0E2F28;
 }
 
+.rnd-green-button--locked {
+	color: #FFFFFF;
+	background-color: #A7A7A7;
+
+	cursor: default;
+}
+
+.rnd-green-button--locked:hover {
+	color: #FFFFFF;
+	background-color: #A7A7A7;
+}
 
 /************************** PORTFOLIO H **************************/
 .portfolio__header {
@@ -569,13 +580,6 @@ footer nav ul {
 	margin : 38px auto 0px auto;
 }
 
-.modal input[value="Valider"] {
-	height: 36px;
-	width: 237px;
-
-	margin : 38px auto 55px auto;
-}
-
 /* Delete the gallery */
 .modal input[value="Supprimer la galerie"] {
 	height: 17px;
@@ -670,6 +674,13 @@ input[type="file"] {
 
 .modal-add-project select {
 	margin-bottom: 47px;
+}
+
+.modal input[value="Valider"] {
+	height: 36px;
+	width: 237px;
+
+	margin : 38px auto 55px auto;
 }
 
 /* TODO: NOT WORKING */

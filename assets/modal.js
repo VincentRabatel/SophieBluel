@@ -21,9 +21,7 @@ export function initModal(){
     // Modal window second step
     initModalAddProject();
     initModalValidateButton();
-    
-    initNewProjectPictureInput();
-    initNewProjectCategoryInput();
+    initNewProjectForm();
 }
 
 export function openModal(){
@@ -143,30 +141,50 @@ function initModalValidateButton(){
     }, false);
 }
 
+function initNewProjectForm(){
+    initNewProjectPictureInput();
+    iniNewProjectTitleInput();
+    initNewProjectCategoryInput();
+}
+
 // Initialize 'new project picture' input
 function initNewProjectPictureInput(){
-    const newPictureInput = document.querySelector("#picture");
+    const newPictureInput = document.querySelector("#newPicture");
     const newPictureInputDefault = document.querySelector(".input-file-default");
     const newPictureInputImg = document.querySelector(".input-file-img");
     showElement(newPictureInputDefault);
     hideElement(newPictureInputImg);
 
     newPictureInput.addEventListener('change', function(){
-        const newFile = newPictureInput.files[0]; console.log(newFile);
+        const newFile = newPictureInput.files[0]; //console.log(newFile);
         newPictureInputImg.src = URL.createObjectURL(newFile);
 
         showElement(newPictureInputImg);
         hideElement(newPictureInputDefault);
+
+        checkNewProjectValidity();
     }, false);
 }
 
-// Initialize 'new project category input'
-function initNewProjectCategoryInput(){
-    const newCategoryInput = document.querySelector("#category");
+// Initialize 'new project title' input
+function iniNewProjectTitleInput(){
+    const newTitleInput = document.querySelector("#newTitle");
 
+    newTitleInput.addEventListener('input', function(){
+        checkNewProjectValidity();
+    }, false);
+}
+
+// Initialize 'new project category' input
+function initNewProjectCategoryInput(){
+    // Get the category input element
+    const newCategoryInput = document.querySelector("#category");
+    
+    // Fetch categories in the localStorage
 	const categoriesJSON = window.localStorage.getItem("categories");				// to do : maybe this should be
 	const categories = JSON.parse(categoriesJSON);									// a function
 
+    // Fill the category input with the one option for each category
     categories.forEach(category => {
         const newOption = document.createElement("option");
         newOption.value = category.name;
@@ -174,6 +192,36 @@ function initNewProjectCategoryInput(){
 
         newCategoryInput.appendChild(newOption);
     })
+}
+
+function checkNewProjectValidity(){
+    const newPictureInput = document.querySelector("#newPicture"); console.log(newPictureInput.files[0]);
+    const newPictureInputImg = document.querySelector(".input-file-img"); console.log(newPictureInputImg);
+    const newTitleInput = document.querySelector("#newTitle")
+
+    // console.log("Checking the new img validity...")
+    // if(newPictureInput.files[0]){
+    //     console.log("New img is valid and file is " + newPictureInput.files[0]);
+    // } else {
+    //     console.log("New img isn't valid and file is " + newPictureInput.files[0]);
+    // }
+
+    // console.log("Checking the new title validity...")
+    // if(newTitleInput.value){
+    //     console.log("New title is valid and text is " + newTitleInput.value);
+    // } else {
+    //     console.log("New title isn't valid and text is " + newTitleInput.value);
+    // }
+
+    if(newPictureInput.files[0] && newTitleInput.value){
+        //console.log("New project is valid");
+
+        validateProjectButton.classList.remove("rnd-green-button--locked");
+    } else {
+        //console.log("New project isn't valid yet");
+
+        validateProjectButton.classList.add("rnd-green-button--locked");
+    }
 }
 
 /************************ DELETE GALLERY BUTTON **************************/

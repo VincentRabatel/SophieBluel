@@ -140,7 +140,7 @@
 
 					<form action="#" method="post">
 						<!-- New project's picture file input -->
-						<label class="input-file" for="picture">
+						<label class="input-file" for="newPicture">
 							<div class="input-file-default">
 								<img class="input-file-bkg" src="./assets/vectors/frame.svg" alt="">
 								<h3>+ Ajouter une photo</h3>
@@ -148,11 +148,11 @@
 							</div>
 							<img class="input-file-img" src="" alt="">
 						</label>
-						<input type="file" name="picture" id="picture" accept=".jpg,.png">
+						<input type="file" name="picture" id="newPicture" accept=".jpg,.png">
 
 						<!-- New project's title input -->
 						<label for="title">Titre</label>
-						<input type="text" name="title" id="title">
+						<input type="text" name="title" id="newTitle">
 
 						<!-- New project's category input -->
 						<label for="category">Categorie</label>
@@ -162,7 +162,7 @@
 					
 						<div class="grey-line"></div>
 
-						<input type="submit" value="Valider" class="rnd-green-button">
+						<input type="submit" value="Valider" disabled class="rnd-green-button rnd-green-button--locked">
 					</form>
 				</div>
 
