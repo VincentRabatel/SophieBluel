@@ -278,12 +278,35 @@ form {
 	margin-bottom: 37px;
 }
 
+/*** Forms' labels ***/
+form label {
+	text-align: left;
+	margin-bottom: 7px;
+}
+
 /*** Forms' inputs ***/
-form input {
-	height: 50px;
-	font-size: 1.2em;
+form input, form select, form textarea {
+	height: 51px;
+
+	font-size: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans';
+	color: #444444;
+
 	border: none;
+	background-color: #FFFFFF;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+/*** Forms' text areas ***/
+form textarea {
+	height: 174px;
+
+	padding: 16px;
+	resize: none;
 }
 
 #contact input {
@@ -294,19 +317,6 @@ form input {
 	margin-bottom: 30px;
 }
 
-/*** Forms' labels ***/
-form label {
-	text-align: left;
-	margin-bottom: 7px;
-}
-
-/*** Forms' text areas ***/
-textarea {
-	min-width: 379px;
-	max-width: 379px;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
 
 /*** Submit inputs ***/
 #contact .rnd-green-button {
@@ -456,7 +466,7 @@ footer nav ul {
 }
 
 
-/* Modal window top buttons */
+/*** Modal window  buttons ***/
 .modal .back-button {
 	position: absolute;
 	top: 35px; left: 35px;
@@ -477,7 +487,7 @@ footer nav ul {
 	cursor: pointer;
 }
 
-/* Modal window galery */
+/**** Modal window galery ****/
 .modal-galery {
 	width: 430px;
 
@@ -551,10 +561,10 @@ footer nav ul {
 	border-top: 1px solid #B3B3B3;
 }
 
-/* Modal form to add a picture to the gallery */
-.modal form {
+/***  ***/
+/* .modal form {
 	align-items: flex-end;
-}
+} */
 
 .modal input[value="Ajouter une photo"] {
 	height: 36px;
@@ -582,7 +592,80 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/**** Modal form to add a picture to the galery ****/
+.modal-add-project form {
 
+}
+
+/* Note : it's difficult to style a input type=file directly in CSS
+so we hide it and style the label instead */
+input[type="file"] {
+	display: none;
+}
+
+.modal-add-project .input-file {
+	width: 420px;
+	height: 169px;
+
+	background: #E8F1F7;
+	border: none;
+	border-radius: 3px;
+
+	margin-bottom: 30px;
+	cursor: pointer;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-add-project .input-file img {
+	width: 58px;
+	height: 46px;
+	color: #B9C5CC;
+	margin-bottom: 21px;
+}
+
+.modal-add-project .input-file h3 {
+	color: #306685;
+	font-size: 14px;
+	font-weight: 500;
+	font-family: 'Work Sans';
+
+	padding: 10px 33px;
+	border-radius: 50px;
+	background-color: #CBD6DC;
+
+	margin-bottom: 7px;
+}
+
+.modal-add-project .input-file span {
+	font-family: 'Work Sans';
+	font-size: 10px;
+	font-weight: 400;
+}
+
+
+.modal-add-project input[type="text"] {
+	margin-bottom: 21px;
+}
+
+.modal-add-project select {
+	margin-bottom: 47px;
+}
+
+/* TODO: NOT WORKING */
+.modal-add-project option {
+	font-family: 'Work Sans';
+	font-size: 14px;
+
+	color: #444444;
+	padding-left: 16px;
+	padding-right: 16px;
+
+	border-radius: none;
+}
 
 .edit-hidden {
 	display: none;

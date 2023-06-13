@@ -138,18 +138,22 @@
 						<i class="fa-solid fa-arrow-left-long"></i>
 					</button>
 
-					<form action="" method="post">
-						<label for="picture">Ajouter une photo</label>
+					<form action="#" method="post">
+						<label class="input-file" for="picture">
+							<img src="./assets/vectors/frame.svg" alt="">
+							<h3>+ Ajouter une photo</h3>
+							<span>jpg, png : 4mo max</span>
+						</label>
 						<input type="file" id="picture" name="picture">
 
 						<label for="title">Titre</label>
 						<input type="text" name="title" id="title">
 
 						<label for="category">Categorie</label>
-						<select type="dropdown" name="category" id="category">
+						<select name="category" id="category">
 							<!-- Different categories options added by JavaScript here -->
-							<option value="test-1">Test 1</option>
-							<option value="test-2">Test 2</option>	
+							<option value="test-1">Test 1</option> <!-- Temporary debug -->
+							<option value="test-2">Test 2</option> <!-- Temporary debug -->
 						</select>
 					</form>
 				</div>
