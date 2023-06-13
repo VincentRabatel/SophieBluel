@@ -618,16 +618,29 @@ input[type="file"] {
 	cursor: pointer;
 
 	display: flex;
+	justify-content: center;
+}
+
+.input-file-default {
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
 
-.modal-add-project .input-file img {
+.modal-add-project .input-file .input-file-bkg {
 	width: 58px;
 	height: 46px;
 	color: #B9C5CC;
 	margin-bottom: 21px;
+}
+
+.modal-add-project .input-file .input-file-img {
+	position: absolute;
+
+	width: inherit;
+	height: inherit;
+	object-fit: contain;
 }
 
 .modal-add-project .input-file h3 {

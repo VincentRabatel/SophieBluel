@@ -13,11 +13,16 @@ export function initModal(){
     initModalPreviousButton();
     initModalCloseButton();
 	
+    // Modal window first step
 	initModalGallery();
-    initModalAddProject();
-
 	initModalAddProjectButton();
 	initModalDeleteGalleryButton();
+
+    // Modal window second step
+    initModalAddProject();
+    initModalValidateButton();
+    
+    initNewProjectPictureInput();
 }
 
 export function openModal(){
@@ -114,7 +119,11 @@ function initModalCloseButton(){
 }
 
 
-/************************** ADD PROJECT BUTTON **************************/
+/************************** MODAL ADD PROJECT **************************/
+function initModalAddProject(){
+    hideElement(modalAddProject);
+}
+
 // Initialize 'add project' modal button
 function initModalAddProjectButton(){
     addProjectButton.addEventListener('click', function(){
@@ -124,8 +133,7 @@ function initModalAddProjectButton(){
     }, false);
 }
 
-/*************************** VALIDATE BUTTON ***************************/
-// Initialize 'add project' modal button
+// Initialize 'validate project' modal button
 function initModalValidateButton(){
     validateProjectButton.addEventListener('click', function(){
 
@@ -133,6 +141,24 @@ function initModalValidateButton(){
         
     }, false);
 }
+
+// Initialize 'new project picture' input
+function initNewProjectPictureInput(){
+    const newPictureInput = document.querySelector("#picture");
+    const newPictureInputDefault = document.querySelector(".input-file-default");
+    const newPictureInputImg = document.querySelector(".input-file-img");
+    showElement(newPictureInputDefault);
+    hideElement(newPictureInputImg);
+
+    newPictureInput.addEventListener('change', function(){
+        const newFile = newPictureInput.files[0]; console.log(newFile);
+        newPictureInputImg.src = URL.createObjectURL(newFile);
+
+        showElement(newPictureInputImg);
+        hideElement(newPictureInputDefault);
+    }, false);
+}
+
 
 /************************ DELETE GALLERY BUTTON **************************/
 // Initialize 'delete gallery' modal button
@@ -146,13 +172,6 @@ function initModalDeleteGalleryButton(){
 		clearModalGallery();
     }, false);
 }
-
-
-/************************* MODAL ADD PROJECT *************************/
-function initModalAddProject(){
-    hideElement(modalAddProject);
-}
-
 
 
 /*************************** MODAL GALLERY ***************************/

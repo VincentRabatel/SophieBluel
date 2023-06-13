@@ -11,7 +11,7 @@
 
 		<!-- Link to JavaScript script -->
 		<script type="module" src="./main.js"></script>
-		<script type="module" src="./assets/edit.js"></script>
+		<!-- <script type="module" src="./assets/edit.js"></script> -->
 		<!-- <script type="module" src="./assets/gallery.js"></script> -->
 
 		<!-- Link to Google Font - Syne - Work Sans -->
@@ -126,7 +126,7 @@
 				</button>
 
 				<h2 class="modal-title">
-					<!-- Title text sadded by JavaScript here -->
+					<!-- Title text added by JavaScript here -->
 				</h2>
 
 				<div class="modal-galery">
@@ -139,22 +139,32 @@
 					</button>
 
 					<form action="#" method="post">
+						<!-- New project's picture file input -->
 						<label class="input-file" for="picture">
-							<img src="./assets/vectors/frame.svg" alt="">
-							<h3>+ Ajouter une photo</h3>
-							<span>jpg, png : 4mo max</span>
+							<div class="input-file-default">
+								<img class="input-file-bkg" src="./assets/vectors/frame.svg" alt="">
+								<h3>+ Ajouter une photo</h3>
+								<span>jpg, png : 4mo max</span>
+							</div>
+							<img class="input-file-img" src="" alt="">
 						</label>
-						<input type="file" id="picture" name="picture">
+						<input type="file" name="picture" id="picture" accept=".jpg,.png">
 
+						<!-- New project's title input -->
 						<label for="title">Titre</label>
 						<input type="text" name="title" id="title">
 
+						<!-- New project's category input -->
 						<label for="category">Categorie</label>
 						<select name="category" id="category">
 							<!-- Different categories options added by JavaScript here -->
 							<option value="test-1">Test 1</option> <!-- Temporary debug -->
 							<option value="test-2">Test 2</option> <!-- Temporary debug -->
 						</select>
+					
+						<div class="grey-line"></div>
+
+						<input type="submit" value="Valider" class="rnd-green-button">
 					</form>
 				</div>
 
@@ -163,10 +173,6 @@
 				<form action="#" method="post">
 					<input type="button" value="Ajouter une photo" class="rnd-green-button">
 					<input type="button" value="Supprimer la galerie">
-				</form>
-
-				<form action="#" method="post">
-					<input type="button" value="Valider" class="rnd-green-button">
 				</form>
 			</div>
 		</div>
