@@ -39,4 +39,6 @@ async function logInSubmit(logInInfo){
             window.alert("User not found");
         break;
     }
+
+    // to do : store the token auth
 }

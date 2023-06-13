@@ -51,7 +51,7 @@ export function getProjects(){
 // Get the 'projectsDisplayed' array from the local storage
 // Return a list of all displayed projects in the main gallery (a filter is applied)
 export function getProjectsDisplayed(){
-	const projectsDisplayedJSON = window.localStorage.getItem("projectsDisplayed");	//	To do : rename displayedProject to
+	const projectsDisplayedJSON = window.localStorage.getItem("projectsDisplayed");	// To do : rename displayedProject to
 	const projectsDisplayed = JSON.parse(projectsDisplayedJSON);					// projectsDisplayed in gallery.js
 
     return projectsDisplayed;
@@ -65,4 +65,24 @@ export function getProjectsEditMode(){
 
     return projectsEditMode;
 }
-	
+
+
+
+
+
+
+
+
+
+
+// Get modal window's 'previous' button element => USELESS RIGHT NOW //
+// function getModalPreviousButtonElement(){
+//     const previousButtonElement = document.querySelector(".back-button"); //console.log(previousButtonElement);
+//     return previousButtonElement;
+// }
+
+// Get modal window's 'close' button element => USELESS RIGHT NOW
+// function getModalCloseButtonElement(){
+//     const closeButtonElement = document.querySelector(".close-button"); //console.log(closeButtonElement);
+//     return closeButtonElement;
+// }

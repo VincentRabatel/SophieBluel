@@ -6,7 +6,8 @@ initGallery();
 const logInStatus = checkLogInStatus();
 
 // Initialization of 'Edit Mode' if user is logged in
-import { checkLogInStatus, initEditMode, initModal } from "./assets/edit.js";
+import { checkLogInStatus, initEditMode } from "./assets/edit.js";
+import { initModal } from "./assets/modal.js";
 if (logInStatus){
     initEditMode();
     initModal();
