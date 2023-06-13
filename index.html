@@ -121,21 +121,37 @@
 			
 			<!-- Modal - Gallery -->
 			<div class="modal">
-
-				<button class="back-button edit-hidden" type="button">
-					<i class="fa-solid fa-arrow-left-long"></i>
-				</button>
-
 				<button class="close-button" type="button">
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 
-				<h2>
-					Galerie photo
+				<h2 class="modal-title">
+					<!-- Title text sadded by JavaScript here -->
 				</h2>
 
 				<div class="modal-galery">
 					<!-- Modal gallery projects added by JavaScript here -->
+				</div>
+
+				<div class="modal-add-project">
+					<button class="back-button" type="button">
+						<i class="fa-solid fa-arrow-left-long"></i>
+					</button>
+
+					<form action="" method="post">
+						<label for="picture">Ajouter une photo</label>
+						<input type="file" id="picture" name="picture">
+
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title">
+
+						<label for="category">Categorie</label>
+						<select type="dropdown" name="category" id="category">
+							<!-- Different categories options added by JavaScript here -->
+							<option value="test-1">Test 1</option>
+							<option value="test-2">Test 2</option>	
+						</select>
+					</form>
 				</div>
 
 				<div class="grey-line"></div>
@@ -145,12 +161,8 @@
 					<input type="button" value="Supprimer la galerie">
 				</form>
 			</div>
-
-			<!-- Modal - Add a project -->
-			<div>
-
-			</div>
-
 		</div>
+
 	</body>
+
 </html>
