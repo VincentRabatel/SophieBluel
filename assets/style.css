@@ -542,7 +542,7 @@ footer nav ul {
 	/* TO DO */
 }
 
-/* Modal window titles */
+/*** Modal window's titles ***/
 .modal h2 {
 	margin-bottom: 46px;
 
@@ -561,16 +561,19 @@ footer nav ul {
 	border-top: 1px solid #B3B3B3;
 }
 
-/***  ***/
-/* .modal form {
-	align-items: flex-end;
-} */
-
+/*** Modal window's buttons ***/
 .modal input[value="Ajouter une photo"] {
 	height: 36px;
 	width: 237px;
 
 	margin : 38px auto 0px auto;
+}
+
+.modal input[value="Valider"] {
+	height: 36px;
+	width: 237px;
+
+	margin : 38px auto 55px auto;
 }
 
 /* Delete the gallery */
@@ -644,6 +647,7 @@ input[type="file"] {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	font-weight: 400;
+	color: #444444;
 }
 
 

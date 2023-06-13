@@ -1,9 +1,13 @@
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
-const modal = document.querySelector(".modal-container"); //console.log(modal);
-const modalTitle = document.querySelector(".modal-title"); //console.log(modalTitle);
-const modalGallery = document.querySelector(".modal-galery"); //console.log(modalGallery);
-const modalAddProject = document.querySelector(".modal-add-project") //console.log(modalAddProject);
+const modal = document.querySelector(".modal-container");
+const modalTitle = document.querySelector(".modal-title");
+const modalGallery = document.querySelector(".modal-galery");
+const modalAddProject = document.querySelector(".modal-add-project");
+
+const addProjectButton = document.querySelector('input[value="Ajouter une photo"]');
+const deleteGalleryButton = document.querySelector('input[value="Supprimer la galerie"]');
+const validateProjectButton = document.querySelector('input[value="Valider"]');
 
 export function initModal(){
     initModalPreviousButton();
@@ -41,14 +45,22 @@ function updateModalContent(){
         case 1:
             showElement(modal);
             showElement(modalGallery);
+            showElement(addProjectButton);
+            showElement(deleteGalleryButton);
+
             hideElement(modalAddProject);
+            hideElement(validateProjectButton);
             modalTitle.innerText = "Galerie Photo";
             break;
     
         // Modal window is at 'add project (form is empty)' step
         case 2:
-            hideElement(modalGallery);
             showElement(modalAddProject);
+            showElement(validateProjectButton);
+
+            hideElement(modalGallery);
+            hideElement(addProjectButton);
+            hideElement(deleteGalleryButton);
             modalTitle.innerText = "Ajout photo";
             break;
 
@@ -105,9 +117,6 @@ function initModalCloseButton(){
 /************************** ADD PROJECT BUTTON **************************/
 // Initialize 'add project' modal button
 function initModalAddProjectButton(){
-	// Get modal window's 'add project' button element
-    const addProjectButton = document.querySelector('input[value="Ajouter une photo"]'); //console.log(addProjectButton);
-
     addProjectButton.addEventListener('click', function(){
 		//console.log("'Add project' button clicked !");
 		modalId += 1;
@@ -115,14 +124,19 @@ function initModalAddProjectButton(){
     }, false);
 }
 
+/*************************** VALIDATE BUTTON ***************************/
+// Initialize 'add project' modal button
+function initModalValidateButton(){
+    validateProjectButton.addEventListener('click', function(){
 
+        // TODO
+        
+    }, false);
+}
 
-/************************** DELETE GALLERY BUTTON **************************/
+/************************ DELETE GALLERY BUTTON **************************/
 // Initialize 'delete gallery' modal button
 function initModalDeleteGalleryButton(){
-	// Get modal window's 'delete gallery' button element
-    const deleteGalleryButton = document.querySelector('input[value="Supprimer la galerie"]'); //console.log(deleteGalleryButton);
-
     deleteGalleryButton.addEventListener('click', function(){
 		//console.log("'Delete gallery' button clicked !");
 
