@@ -1,4 +1,4 @@
-// Get logIn form
+// Get logIn form HTML element
 const logInForm = document.querySelector(".login-form"); // console.log(logInForm);
 
 // Add event listener to log in form

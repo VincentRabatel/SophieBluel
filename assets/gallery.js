@@ -22,19 +22,9 @@ async function fetchCategories(){
 
 
 // ----------------------------------- //
-// First initialisation of the gallery // => TODO save to local storage
+// First initialisation of the gallery //
 // ----------------------------------- //
 export async function initGallery(){
-	/* TODO : only fetch projects if there is nothing in the localStorage
-	// Try to find a project list in localStorage
-	const projectsJSON = localStorage.getItem("projects");	//console.log(projectsJSON);
-	const projects = JSON.parse(projectsJSON);
-
-	if(projects === null){
-		
-	}
-	*/
-
 	// First 'projects' fetch from the API
 	const projects = await fetchProjects();
 
@@ -66,8 +56,6 @@ export async function updateGallery(projects){
 	for(let project of projects){
 		createProjectElement(project);
 	}
-
-	window.localStorage.setItem("displayedProjects", JSON.stringify(projects));
 }
 
 
@@ -137,6 +125,8 @@ function filterGallery(filterCategoryId){
 	}
 
 	updateFilterButtonsColor(filterCategoryId);
+
+	window.localStorage.setItem("displayedProjects", JSON.stringify(displayedProjects));
 
 	updateGallery(displayedProjects);
 }

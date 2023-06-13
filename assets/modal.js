@@ -141,6 +141,8 @@ function initModalValidateButton(){
     }, false);
 }
 
+
+/************************** NEW PROJECT FORM **************************/
 function initNewProjectForm(){
     initNewProjectPictureInput();
     iniNewProjectTitleInput();
@@ -196,22 +198,7 @@ function initNewProjectCategoryInput(){
 
 function checkNewProjectValidity(){
     const newPictureInput = document.querySelector("#newPicture"); console.log(newPictureInput.files[0]);
-    const newPictureInputImg = document.querySelector(".input-file-img"); console.log(newPictureInputImg);
     const newTitleInput = document.querySelector("#newTitle")
-
-    // console.log("Checking the new img validity...")
-    // if(newPictureInput.files[0]){
-    //     console.log("New img is valid and file is " + newPictureInput.files[0]);
-    // } else {
-    //     console.log("New img isn't valid and file is " + newPictureInput.files[0]);
-    // }
-
-    // console.log("Checking the new title validity...")
-    // if(newTitleInput.value){
-    //     console.log("New title is valid and text is " + newTitleInput.value);
-    // } else {
-    //     console.log("New title isn't valid and text is " + newTitleInput.value);
-    // }
 
     if(newPictureInput.files[0] && newTitleInput.value){
         //console.log("New project is valid");
