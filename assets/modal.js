@@ -1,38 +1,70 @@
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
 const modal = document.querySelector(".modal-container"); //console.log(modal);
+const modalTitle = document.querySelector(".modal-title"); //console.log(modalTitle);
 const modalGallery = document.querySelector(".modal-galery"); //console.log(modalGallery);
-
-let modalId = 0;
+const modalAddProject = document.querySelector(".modal-add-project") //console.log(modalAddProject);
 
 export function initModal(){
     initModalPreviousButton();
     initModalCloseButton();
 	
 	initModalGallery();
+    initModalAddProject();
+
 	initModalAddProjectButton();
 	initModalDeleteGalleryButton();
 }
 
 export function openModal(){
-	showElement(modal);
     modalId = 1;
+    updateModalContent();
 }
 
 function closeModal(){
-    hideElement(modal);
     modalId = 0;
+    updateModalContent();
 }
 
-function nextModal(){
-	// to do
-    modalId += 1;
+// This variable is used to track the modal current state
+let modalId = 0;
+
+// Update the modal window's content depending of 'modalId' variable
+function updateModalContent(){
+    switch(modalId){
+        // Modal window is closed
+        case 0:
+            hideElement(modal);
+            break;
+
+        // Modal window is at 'modal gallery' step
+        case 1:
+            showElement(modal);
+            showElement(modalGallery);
+            hideElement(modalAddProject);
+            modalTitle.innerText = "Galerie Photo";
+            break;
+    
+        // Modal window is at 'add project (form is empty)' step
+        case 2:
+            hideElement(modalGallery);
+            showElement(modalAddProject);
+            modalTitle.innerText = "Ajout photo";
+            break;
+
+        // Modal window is at 'add project (form is complete)' step
+        case 3:
+
+            // TODO : back to main page, with the main gallery updated
+
+            modalTitle.innerText = "Ajout photo"
+            break;
+
+        default:
+            window.alert("We shouldn't be here");
+    }
 }
 
-function previousModal(){
-    // to do
-    modalId -= 1;
-}
 
 function showElement(element){
     element.classList.remove("edit-hidden");
@@ -51,7 +83,8 @@ function initModalPreviousButton(){
 
     previousButton.addEventListener('click', function(){
         //console.log("'Previous button' clicked !");
-        previousModal();
+        modalId -= 1;
+        updateModalContent();
     }, false);
 }
 
@@ -77,7 +110,8 @@ function initModalAddProjectButton(){
 
     addProjectButton.addEventListener('click', function(){
 		//console.log("'Add project' button clicked !");
-		// TO DO
+		modalId += 1;
+        updateModalContent();
     }, false);
 }
 
@@ -98,6 +132,13 @@ function initModalDeleteGalleryButton(){
 		clearModalGallery();
     }, false);
 }
+
+
+/************************* MODAL ADD PROJECT *************************/
+function initModalAddProject(){
+    hideElement(modalAddProject);
+}
+
 
 
 /*************************** MODAL GALLERY ***************************/
