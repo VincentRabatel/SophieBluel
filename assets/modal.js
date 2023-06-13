@@ -23,6 +23,7 @@ export function initModal(){
     initModalValidateButton();
     
     initNewProjectPictureInput();
+    initNewProjectCategoryInput();
 }
 
 export function openModal(){
@@ -159,6 +160,21 @@ function initNewProjectPictureInput(){
     }, false);
 }
 
+// Initialize 'new project category input'
+function initNewProjectCategoryInput(){
+    const newCategoryInput = document.querySelector("#category");
+
+	const categoriesJSON = window.localStorage.getItem("categories");				// to do : maybe this should be
+	const categories = JSON.parse(categoriesJSON);									// a function
+
+    categories.forEach(category => {
+        const newOption = document.createElement("option");
+        newOption.value = category.name;
+        newOption.innerText = category.name;
+
+        newCategoryInput.appendChild(newOption);
+    })
+}
 
 /************************ DELETE GALLERY BUTTON **************************/
 // Initialize 'delete gallery' modal button
