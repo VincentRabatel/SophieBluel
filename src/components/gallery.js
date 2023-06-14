@@ -33,6 +33,8 @@ export async function initGallery(){
 
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
+
+	updateFilterButtonsColor(0);
 }
 
 
@@ -54,6 +56,13 @@ function createGallery(projects){
 		createProjectElement(project);
 	}
 }
+
+
+// Get rid of everything in the gallery //
+function emptyGallery() {
+	galleryElement.innerHTML = "";
+}
+
 
 // Create a project HTML element
 function createProjectElement(project){
@@ -97,7 +106,7 @@ function filterGallery(filterCategoryId){
 
 		// If it's another filter
 		} else {
-			console.log("Filtering the gallery with projects of the category number \"" + "\" and id == " + filterCategoryId);
+			console.log("Filtering the gallery with projects of the category \"" + getCategoriesFromStorage()[filterCategoryId - 1].name + "\" and id == " + filterCategoryId);
 			// Empty the displayed project array
 			projectsDisplayed.splice(0,projectsDisplayed.length);
 
@@ -123,13 +132,11 @@ function filterGallery(filterCategoryId){
 // Generate all filters buttons with an array of categories
 function createFilters(categories){
 	// Create the first filter for all projects
-	const filterAll = createFilterButton(0, "Tous");
-	//filters.push(filterAll); // DEPRECATED ?
+	createFilterButton (0, "Tous");
 
 	// Create filters depending of the backend categories 
 	for(let category of categories){
-		const filter = createFilterButton(category.id, category.name);
-		//filters.push(filter); // DEPRECATED ?
+		createFilterButton(category.id, category.name);
 	}
 }
 
@@ -158,7 +165,7 @@ function createFilterButton(id, name){
 function updateFilterButtonsColor(selectedID){
 	const categories = getCategoriesFromStorage();
 
-	for(let i = 0; i <= categories.length - 1; i++){
+	for(let i = 0; i <= categories.length; i++){
 		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
 		let filter = document.getElementById("filter-" + i.toString());
 
@@ -168,9 +175,4 @@ function updateFilterButtonsColor(selectedID){
 			filter.classList.remove("selected");
 		}
 	}
-}
-
-// Get rid of everything in the gallery //
-function emptyGallery() {
-	galleryElement.innerHTML = "";
 }
