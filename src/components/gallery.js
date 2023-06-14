@@ -1,30 +1,35 @@
 import { getProjectsFromAPI, getCategoriesFromAPI } from "../hooks/fetch.js";
-import { getProjectsFromStorage, getProjectsDisplayedFromStorage, getProjectsEditedFromStorage }from "../hooks/storage.js";
+import { 
+	getProjectsFromStorage, setProjectsToStorage,
+	getProjectsDisplayedFromStorage, setProjectsDisplayedToStorage,
+	getProjectsEditedFromStorage, setProjectsEditedToStorage,
+	getCategoriesFromStorage, setCategoriesToStorage
+	} from "../hooks/storage.js";
 
 /**************************** HTML FETCH ****************************/
 const galleryElement = document.querySelector(".gallery");
 const filtersElement = document.querySelector(".filters");
 
 // ----------------------------------- //
-// First initialisation of the gallery // => TODO : check if project list exist in the localStorage first
+// First initialisation of the gallery // => TODO : check if project/categories list exist in the localStorage first
 // ----------------------------------- //
 export async function initGallery(){
 	// First 'projects' fetch from the API
 	const projects = await getProjectsFromAPI();
 
 	// Store the project array in the local storage
-	window.localStorage.setItem("projects", JSON.stringify(projects));
-	window.localStorage.setItem("displayedProjects", JSON.stringify(projects));
+	setProjectsToStorage(projects);
+	setProjectsDisplayedToStorage(projects);
 
-	// Generate the gallery with an array of projects
+	// Generate the gallery with the list of projects
 	createGallery(projects);
 
 
 	// First 'categories' fetch from the API
 	const categories = await getCategoriesFromAPI();
 
-	// Store the project array in the local storage
-	window.localStorage.setItem("categories", JSON.stringify(categories));
+	// Store the categories array in the local storage
+	setCategoriesToStorage(categories);
 
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
@@ -74,32 +79,32 @@ function createProjectElement(project){
 
 // This function is called when clicking on a filter button //
 function filterGallery(filterCategoryId){
-	const projects = JSON.parse(localStorage.getItem("projects"));						//console.log(projects);
-	const displayedProjects = JSON.parse(localStorage.getItem("displayedProjects"));	//console.log(displayedProjects);
+	const projects = getProjectsFromStorage();
+	const projectsDisplayed = getProjectsDisplayedFromStorage();
 
 	// Check if a different filter is activated
-	if (projects != displayedProjects) {
+	if (projects != projectsDisplayed) {
 		// If the filter 'all' is activated
 		if (filterCategoryId === 0) {
 			console.log("Filtering the gallery with all projects");
 			// Empty the displayed project array
-			displayedProjects.splice(0,displayedProjects.length);
+			projectsDisplayed.splice(0,projectsDisplayed.length);
 
 			// Refill the displayed projects array with new projects
 			for(let project of projects){
-				displayedProjects.push(project);
+				projectsDisplayed.push(project);
 			}
 
 		// If it's another filter
 		} else {
 			console.log("Filtering the gallery with projects of the category number \"" + "\" and id == " + filterCategoryId);
 			// Empty the displayed project array
-			displayedProjects.splice(0,displayedProjects.length);
+			projectsDisplayed.splice(0,projectsDisplayed.length);
 
 			// Refill the displayed projects array with new projects
 			for(let project of projects){
 				if(project.categoryId == filterCategoryId){
-					displayedProjects.push(project);
+					projectsDisplayed.push(project);
 				}
 			}
 		}
@@ -110,9 +115,9 @@ function filterGallery(filterCategoryId){
 
 	updateFilterButtonsColor(filterCategoryId);
 
-	window.localStorage.setItem("displayedProjects", JSON.stringify(displayedProjects));
+	setProjectsDisplayedToStorage(projectsDisplayed);
 
-	updateGallery(displayedProjects);
+	updateGallery(projectsDisplayed);
 }
 
 // Generate all filters buttons with an array of categories
@@ -151,7 +156,8 @@ function createFilterButton(id, name){
 
 // Update filters buttons colors when clicked
 function updateFilterButtonsColor(selectedID){
-	const categories = JSON.parse(localStorage.getItem("categories"));	
+	const categories = getCategoriesFromStorage();
+
 	for(let i = 0; i <= categories.length - 1; i++){
 		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
 		let filter = document.getElementById("filter-" + i.toString());
