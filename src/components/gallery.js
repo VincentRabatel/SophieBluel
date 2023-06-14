@@ -11,11 +11,11 @@ const galleryElement = document.querySelector(".gallery");
 const filtersElement = document.querySelector(".filters");
 
 // ----------------------------------- //
-// First initialisation of the gallery // => TODO : check if project/categories list exist in the localStorage first
+// First initialisation of the gallery //
 // ----------------------------------- //
 export async function initGallery(){
-	// First 'projects' fetch from the API
-	const projects = await getProjectsFromAPI();
+	// Get the 'projects' list from the localStorage and fetch the API if null
+	const projects = getProjectsFromStorage() ?? await getProjectsFromAPI();
 
 	// Store the project array in the local storage
 	setProjectsToStorage(projects);
@@ -25,8 +25,8 @@ export async function initGallery(){
 	createGallery(projects);
 
 
-	// First 'categories' fetch from the API
-	const categories = await getCategoriesFromAPI();
+	// Get the 'categories' list from the localStorage and fetch the API if null
+	const categories = getCategoriesFromStorage() ?? await getCategoriesFromAPI();
 
 	// Store the categories array in the local storage
 	setCategoriesToStorage(categories);
@@ -37,8 +37,8 @@ export async function initGallery(){
 
 
 // ------------------------------ //
-// Update the gallery when needed // => TODO use the local storage
-// ------------------------------ // => TODO use the map() function
+// Update the gallery when needed // => TODO use the map() function
+// ------------------------------ //
 export async function updateGallery(projects){
 	emptyGallery();
 
