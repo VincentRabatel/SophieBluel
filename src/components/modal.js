@@ -1,3 +1,10 @@
+import { 
+	getProjectsFromStorage, setProjectsToStorage,
+	getProjectsDisplayedFromStorage, setProjectsDisplayedToStorage,
+	getProjectsEditedFromStorage, setProjectsEditedToStorage,
+	getCategoriesFromStorage, setCategoriesToStorage
+	} from "../hooks/storage.js";
+
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
 const modal = document.querySelector(".modal-container");
@@ -182,9 +189,8 @@ function initNewProjectCategoryInput(){
     // Get the category input element
     const newCategoryInput = document.querySelector("#category");
     
-    // Fetch categories in the localStorage
-	const categoriesJSON = window.localStorage.getItem("categories");				// to do : maybe this should be
-	const categories = JSON.parse(categoriesJSON);									// a function
+    // Fetch categories in the local storage
+	const categories = getCategoriesFromStorage();
 
     // Fill the category input with the one option for each category
     categories.forEach(category => {
@@ -218,7 +224,7 @@ function initModalDeleteGalleryButton(){
 		//console.log("'Delete gallery' button clicked !");
 
 		// Empty the local storage
-		window.localStorage.setItem("projectsEditMode", "");
+        setProjectsEditedToStorage("");
 
 		clearModalGallery();
     }, false);
@@ -229,29 +235,28 @@ function initModalDeleteGalleryButton(){
 // Initialize the modal gallery from the local storage data
 export function initModalGallery(){
 	// Get the 'projects' array from the local storage
-	const projectsJSON = window.localStorage.getItem("projects");					// to do : maybe this should be
-	const projects = JSON.parse(projectsJSON);										// a function
+	const projects = getProjectsFromStorage();
 
 	// Create HTML for every project in 'projects'
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 
-	// Set the 'projectsEditMode' array in the local storage, that will be used during edit mode
-	window.localStorage.setItem("projectsEditMode", JSON.stringify(projects));
+	// Set the 'projectsEdited' array in the local storage for the first time,
+    // that will be used during edit mode
+    setProjectsEditedToStorage(projects);
 }
 
 
 // Update the modal gallery from the local storage data
 function updateModalGallery(){
-	// Get the 'projectsEditMode' array from the local storage
-	const projectsEditModeJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
-	const projectsEditMode = JSON.parse(projectsEditModeJSON);						// a function
+	// Get the 'projectsEdited' array from the local storage
+	const projectsEdited = getProjectsEditedFromStorage();
 
 	clearModalGallery();
 
-	// Create HTML for every project in 'projectEditMode'
-	projectsEditMode.forEach(project => {
+	// Create HTML for every project in 'projectsEdited'
+	projectsEdited.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 }
@@ -260,15 +265,14 @@ function updateModalGallery(){
 function deleteModalGalleryProject(projectIdToDelete){
 	console.log("Delete project number " + projectIdToDelete + " during edit mode");
 
-	// Get the 'projectsEditMode' array from the local storage
-	const projectsEditModeJSON = window.localStorage.getItem("projectsEditMode");	// to do : maybe this should be
-	const projectsEditMode = JSON.parse(projectsEditModeJSON);						// a function
+	// Get the 'projectsEdited' array from the local storage
+	const projectsEdited = getProjectsEditedFromStorage();
 
 	// Filter the project array with the project to delete
-	const newProjectsEditMode = projectsEditMode.filter(project => project.id != projectIdToDelete);
+	const newProjectsEdited = projectsEdited.filter(project => project.id != projectIdToDelete);
 
-	// Update the localStorage with the new project array
-	window.localStorage.setItem("projectsEditMode", JSON.stringify(newProjectsEditMode));
+	// Update the local storage with the new project array
+    setProjectsEditedToStorage(newProjectsEdited);
 
 	updateModalGallery();
 }
