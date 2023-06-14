@@ -1,14 +1,5 @@
 import { openModal } from "./modal.js";
 
-/*************************** LOG IN STATUS ***************************/
-// Check the loggin status
-export function checkLogInStatus(){
-	const logInStatus = window.localStorage.getItem("logInStatus");
-	return logInStatus;
-}
-
-
-
 /***************************** EDIT MODE ******************************/
 // Initialize edit mode if user logged in
 export function initEditMode(){

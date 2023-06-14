@@ -67,3 +67,10 @@ export function getCategoriesFromStorage(){
 export function setCategoriesToStorage(categories){
 	window.localStorage.setItem(categoriesStorageId, JSON.stringify(categories));
 }
+
+
+
+export function checkLogInStatusFromStorage(){
+	const logInStatus = window.localStorage.getItem("logInStatus");
+	return logInStatus;
+} 
