@@ -39,14 +39,16 @@ export async function initGallery(){
 
 
 // ------------------------------ //
-// Update the gallery when needed // => TODO use the map() function
+// Update the gallery when needed //
 // ------------------------------ //
-export async function updateGallery(projects){
-	emptyGallery();
+export async function updateGallery(projects, filterId){
+	emptyGallery(); // TODO : check if a project is already there, and change only if needed
 
-	for(let project of projects){
+	for(let project of filterProjects(projects, filterId)){
 		createProjectElement(project);
 	}
+
+	setProjectsDisplayedToStorage(projects);
 }
 
 
@@ -58,7 +60,17 @@ function createGallery(projects){
 }
 
 
-// Get rid of everything in the gallery //
+// Filter the gallery (when clicking on a filter button)
+function filterGallery(filterId){
+	const projects = getProjectsEditedFromStorage() ?? getProjectsFromStorage();
+
+	updateFilterButtonsColor(filterId);
+
+	updateGallery(projects, filterId); // PROBLEM : this is calling the filterProject() twice
+}
+
+
+// Get rid of everything in the gallery
 function emptyGallery() {
 	galleryElement.innerHTML = "";
 }
@@ -83,50 +95,33 @@ function createProjectElement(project){
 
 
 // --------------------- //
-// Filters buttons logic // => TO DO : use filter() 
+// Filters buttons logic //
 // --------------------- //
 
-// This function is called when clicking on a filter button //
-function filterGallery(filterCategoryId){
-	const projects = getProjectsFromStorage();
-	const projectsDisplayed = getProjectsDisplayedFromStorage();
+let lastFilterId = 0;
+function filterProjects(projects, filterId){
+	let projectsFiltered;
 
-	// Check if a different filter is activated
-	if (projects != projectsDisplayed) {
-		// If the filter 'all' is activated
-		if (filterCategoryId === 0) {
-			console.log("Filtering the gallery with all projects");
-			// Empty the displayed project array
-			projectsDisplayed.splice(0,projectsDisplayed.length);
-
-			// Refill the displayed projects array with new projects
-			for(let project of projects){
-				projectsDisplayed.push(project);
-			}
-
-		// If it's another filter
-		} else {
-			console.log("Filtering the gallery with projects of the category \"" + getCategoriesFromStorage()[filterCategoryId - 1].name + "\" and id == " + filterCategoryId);
-			// Empty the displayed project array
-			projectsDisplayed.splice(0,projectsDisplayed.length);
-
-			// Refill the displayed projects array with new projects
-			for(let project of projects){
-				if(project.categoryId == filterCategoryId){
-					projectsDisplayed.push(project);
-				}
-			}
-		}
-	} else {
-		console.log("Gallery is already correctly filtered");
-		return;
+	// If we pass 'null' here we keep the filter unchanged
+	if (filterId === null) {
+		console.log("Filter the gallery but no change in the filter id");
+		filterId = lastFilterId;
 	}
 
-	updateFilterButtonsColor(filterCategoryId);
+	// If it's the 'all' filter
+	if (filterId === 0) {
+		console.log("Filter the gallery with all projects");
+		projectsFiltered = projects;
 
-	setProjectsDisplayedToStorage(projectsDisplayed);
+	// If it's another filter
+	} else {
+		console.log("Filter the gallery with projects of the category \"" + getCategoriesFromStorage()[filterId - 1].name + "\" and id == " + filterId);
+		projectsFiltered = projects.filter(project => project.categoryId == filterId);
+	}
 
-	updateGallery(projectsDisplayed);
+	lastFilterId = filterId;
+	
+	return projectsFiltered;
 }
 
 // Generate all filters buttons with an array of categories

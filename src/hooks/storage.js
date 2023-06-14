@@ -40,8 +40,8 @@ const projectsEditedStorageId = "projectsEdited";
 
 // Return a list of all projects of the Edit Mode (not yet published)
 export function getProjectsEditedFromStorage(){
-	const projectsEditedJSON = window.localStorage.getItem(projectsEditedStorageId);	// To do : rename projectsEditMode to
-	const projectsEdited = JSON.parse(projectsEditedJSON);                              // projectsEdited in other js scripts
+	const projectsEditedJSON = window.localStorage.getItem(projectsEditedStorageId);
+	const projectsEdited = JSON.parse(projectsEditedJSON);
 
     return projectsEdited;
 }

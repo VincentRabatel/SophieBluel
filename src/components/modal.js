@@ -4,6 +4,7 @@ import {
 	getProjectsEditedFromStorage, setProjectsEditedToStorage,
 	getCategoriesFromStorage, setCategoriesToStorage
 	} from "../hooks/storage.js";
+import { updateGallery } from "./gallery.js";
 
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
@@ -23,7 +24,7 @@ export function initModal(){
     // Modal window first step
 	initModalGallery();
 	initModalAddProjectButton();
-	initModalDeleteGalleryButton();
+	initModalClearGalleryButton();
 
     // Modal window second step
     initModalAddProject();
@@ -219,7 +220,7 @@ function checkNewProjectValidity(){
 
 /************************ DELETE GALLERY BUTTON **************************/
 // Initialize 'delete gallery' modal button
-function initModalDeleteGalleryButton(){
+function initModalClearGalleryButton(){
     deleteGalleryButton.addEventListener('click', function(){
 		//console.log("'Delete gallery' button clicked !");
 
@@ -249,14 +250,14 @@ export function initModalGallery(){
 
 
 // Update the modal gallery from the local storage data
-function updateModalGallery(){
-	// Get the 'projectsEdited' array from the local storage
-	const projectsEdited = getProjectsEditedFromStorage();
+function updateModalGallery(projects){
+	// // Get the 'projectsEdited' array from the local storage
+	// const projectsEdited = getProjectsEditedFromStorage();
 
 	clearModalGallery();
 
 	// Create HTML for every project in 'projectsEdited'
-	projectsEdited.forEach(project => {
+	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 }
@@ -274,7 +275,8 @@ function deleteModalGalleryProject(projectIdToDelete){
 	// Update the local storage with the new project array
     setProjectsEditedToStorage(newProjectsEdited);
 
-	updateModalGallery();
+    updateGallery(newProjectsEdited, null);
+	updateModalGallery(newProjectsEdited);
 }
 
 
