@@ -1,32 +1,16 @@
+import { getProjectsFromAPI, getCategoriesFromAPI } from "../hooks/fetch.js";
+import { getProjectsFromStorage, getProjectsDisplayedFromStorage, getProjectsEditedFromStorage }from "../hooks/storage.js";
+
 /**************************** HTML FETCH ****************************/
 const galleryElement = document.querySelector(".gallery");
 const filtersElement = document.querySelector(".filters");
 
-/************************** PROJECTS FETCH **************************/
-async function fetchProjects(){
-	//console.log("Fetching projects form the API...");
-	const projectsResponse = await fetch("http://localhost:5678/api/works");
-	const projects = await projectsResponse.json(); //console.log(projects);
-	
-	return projects;
-}
-
-/************************** CATEGORIES FETCH **************************/
-async function fetchCategories(){
-	//console.log("Fetching categories form the API...");
-	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-	const categories = await categoriesResponse.json(); //console.log(categories);
-
-	return categories;
-}
-
-
 // ----------------------------------- //
-// First initialisation of the gallery //
+// First initialisation of the gallery // => TODO : check if project list exist in the localStorage first
 // ----------------------------------- //
 export async function initGallery(){
 	// First 'projects' fetch from the API
-	const projects = await fetchProjects();
+	const projects = await getProjectsFromAPI();
 
 	// Store the project array in the local storage
 	window.localStorage.setItem("projects", JSON.stringify(projects));
@@ -37,7 +21,7 @@ export async function initGallery(){
 
 
 	// First 'categories' fetch from the API
-	const categories = await fetchCategories();
+	const categories = await getCategoriesFromAPI();
 
 	// Store the project array in the local storage
 	window.localStorage.setItem("categories", JSON.stringify(categories));
@@ -184,25 +168,3 @@ function updateFilterButtonsColor(selectedID){
 function emptyGallery() {
 	galleryElement.innerHTML = "";
 }
-
-/*
-// Category class
-class Category {
-    constructor(id, name){
-        this.id = id;
-        this.name = name;
-    }
-}
-
-// Project class
-class Project {
-    constructor(id, title, imageUrl, categoryId, userId, category) {
-        this.id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.categoryId = categoryId;
-        this.userId = userId;
-        this.category = category;
-    }
-}
-*/

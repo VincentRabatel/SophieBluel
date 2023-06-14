@@ -40,5 +40,5 @@ async function logInSubmit(logInInfo){
         break;
     }
 
-    // to do : store the token auth
+    // TODO : store the token auth
 }
