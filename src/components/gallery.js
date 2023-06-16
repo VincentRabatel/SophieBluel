@@ -17,7 +17,6 @@ export async function initGallery(){
 
 	// Store the project array in the local storage
 	storage.storeProjects(projects);
-	storage.storeProjectsDisplayed(projects);
 
 	// Generate the gallery with the list of projects
 	createGallery(projects);
@@ -45,8 +44,6 @@ export async function updateGallery(projects, filterId){
 	for(let project of filterProjects(projects, filterId)){
 		createProjectElement(project);
 	}
-
-	storage.storeProjectsDisplayed(projects);
 }
 
 

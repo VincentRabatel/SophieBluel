@@ -73,22 +73,6 @@ export function getCategoryId(name){
 // TODO : Add a new category
 
 
-const projectsDisplayedStorageId = "projectsDisplayed";
-
-// Return a list of all displayed projects in the main gallery (a filter might be is applied)
-export function getProjectsDisplayed(){
-	const projectsDisplayedJSON = window.localStorage.getItem(projectsDisplayedStorageId);	// To do : rename displayedProject to
-	const projectsDisplayed = JSON.parse(projectsDisplayedJSON);							// projectsDisplayed in other js scripts
-
-    return projectsDisplayed;
-}
-
-// Store a new list of displayed projects in the localStorage
-export function storeProjectsDisplayed(projectsDisplayed){
-	window.localStorage.setItem(projectsDisplayedStorageId, JSON.stringify(projectsDisplayed));
-}
-
-
 
 const projectsEditedStorageId = "projectsEdited";
 
