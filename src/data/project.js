@@ -1,4 +1,4 @@
-import { Category } from "./category";
+import { Category } from "./category.js";
 
 export class Project  {
     constructor(id, title, imageURL, categoryId, userId, category ) {
@@ -6,7 +6,7 @@ export class Project  {
         this.title = title;
         this.imageURL = imageURL;
         this.categoryId = categoryId;
-        this.useId = userId
+        this.userId = userId
         this.category = new Category;
     }
 

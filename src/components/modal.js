@@ -1,10 +1,16 @@
 import { 
-	getProjectsFromStorage, setProjectsToStorage,
-	getProjectsDisplayedFromStorage, setProjectsDisplayedToStorage,
-	getProjectsEditedFromStorage, setProjectsEditedToStorage,
-	getCategoriesFromStorage, setCategoriesToStorage
+	getProjectsFromStorage,             setProjectsToStorage,
+    addNewProjectToStorage,
+	getProjectsDisplayedFromStorage,    setProjectsDisplayedToStorage,
+	getProjectsEditedFromStorage,       setProjectsEditedToStorage,
+	getCategoriesFromStorage,           setCategoriesToStorage
 	} from "../hooks/storage.js";
+import * as storage from '../hooks/storage.js';
 import { updateGallery } from "./gallery.js";
+
+// import { Category } from "../data/category.js";
+import { Project } from "../data/project.js";
+import { Category } from "../data/category.js";
 
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
@@ -140,14 +146,6 @@ function initModalAddProjectButton(){
     }, false);
 }
 
-// Initialize 'validate project' modal button
-function initModalValidateButton(){
-    validateProjectButton.addEventListener('click', function(){
-
-        // TODO
-        
-    }, false);
-}
 
 
 /************************** NEW PROJECT FORM **************************/
@@ -155,6 +153,43 @@ function initNewProjectForm(){
     initNewProjectPictureInput();
     iniNewProjectTitleInput();
     initNewProjectCategoryInput();
+
+    const newProjectForm = document.querySelector(".new-project-form");
+
+    newProjectForm.addEventListener("submit", function (event) {
+        console.log("New project submited !");
+
+        // Disable default behaviour of the web browser
+        event.preventDefault();
+
+        const newProjectId = storage.getAvailableIdInProjectsEdited();
+
+        const newProjectTitle = event.target.querySelector("[name=title]").value;
+
+        const newProjectImageURL = event.target.querySelector("[name=picture]").value; // TODO
+
+        const newCategoryName = event.target.querySelector("[name=category]").value; console.log(newCategoryName);
+        const newCategoryId = storage.getCategoryId(newCategoryName); console.log(newCategoryId);
+
+        const newCategory = new Category(newCategoryId, newCategoryName); // TODO : new category or existing category
+
+        // Create the newProject object from the form      
+        const newProject = new Project(
+            newProjectId, 
+            newProjectTitle, 
+            newProjectImageURL, 
+            newCategoryId, 
+            "1", // TODO Not sure what should be done with this
+            newCategory);
+
+        console.log(newProject);
+
+        //addNewProjectToStorage(newProject); // TODO
+
+        //updateGallery("", ""); // TODO
+
+        //closeModal(); // TODO
+    })
 }
 
 // Initialize 'new project picture' input
@@ -165,6 +200,7 @@ function initNewProjectPictureInput(){
     showElement(newPictureInputDefault);
     hideElement(newPictureInputImg);
 
+    // Check if there is a change in the 'new project picture' input
     newPictureInput.addEventListener('change', function(){
         const newFile = newPictureInput.files[0]; //console.log(newFile);
         newPictureInputImg.src = URL.createObjectURL(newFile);
@@ -180,6 +216,7 @@ function initNewProjectPictureInput(){
 function iniNewProjectTitleInput(){
     const newTitleInput = document.querySelector("#newTitle");
 
+    // Check if there is a change in the 'new project title' input
     newTitleInput.addEventListener('input', function(){
         checkNewProjectValidity();
     }, false);
@@ -204,19 +241,37 @@ function initNewProjectCategoryInput(){
 }
 
 function checkNewProjectValidity(){
-    const newPictureInput = document.querySelector("#newPicture"); console.log(newPictureInput.files[0]);
+    const newPictureInput = document.querySelector("#newPicture"); //console.log(newPictureInput.files[0]);
     const newTitleInput = document.querySelector("#newTitle")
 
     if(newPictureInput.files[0] && newTitleInput.value){
         //console.log("New project is valid");
-
+        validateProjectButton.disabled = false;
         validateProjectButton.classList.remove("rnd-green-button--locked");
     } else {
         //console.log("New project isn't valid yet");
-
+        validateProjectButton.disabled = true;
         validateProjectButton.classList.add("rnd-green-button--locked");
     }
 }
+
+
+// Initialize 'validate project' modal button
+function initModalValidateButton(){
+    validateProjectButton.addEventListener('click', function(){
+
+        // Useless ?
+
+    }, false);
+}
+
+
+function createNewProject(){
+
+    
+    
+}
+
 
 /************************ DELETE GALLERY BUTTON **************************/
 // Initialize 'delete gallery' modal button

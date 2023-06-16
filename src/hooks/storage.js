@@ -17,6 +17,60 @@ export function setProjectsToStorage(projects){
 	window.localStorage.setItem(projectsStorageId, JSON.stringify(projects));
 }
 
+export function addNewProjectToStorage(project){
+	// TODO
+}
+
+// Return the first available id in the 'projects' array // => USELESS FOR NOW
+export function getAvailableIdInProjects(){
+	
+	const projects = getProjectsFromStorage();
+
+	for(let id = 1; id < projects.length + 1; id++){
+		// If there is an available OR if we reach the end of the list
+		if(id != projects[id].id - 1 || !projects[id]){
+			//console.log("Available id is : " + parseInt(id + 1))
+			return parseInt(id + 1);
+		}
+	}
+}
+
+// Return the first available id in the 'projectsEdited' array
+export function getAvailableIdInProjectsEdited(){
+	
+	const projects = getProjectsEditedFromStorage();
+
+	for(let id = 1; id < projects.length + 1; id++){
+		// If we reach the end of the list,
+		// or there is an ID available
+		if(!projects[id] || id != projects[id].id - 1){
+			//console.log("Available id is : " + parseInt(id + 1))
+			return parseInt(id + 1);
+		}
+	}
+}
+
+export function getCategoryName(id){
+	// TODO
+}
+
+export function getCategoryId(name){
+	//console.log("Testing all categories to find the if ID of category : " + name);
+	const categories = getCategoriesFromStorage();
+	
+	let categoryId;
+
+	categories.forEach(category => {
+		//console.log("Trying category : " + category.name + " and name " + name);
+		if(category.name == name){
+			categoryId = parseInt(category.id);
+		}
+	});
+
+	return categoryId;
+}
+
+// TODO : Add a new category
 
 
 const projectsDisplayedStorageId = "projectsDisplayed";
