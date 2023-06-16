@@ -1,16 +1,10 @@
-import { 
-	getProjectsFromStorage,             setProjectsToStorage,
-    addNewProjectToStorage,
-	getProjectsDisplayedFromStorage,    setProjectsDisplayedToStorage,
-	getProjectsEditedFromStorage,       setProjectsEditedToStorage,
-	getCategoriesFromStorage,           setCategoriesToStorage
-	} from "../hooks/storage.js";
-import * as storage from '../hooks/storage.js';
-import { updateGallery } from "./gallery.js";
-
-// import { Category } from "../data/category.js";
 import { Project } from "../data/project.js";
 import { Category } from "../data/category.js";
+
+import * as api from '../hooks/api.js'
+import * as storage from '../hooks/storage.js';
+
+import { updateGallery } from "./gallery.js";
 
 /**************************** MODAL WINDOW *****************************/
 // Get HTML main elements
@@ -228,7 +222,7 @@ function initNewProjectCategoryInput(){
     const newCategoryInput = document.querySelector("#category");
     
     // Fetch categories in the local storage
-	const categories = getCategoriesFromStorage();
+	const categories = storage.getCategories();
 
     // Fill the category input with the one option for each category
     categories.forEach(category => {
@@ -280,7 +274,7 @@ function initModalClearGalleryButton(){
 		//console.log("'Delete gallery' button clicked !");
 
 		// Empty the local storage
-        setProjectsEditedToStorage("");
+        storage.storeProjectsEdited("");
 
 		clearModalGallery();
     }, false);
@@ -291,23 +285,23 @@ function initModalClearGalleryButton(){
 // Initialize the modal gallery from the local storage data
 export function initModalGallery(){
 	// Get the 'projects' array from the local storage
-	const projects = getProjectsFromStorage();
+	const projects = storage.getProjects();
 
 	// Create HTML for every project in 'projects'
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 
-	// Set the 'projectsEdited' array in the local storage for the first time,
+	// store the 'projectsEdited' array in the local storage for the first time,
     // that will be used during edit mode
-    setProjectsEditedToStorage(projects);
+    storage.storeProjectsEdited(projects);
 }
 
 
 // Update the modal gallery from the local storage data
 function updateModalGallery(projects){
 	// // Get the 'projectsEdited' array from the local storage
-	// const projectsEdited = getProjectsEditedFromStorage();
+	// const projectsEdited = storage.getProjectsEdited();
 
 	clearModalGallery();
 
@@ -322,13 +316,13 @@ function deleteModalGalleryProject(projectIdToDelete){
 	console.log("Delete project number " + projectIdToDelete + " during edit mode");
 
 	// Get the 'projectsEdited' array from the local storage
-	const projectsEdited = getProjectsEditedFromStorage();
+	const projectsEdited = storage.getProjectsEdited();
 
 	// Filter the project array with the project to delete
 	const newProjectsEdited = projectsEdited.filter(project => project.id != projectIdToDelete);
 
 	// Update the local storage with the new project array
-    setProjectsEditedToStorage(newProjectsEdited);
+    storage.storeProjectsEdited(newProjectsEdited);
 
     updateGallery(newProjectsEdited, null);
 	updateModalGallery(newProjectsEdited);

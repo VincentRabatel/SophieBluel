@@ -2,12 +2,12 @@
 // API get and post functions //
 // -------------------------- //
 
-export async function getProjectFromAPI(projectID){
+export async function getProject(projectID){
 	// TODO ?
 }
 
 // Fetch all projects from API
-export async function getProjectsFromAPI(){
+export async function getProjects(){
 	//console.log("Fetching projects form the API...");
 	const projectsResponse = await fetch("http://localhost:5678/api/works");
 	const projects = await projectsResponse.json(); //console.log(projects);
@@ -15,16 +15,16 @@ export async function getProjectsFromAPI(){
 	return projects;
 }
 
-export async function postProjectToAPI(project){
+export async function postProject(project){
 	// TODO
 }
 
-export async function getCategoryFromAPI(categoryID){
+export async function getCategory(categoryID){
 	// TODO ?
 }
 
 // Fetch all categories from API
-export async function getCategoriesFromAPI(){
+export async function getCategories(){
 	//console.log("Fetching categories form the API...");
 	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
 	const categories = await categoriesResponse.json(); //console.log(categories);

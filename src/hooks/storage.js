@@ -1,11 +1,11 @@
 // ---------------------------------- //
-// localStorage get and set functions //
+// localStorage get and store functions //
 // ---------------------------------- //
 
 const projectsStorageId = "projects";
 
 // Return a list of all published projects from localStorage
-export function getProjectsFromStorage(){
+export function getProjects(){
 	const projectsJSON = window.localStorage.getItem(projectsStorageId);
 	const projects = JSON.parse(projectsJSON);
 
@@ -13,18 +13,18 @@ export function getProjectsFromStorage(){
 }
 
 // Store a new list of published projects in the localStorage
-export function setProjectsToStorage(projects){
+export function storeProjects(projects){
 	window.localStorage.setItem(projectsStorageId, JSON.stringify(projects));
 }
 
-export function addNewProjectToStorage(project){
+export function addNewProject(project){
 	// TODO
 }
 
 // Return the first available id in the 'projects' array // => USELESS FOR NOW
 export function getAvailableIdInProjects(){
 	
-	const projects = getProjectsFromStorage();
+	const projects = getProjects();
 
 	for(let id = 1; id < projects.length + 1; id++){
 		// If there is an available OR if we reach the end of the list
@@ -38,7 +38,7 @@ export function getAvailableIdInProjects(){
 // Return the first available id in the 'projectsEdited' array
 export function getAvailableIdInProjectsEdited(){
 	
-	const projects = getProjectsEditedFromStorage();
+	const projects = getProjectsEdited();
 
 	for(let id = 1; id < projects.length + 1; id++){
 		// If we reach the end of the list,
@@ -56,7 +56,7 @@ export function getCategoryName(id){
 
 export function getCategoryId(name){
 	//console.log("Testing all categories to find the if ID of category : " + name);
-	const categories = getCategoriesFromStorage();
+	const categories = getCategories();
 	
 	let categoryId;
 
@@ -76,7 +76,7 @@ export function getCategoryId(name){
 const projectsDisplayedStorageId = "projectsDisplayed";
 
 // Return a list of all displayed projects in the main gallery (a filter might be is applied)
-export function getProjectsDisplayedFromStorage(){
+export function getProjectsDisplayed(){
 	const projectsDisplayedJSON = window.localStorage.getItem(projectsDisplayedStorageId);	// To do : rename displayedProject to
 	const projectsDisplayed = JSON.parse(projectsDisplayedJSON);							// projectsDisplayed in other js scripts
 
@@ -84,7 +84,7 @@ export function getProjectsDisplayedFromStorage(){
 }
 
 // Store a new list of displayed projects in the localStorage
-export function setProjectsDisplayedToStorage(projectsDisplayed){
+export function storeProjectsDisplayed(projectsDisplayed){
 	window.localStorage.setItem(projectsDisplayedStorageId, JSON.stringify(projectsDisplayed));
 }
 
@@ -93,7 +93,7 @@ export function setProjectsDisplayedToStorage(projectsDisplayed){
 const projectsEditedStorageId = "projectsEdited";
 
 // Return a list of all projects of the Edit Mode (not yet published)
-export function getProjectsEditedFromStorage(){
+export function getProjectsEdited(){
 	const projectsEditedJSON = window.localStorage.getItem(projectsEditedStorageId);
 	const projectsEdited = JSON.parse(projectsEditedJSON);
 
@@ -101,7 +101,7 @@ export function getProjectsEditedFromStorage(){
 }
 
 // Store a new list of edited projects in the localStorage (not yet published)
-export function setProjectsEditedToStorage(projectsEdited){
+export function storeProjectsEdited(projectsEdited){
 	window.localStorage.setItem(projectsEditedStorageId, JSON.stringify(projectsEdited));
 }
 
@@ -110,7 +110,7 @@ export function setProjectsEditedToStorage(projectsEdited){
 const categoriesStorageId = "categories";
 
 // Return a list of all categories from the local Storage 
-export function getCategoriesFromStorage(){
+export function getCategories(){
 	const categoriesJSON = window.localStorage.getItem(categoriesStorageId);
 	const categories = JSON.parse(categoriesJSON);
 
@@ -118,13 +118,13 @@ export function getCategoriesFromStorage(){
 }
 
 // Store a new list of catgeories in the localStorage
-export function setCategoriesToStorage(categories){
+export function storeCategories(categories){
 	window.localStorage.setItem(categoriesStorageId, JSON.stringify(categories));
 }
 
 
 
-export function checkLogInStatusFromStorage(){
+export function checkLogInStatus(){
 	const logInStatus = window.localStorage.getItem("logInStatus");
 	return logInStatus;
 } 

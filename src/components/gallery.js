@@ -1,10 +1,8 @@
-import { getProjectsFromAPI, getCategoriesFromAPI } from "../hooks/fetch.js";
-import { 
-	getProjectsFromStorage, setProjectsToStorage,
-	getProjectsDisplayedFromStorage, setProjectsDisplayedToStorage,
-	getProjectsEditedFromStorage, setProjectsEditedToStorage,
-	getCategoriesFromStorage, setCategoriesToStorage
-	} from "../hooks/storage.js";
+import { Project } from "../data/project.js";
+import { Category } from "../data/category.js";
+
+import * as api from '../hooks/api.js'
+import * as storage from '../hooks/storage.js';
 
 /**************************** HTML FETCH ****************************/
 const galleryElement = document.querySelector(".gallery");
@@ -15,21 +13,21 @@ const filtersElement = document.querySelector(".filters");
 // ----------------------------------- //
 export async function initGallery(){
 	// Get the 'projects' list from the localStorage and fetch the API if null
-	const projects = getProjectsFromStorage() ?? await getProjectsFromAPI();
+	const projects = storage.getProjects() ?? await api.getProjects();
 
 	// Store the project array in the local storage
-	setProjectsToStorage(projects);
-	setProjectsDisplayedToStorage(projects);
+	storage.storeProjects(projects);
+	storage.storeProjectsDisplayed(projects);
 
 	// Generate the gallery with the list of projects
 	createGallery(projects);
 
 
 	// Get the 'categories' list from the localStorage and fetch the API if null
-	const categories = getCategoriesFromStorage() ?? await getCategoriesFromAPI();
+	const categories = storage.getCategories() ?? await api.getCategories();
 
 	// Store the categories array in the local storage
-	setCategoriesToStorage(categories);
+	storage.storeCategories(categories);
 
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
@@ -48,7 +46,7 @@ export async function updateGallery(projects, filterId){
 		createProjectElement(project);
 	}
 
-	setProjectsDisplayedToStorage(projects);
+	storage.storeProjectsDisplayed(projects);
 }
 
 
@@ -62,7 +60,7 @@ function createGallery(projects){
 
 // Filter the gallery (when clicking on a filter button)
 function filterGallery(filterId){
-	const projects = getProjectsEditedFromStorage() ?? getProjectsFromStorage();
+	const projects = storage.getProjectsEdited() ?? storage.getProjects();
 
 	updateFilterButtonsColor(filterId);
 
@@ -104,18 +102,18 @@ function filterProjects(projects, filterId){
 
 	// If we pass 'null' here we keep the filter unchanged
 	if (filterId === null) {
-		console.log("Filter the gallery but no change in the filter id");
+		//console.log("Filter the gallery but no change in the filter id");
 		filterId = lastFilterId;
 	}
 
 	// If it's the 'all' filter
 	if (filterId === 0) {
-		console.log("Filter the gallery with all projects");
+		//console.log("Filter the gallery with all projects");
 		projectsFiltered = projects;
 
 	// If it's another filter
 	} else {
-		console.log("Filter the gallery with projects of the category \"" + getCategoriesFromStorage()[filterId - 1].name + "\" and id == " + filterId);
+		//console.log("Filter the gallery with projects of the category \"" + storage.getCategories()[filterId - 1].name + "\" and id == " + filterId);
 		projectsFiltered = projects.filter(project => project.categoryId == filterId);
 	}
 
@@ -158,7 +156,7 @@ function createFilterButton(id, name){
 
 // Update filters buttons colors when clicked
 function updateFilterButtonsColor(selectedID){
-	const categories = getCategoriesFromStorage();
+	const categories = storage.getCategories();
 
 	for(let i = 0; i <= categories.length; i++){
 		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);

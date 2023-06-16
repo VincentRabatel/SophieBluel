@@ -1,5 +1,5 @@
 // --------------------------- //
-// html elements get functions //
+// html elements get functions // => TODO
 // --------------------------- //
 
 // Get modal window's 'previous' button element
