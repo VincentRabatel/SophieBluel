@@ -28,7 +28,6 @@ export function initModal(){
 
     // Modal window second step
     initModalAddProject();
-    initModalValidateButton();
     initNewProjectForm();
 }
 
@@ -157,9 +156,6 @@ function initNewProjectForm(){
     const newProjectForm = document.querySelector(".new-project-form");
 
     newProjectForm.addEventListener("submit", function (event) {
-        console.log(storage.getProjectsEdited());
-        console.log("New project submited !");
-
         // Disable default behaviour of the web browser
         event.preventDefault();
 
@@ -170,7 +166,7 @@ function initNewProjectForm(){
 
         // TODO : rework
         const newProjectImageFile = event.target.querySelector("[name=picture]").files[0];
-        console.log(newProjectImageFile);
+        //console.log(newProjectImageFile);
 
         // The function URL.revokeObjectURL() is used to tell 
         // the browser to not keep the ObjectURL in memeory anymore
@@ -179,12 +175,10 @@ function initNewProjectForm(){
         const newProjectBlob = new Blob([newProjectImageFile], {type: "image/png"}),
             url = URL.createObjectURL(newProjectBlob),
             img = new Image();
-        console.log(newProjectBlob);
+        //console.log(newProjectBlob);
         
         const newProjectImageBlobURL = url.toString();
-        console.log(newProjectImageBlobURL);
-        
-        //
+        //console.log(newProjectImageBlobURL);
 
 
         const newCategoryName = event.target.querySelector("[name=category]").value;
@@ -202,13 +196,9 @@ function initNewProjectForm(){
             newCategory
         );
 
-        console.log(newProject);
-
         storage.addProjectInProjectsEdited(newProject);
 
         const newProjectsEdited = storage.getProjectsEdited();
-
-        console.log(newProjectsEdited);
 
         updateGallery(newProjectsEdited, null);
         updateModalGallery(newProjectsEdited);
@@ -334,7 +324,7 @@ function updateModalGallery(projects){
 
 
 function deleteModalGalleryProject(projectIdToDelete){
-	console.log("Delete project number " + projectIdToDelete + " during edit mode");
+	//console.log("Delete project number " + projectIdToDelete + " during edit mode");
 
 	// Get the 'projectsEdited' array from the local storage
 	const projectsEdited = storage.getProjectsEdited();

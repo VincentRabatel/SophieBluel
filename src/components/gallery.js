@@ -78,7 +78,6 @@ function createProjectElement(project){
 	const newProjectElementImg = document.createElement('img');
 	const newProjectElementCaption = document.createElement('figcaption');
 
-	console.log(project.imageUrl);
 	newProjectElementImg.src = project.imageUrl;
 	newProjectElementCaption.innerText = project.title;
 

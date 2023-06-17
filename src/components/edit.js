@@ -55,10 +55,18 @@ function initPublishButton(){
 
 	// Create event listener for top bar 'publish' button
 	publishButtonElement.addEventListener('click', function(){
-		console.log("Publish button clicked !");
+		publishProjects();
 	}, false);
 }
 
+function publishProjects(){
+	const projectsEdited = storage.getProjectsEdited();
+	console.log("Publishing this new list of projects :"); console.log(projectsEdited);
+
+	storage.storeProjects(projectsEdited);
+
+	storage.deleteProjectsEdited();
+}
 
 
 /**************************** EDIT BUTTON ******************************/

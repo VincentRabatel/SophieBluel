@@ -31,6 +31,11 @@ export function addProjectInProjects(project){
 	storeProjects(newProjects);
 }
 
+// Completely delete the 'projects' list from the localStorage // => NEVER USED FOR NOW
+export function deleteProjects(){
+	window.localStorage.removeItem(projectsStorageId);
+}
+
 // Return the first available id in the 'projects' array // => NEVER USED FOR NOW
 export function getAvailableIdInProjects(){
 	const projects = getProjects();
@@ -67,6 +72,11 @@ export function addProjectInProjectsEdited(project){
 	storeProjectsEdited(newProjectsEdited);
 }
 
+// Completely delete the 'projectsEdited' list from the localStorage
+export function deleteProjectsEdited(){
+	window.localStorage.removeItem(projectsEditedStorageId);
+}
+
 // Return the first available id in the 'projectsEdited' array
 export function getAvailableIdInProjectsEdited(){
 	const projectsEdited = getProjectsEdited();
@@ -77,9 +87,9 @@ export function getAvailableIdInProjectsEdited(){
 
 
 
-// ----------------------------------------------- //
-// The 'categorie' array is storing all categories //
-// ----------------------------------------------- //
+// ------------------------------------------------ //
+// The 'categories' array is storing all categories //
+// ------------------------------------------------ //
 const categoriesStorageId = "categories";
 
 // Return a list of all categories from the local Storage 
@@ -101,6 +111,11 @@ export function addCategory(category){
 	const newCategories = addNewItem(category, categories);
 
 	storeCategories(newCategories);
+}
+
+// Completely delete the 'categories' list from the localStorage // => NEVER USED FOR NOW
+export function deleteCategories(){
+	window.localStorage.removeItem(categoriesStorageId);
 }
 
 // Return the first available id in the 'categories' array // => NEVER USED FOR NOW
