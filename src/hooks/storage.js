@@ -26,7 +26,9 @@ export function storeProjects(projects){
 // Add a new Category to the categories array // => NEVER USED FOR NOW
 export function addProjectInProjects(project){
 	const projects = getProjects();
-	addNewItem(project, projects);
+	const newProjects = addNewItem(project, projects);
+
+	storeProjects(newProjects);
 }
 
 // Return the first available id in the 'projects' array // => NEVER USED FOR NOW
@@ -57,10 +59,12 @@ export function storeProjectsEdited(projectsEdited){
 	window.localStorage.setItem(projectsEditedStorageId, JSON.stringify(projectsEdited));
 }
 
-// Add a new Category to the categories array // => NEVER USED FOR NOW
+// Add a new project to the 'projectsEdited' array
 export function addProjectInProjectsEdited(project){
 	const projectsEdited = getProjectsEdited();
-	addNewItem(project, projectsEdited);
+	const newProjectsEdited = addNewItem(project, projectsEdited);
+
+	storeProjectsEdited(newProjectsEdited);
 }
 
 // Return the first available id in the 'projectsEdited' array
@@ -94,7 +98,9 @@ export function storeCategories(categories){
 // Add a new Category to the categories array // => NEVER USED FOR NOW
 export function addCategory(category){
 	const categories = getCategories();
-	addNewItem(categorie, categories);
+	const newCategories = addNewItem(category, categories);
+
+	storeCategories(newCategories);
 }
 
 // Return the first available id in the 'categories' array // => NEVER USED FOR NOW
@@ -143,14 +149,19 @@ export function checkLogInStatus(){
 // ----------------- //
 // Generic function to add a item to an array
 function addNewItem(item, arr){
-	// TODO
+	let newArr = arr;
+	let availableId = getAvailableId(arr);
+
+	newArr.splice(availableId - 1, 0, item);
+
+	return newArr;
 }
 
 // Generic function to find an available .id in an array
 function getAvailableId(arr){
 	for(let id = 1; id < arr.length + 1; id++){
 		// If there is an available OR if we reach the end of the list
-		if(id != arr[id].id - 1 || !arr[id]){
+		if(!arr[id] || id != arr[id].id - 1){
 			//console.log("Available id is : " + parseInt(id + 1))
 			return parseInt(id + 1);
 		}
