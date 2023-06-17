@@ -1,10 +1,10 @@
 import { Category } from "./category.js";
 
 export class Project  {
-    constructor(id, title, imageURL, categoryId, userId, category ) {
+    constructor(id, title, imageUrl, categoryId, userId, category ) {
         this.id = id;
         this.title = title;
-        this.imageURL = imageURL;
+        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
         this.userId = userId
         this.category = new Category;

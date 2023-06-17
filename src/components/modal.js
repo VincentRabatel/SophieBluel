@@ -143,6 +143,12 @@ function initModalAddProjectButton(){
 
 
 /************************** NEW PROJECT FORM **************************/
+
+// TODO list :
+// - finish to build the Category object
+// - manage when we type an unexisting category
+// - manage the cas when a project already exists
+// - choose what we should be doing with the 'project.userId' property
 function initNewProjectForm(){
     initNewProjectPictureInput();
     initNewProjectTitleInput();
@@ -161,20 +167,38 @@ function initNewProjectForm(){
 
         const newProjectTitle = event.target.querySelector("[name=title]").value;
 
-        const newProjectImageURL = event.target.querySelector("[name=picture]").value; // TODO
+
+        // TODO : rework
+        const newProjectImageFile = event.target.querySelector("[name=picture]").files[0];
+        console.log(newProjectImageFile);
+
+        // The function URL.revokeObjectURL() is used to tell 
+        // the browser to not keep the ObjectURL in memeory anymore
+        //URL.revokeObjectURL(newProjectImageBlobURL);
+
+        const newProjectBlob = new Blob([newProjectImageFile], {type: "image/png"}),
+            url = URL.createObjectURL(newProjectBlob),
+            img = new Image();
+        console.log(newProjectBlob);
+        
+        const newProjectImageBlobURL = url.toString();
+        console.log(newProjectImageBlobURL);
+        
+        //
+
 
         const newCategoryName = event.target.querySelector("[name=category]").value;
         const newCategoryId = storage.getCategoryId(newCategoryName);
 
-        const newCategory = new Category(newCategoryId, newCategoryName); // TODO : new category or existing category
+        const newCategory = new Category(newCategoryId, newCategoryName);
 
         // Create the newProject object from the form      
         const newProject = new Project(
-            newProjectId, 
-            newProjectTitle, 
-            newProjectImageURL, 
-            newCategoryId, 
-            "1", // TODO : not sure what should be done with this
+            newProjectId,
+            newProjectTitle,
+            newProjectImageBlobURL,
+            newCategoryId,
+            "1",
             newCategory
         );
 
@@ -182,8 +206,12 @@ function initNewProjectForm(){
 
         storage.addProjectInProjectsEdited(newProject);
 
-        console.log(storage.getProjectsEdited());
-        //updateGallery("", ""); // TODO
+        const newProjectsEdited = storage.getProjectsEdited();
+
+        console.log(newProjectsEdited);
+
+        updateGallery(newProjectsEdited, null);
+        updateModalGallery(newProjectsEdited);
 
         //closeModal(); // TODO
     })
