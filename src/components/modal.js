@@ -213,7 +213,9 @@ function initNewProjectForm(){
         updateGallery(newProjectsEdited, null);
         updateModalGallery(newProjectsEdited);
 
-        //closeModal(); // TODO
+        closeModal();
+
+        resetNewProjectForm();
     })
 }
 
@@ -280,19 +282,9 @@ function checkNewProjectValidity(){
     }
 }
 
-
-// Initialize 'validate project' modal button
-function initModalValidateButton(){
-    validateProjectButton.addEventListener('click', function(){
-
-        // TODO : Useless ?
-
-    }, false);
-}
-
-
-function createNewProject(){
-    // TODO ?
+// Reset the new project form after a new project is added
+function resetNewProjectForm(){
+    // TODO
 }
 
 

@@ -254,7 +254,9 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
+	height: 100%;
+	max-height: 490px;
+	object-fit: cover;
 }
 
 /************************** FORMS **************************/
@@ -520,7 +522,8 @@ footer nav ul {
 .modal-gallery-project img {
 	width: 100%;
 	height: 100%;
-	object-fit: contain;
+	max-height: 100px;
+	object-fit: cover;
 }
 
 .modal-gallery-project span {
