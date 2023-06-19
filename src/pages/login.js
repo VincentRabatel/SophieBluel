@@ -1,3 +1,6 @@
+import * as api from '../hooks/api.js'
+import * as storage from '../hooks/storage.js';
+
 // Get logIn form HTML element
 const logInForm = document.querySelector(".login-form"); // console.log(logInForm);
 
@@ -41,15 +44,14 @@ async function logInSubmit(logInInfo){
         
                 responseInfo = JSON.parse(value);
         
-                console.log("Received", JSON.parse(value));
+                console.log("Received", responseInfo);
             }
 
             // Store log in info in the local storage
             // TODO : write dedicated functions in storage.js
             // TODO : use the now stored .userId everywhere needed
-            window.localStorage.setItem("logInStatus", "true");
-            window.localStorage.setItem("logInUserId", responseInfo.userId);
-            window.localStorage.setItem("logInToken", responseInfo.token);
+            storage.storeLogInStatus(true);
+            storage.storeLogInInfos(responseInfo);
 
             // Back to the main page
             window.location = "index.html";

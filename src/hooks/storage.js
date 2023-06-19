@@ -12,8 +12,7 @@ const projectsStorageId = "projects";
 
 // Return a list of all published projects from localStorage
 export function getProjects(){
-	const projectsJSON = window.localStorage.getItem(projectsStorageId);
-	const projects = JSON.parse(projectsJSON);
+	const projects = JSON.parse(window.localStorage.getItem(projectsStorageId));
 
     return projects;
 }
@@ -53,8 +52,7 @@ const projectsEditedStorageId = "projectsEdited";
 
 // Return a list of all projects of the Edit Mode (not yet published)
 export function getProjectsEdited(){
-	const projectsEditedJSON = window.localStorage.getItem(projectsEditedStorageId);
-	const projectsEdited = JSON.parse(projectsEditedJSON);
+	const projectsEdited = JSON.parse(window.localStorage.getItem(projectsEditedStorageId));
 
     return projectsEdited;
 }
@@ -94,8 +92,7 @@ const categoriesStorageId = "categories";
 
 // Return a list of all categories from the local Storage 
 export function getCategories(){
-	const categoriesJSON = window.localStorage.getItem(categoriesStorageId);
-	const categories = JSON.parse(categoriesJSON);
+	const categories = JSON.parse(window.localStorage.getItem(categoriesStorageId));
 
     return categories;
 }
@@ -153,9 +150,26 @@ export function getCategoryId(name){
 // ------------- //
 const logInStatusStorageId = "logInStatus";
 
+export function storeLogInStatus(logInStatus){
+	window.localStorage.setItem(logInStatusStorageId, logInStatus);
+}
+
 export function checkLogInStatus(){
 	const logInStatus = window.localStorage.getItem(logInStatusStorageId);
 	return logInStatus;
+}
+
+
+const logInInfosStorageId = "logInInfos";
+
+export function storeLogInInfos(logInInfos){
+	window.localStorage.setItem(logInInfosStorageId, JSON.stringify(logInInfos));
+}
+
+export function getLogInInfos(){
+	const logInInfos = JSON.parse(window.localStorage.getItem(logInInfosStorageId));
+
+	return logInInfos;
 }
 
 
