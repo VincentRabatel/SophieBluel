@@ -16,29 +16,53 @@ logInForm.addEventListener("submit", function (event) {
 });
 
 async function logInSubmit(logInInfo){
-
-    const logInResponse = await fetch("http://localhost:5678/api/users/login", {
+    const response = await fetch("http://localhost:5678/api/users/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(logInInfo)
     });
-    
-    switch(logInResponse.status){
+   
+    switch(response.status){
+        // STATUS == Connected
         case 200 :
+            // Create a reader te read the response as ReadableStream
+            const reader = response.body
+                .pipeThrough(new TextDecoderStream())
+                .getReader();
+        
+            let responseInfo;
+        
+            // Wait for the ReadableStream to be fully read befor to continue
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+        
+                responseInfo = JSON.parse(value);
+        
+                console.log("Received", JSON.parse(value));
+            }
+
+            // Store log in info in the local storage
+            // TODO : write dedicated functions in storage.js
+            // TODO : use the now stored .userId everywhere needed
             window.localStorage.setItem("logInStatus", "true");
+            window.localStorage.setItem("logInUserId", responseInfo.userId);
+            window.localStorage.setItem("logInToken", responseInfo.token);
+
+            // Back to the main page
             window.location = "index.html";
         break;
     
+        // STATUS == Not authorized
         case 401 :
             window.alert("Not Authorized");
         break;
-    
+        
+        // STATUS == User not found
         case 404 :
             window.alert("User not found");
         break;
     }
-
-    // TODO : store the token auth
 }

@@ -2,7 +2,7 @@
 // API get and post functions //
 // -------------------------- //
 
-export async function getProject(projectID){
+export async function getProject(projectId){
 	// TODO ?
 }
 
@@ -16,10 +16,35 @@ export async function getProjects(){
 }
 
 export async function postProject(project){
-	// TODO
+	console.log("Posting the new project number " + project.id + " to the API");
+	
+	const postProjectResponse = await fetch("http://localhost:5678/api/works", {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'multipart/form-data',
+			'Authorization': ''
+		},
+		body: JSON.stringify(project)
+	});
+
+	console.log(postProjectResponse);
 }
 
-export async function getCategory(categoryID){
+export async function deleteProject(projectId){
+	console.log("Delete the project number " + projectId + " from the API");
+
+	const projectIdAsInt = parseInt(projectId); console.log(projectIdAsInt)
+	const deleteProjectResponse = await fetch("http://localhost:5678/api/works/" + projectIdAsInt, {
+		method: 'DELETE',
+		headers: {
+			'Authorization': ''
+		}
+	});
+
+	console.log(deleteProjectResponse);
+}
+
+export async function getCategory(categoryId){
 	// TODO ?
 }
 
@@ -42,8 +67,6 @@ export async function postLogInInfo(logInInfo){
 		},
 		body: JSON.stringify(logInInfo)
 	});
-
-	//console.log(logInResponse);
 
 	return logInResponse;
 }

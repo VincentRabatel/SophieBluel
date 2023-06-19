@@ -51,7 +51,7 @@ function hideElement(element){
 /**************************** EDIT TOP BAR *****************************/
 function initPublishButton(){
 	// Get 'publish' button element
-	const publishButtonElement = document.querySelector(".publish-button"); //console.log(publishButtonElement);
+	const publishButtonElement = document.querySelector(".publish-button");
 
 	// Create event listener for top bar 'publish' button
 	publishButtonElement.addEventListener('click', function(){
@@ -59,20 +59,55 @@ function initPublishButton(){
 	}, false);
 }
 
-function publishProjects(){
+async function publishProjects(){
+	const projects = storage.getProjects();
+	console.log("Checking this old list of projects :"); console.log(projects);
 	const projectsEdited = storage.getProjectsEdited();
 	console.log("Publishing this new list of projects :"); console.log(projectsEdited);
 
-	storage.storeProjects(projectsEdited);
+	for(let i = 0; i < projectsEdited.length; i++){
+		//console.log(projects[i].id)
 
-	storage.deleteProjectsEdited();
+		// Do we have a new project at the end of the list ?
+		if(!projects[i] && projectsEdited[i]){
+			await api.postProject(projectsEdited[i]);
+		}
+
+		// Do we have a new project somewhere in the middle of the list ?
+		else if(compareProjects(projects[i], projectsEdited[i]) == false){
+			// console.log("Comparing project : " + projects[i].title); //console.log(projects[i]);
+			// console.log("with project edited : " + projectsEdited[i].title); //console.log(projectsEdited[i]);
+			// console.log("RESULT : " + compareProjects(projects[i], projectsEdited[i]));
+
+			await api.deleteProject(projects[i].id);
+			await api.postProject(projectsEdited[i]);
+		}
+	}
+
+	//storage.storeProjects(projectsEdited);
+
+	//storage.deleteProjectsEdited();
+}
+
+// Return true if the projects are the same and fals if there is any differences
+function compareProjects(projectA, projectB){
+
+	if(projectA.id != projectB.id){
+		return false;
+	} else if(projectA.title != projectB.title){
+		return false;
+	} else if(projectA.imageUrl != projectB.imageUrl) {
+		return false;
+	}
+
+	return true;
 }
 
 
 /**************************** EDIT BUTTON ******************************/
 function initEditButton(){
 	// Get 'publish' button element
-	const editButtonElement = document.querySelector(".edit-button"); //console.log(editButtonElement);
+	const editButtonElement = document.querySelector(".edit-button");
 
 	// Create event listener for 'edit' button
 	editButtonElement.addEventListener('click', function(){
