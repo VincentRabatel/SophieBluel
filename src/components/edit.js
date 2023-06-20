@@ -1,13 +1,17 @@
-import { Project } from "../data/project.js";
-import { Category } from "../data/category.js";
+// --------------- //
+// EDIT MODE LOGIC //
+// --------------- //
 
 import * as api from '../hooks/api.js'
 import * as storage from '../hooks/storage.js';
 
 import { openModal } from "./modal.js";
 
-/***************************** EDIT MODE ******************************/
-// Initialize edit mode if user logged in
+
+// ----------------------- //
+// EDIT MODE ELEMENTS INIT //
+// ----------------------- //
+// Initialize edit mode if user logged in, this function is called in index.js
 export function initEditMode(){
 	initPublishButton();
 	initEditButton();
@@ -25,30 +29,33 @@ function fetchEditModeElements(){
 // Update CCS classes of Edit Mode elements depending of Log in status 
 function updateEditModeElements(logInStatus, editModeElements){
 	if(logInStatus == true){
-		//console.log("Logged in !");
 		editModeElements.forEach(element => {
-			showElement(element);
+			element.classList.remove("edit-hidden");
 		});
 
 	} else {
-		//console.log("User not logged in yet");
 		editModeElements.forEach(element => {
-			hideElement(element);
+			element.classList.add("edit-hidden");
 		});
 	}
 }
 
-function showElement(element){
-    element.classList.remove("edit-hidden");
+
+// ----------- //
+// EDIT BUTTON //
+// ----------- //
+function initEditButton(){
+	// Get 'publish' button element
+	const editButtonElement = document.querySelector(".edit-button");
+
+	// Create event listener for 'edit' button
+	editButtonElement.addEventListener('click', openModal, false);
 }
 
-function hideElement(element){
-    element.classList.add("edit-hidden");
-}
 
-
-
-/**************************** EDIT TOP BAR *****************************/
+// -------------- //
+// PUBLISH BUTTON //
+// -------------- //
 function initPublishButton(){
 	// Get 'publish' button element
 	const publishButtonElement = document.querySelector(".publish-button");
@@ -57,6 +64,7 @@ function initPublishButton(){
 	publishButtonElement.addEventListener('click', publishProjects, false);
 }
 
+// This function is called when clicking on the 'publish' button
 async function publishProjects(){
 	const projects = storage.getProjects();
 	const projectsEdited = storage.getProjectsEdited();
@@ -65,7 +73,7 @@ async function publishProjects(){
 	const projectsToAdd = [];
 	const projectsToDelete = [];
 
-	// To fill 'projectsToAdd', we check for every projects of 'projectsEdited'
+	// To fill 'projectsToAdd' we check for every projects in 'projectsEdited'
 	// if it already exists in 'projects'  
 	for(let i = 0; i < projectsEdited.length; i++){
 		if(containsProject(projects, projectsEdited[i]) == false){
@@ -74,7 +82,7 @@ async function publishProjects(){
 
 	}
 
-	// To fill 'projectsToDelete', we check for every projects of 'projects'
+	// To fill 'projectsToDelete' we check for every projects in 'projects'
 	// if it already DOESN'T exist in 'projects'
 	for(let i = 0; i < projects.length; i++){
 		if(containsProject(projectsEdited, projects[i]) == false){
@@ -107,6 +115,7 @@ async function publishProjects(){
 	window.alert("Publishing done !");
 }
 
+// Returns true if the given project exists in the array
 function containsProject(list, project) {
     for (let i = 0; i < list.length; i++) {
         if (list[i].title === project.title) {
@@ -117,7 +126,7 @@ function containsProject(list, project) {
     return false;
 }
 
-// Return true if the projects are the same and fals if there is any differences
+// Returns true if the projects are the same and fals if there is any differences
 function compareProjects(projectA, projectB){
 
 	if(projectA.id != projectB.id){
@@ -129,17 +138,4 @@ function compareProjects(projectA, projectB){
 	}
 
 	return true;
-}
-
-
-/**************************** EDIT BUTTON ******************************/
-function initEditButton(){
-	// Get 'publish' button element
-	const editButtonElement = document.querySelector(".edit-button");
-
-	// Create event listener for 'edit' button
-	editButtonElement.addEventListener('click', function(){
-		//console.log("Edit button clicked !");
-		openModal();
-	}, false);
 }
