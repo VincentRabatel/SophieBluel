@@ -54,39 +54,67 @@ function initPublishButton(){
 	const publishButtonElement = document.querySelector(".publish-button");
 
 	// Create event listener for top bar 'publish' button
-	publishButtonElement.addEventListener('click', function(){
-		publishProjects();
-	}, false);
+	publishButtonElement.addEventListener('click', publishProjects, false);
 }
 
 async function publishProjects(){
 	const projects = storage.getProjects();
-	console.log("Checking this old list of projects :"); console.log(projects);
 	const projectsEdited = storage.getProjectsEdited();
-	console.log("Publishing this new list of projects :"); console.log(projectsEdited);
 
+	// We prepare two array of projects to add and to delete before to use the api
+	const projectsToAdd = [];
+	const projectsToDelete = [];
+
+	// To fill 'projectsToAdd', we check for every projects of 'projectsEdited'
+	// if it already exists in 'projects'  
 	for(let i = 0; i < projectsEdited.length; i++){
-		//console.log(projects[i].id)
-
-		// Do we have a new project at the end of the list ?
-		if(!projects[i] && projectsEdited[i]){
-			await api.postProject(projectsEdited[i]);
+		if(containsProject(projects, projectsEdited[i]) == false){
+			projectsToAdd.push(projectsEdited[i]);
 		}
 
-		// Do we have a new project somewhere in the middle of the list ?
-		else if(compareProjects(projects[i], projectsEdited[i]) == false){
-			// console.log("Comparing project : " + projects[i].title); //console.log(projects[i]);
-			// console.log("with project edited : " + projectsEdited[i].title); //console.log(projectsEdited[i]);
-			// console.log("RESULT : " + compareProjects(projects[i], projectsEdited[i]));
+	}
 
-			await api.deleteProject(projects[i].id);
-			await api.postProject(projectsEdited[i]);
+	// To fill 'projectsToDelete', we check for every projects of 'projects'
+	// if it already DOESN'T exist in 'projects'
+	for(let i = 0; i < projects.length; i++){
+		if(containsProject(projectsEdited, projects[i]) == false){
+			projectsToDelete.push(projects[i]);
 		}
 	}
 
-	//storage.storeProjects(projectsEdited);
+	//console.log(projectsToAdd);
+	//console.log(projectsToDelete);
 
-	//storage.deleteProjectsEdited();
+	// Call the api for every project to add to the database
+	for(let i = 0; i < projectsToAdd.length; i++){
+		await api.postProject(projectsToAdd[i]);
+	}
+
+	// Call the api for every project to delete from the database
+	for(let i = 0; i < projectsToDelete.length; i++){
+		await api.deleteProject(projectsToDelete[i].id);
+	}
+
+	// Reset the local storage after database update
+	const newProjects = await api.getProjects(); console.log(newProjects);
+
+	storage.storeProjects(newProjects);
+	storage.storeProjectsEdited(newProjects);
+
+	// Reset login status
+	storage.storeLogInStatus(false);
+
+	window.alert("Publishing done !");
+}
+
+function containsProject(list, project) {
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].title === project.title) {
+			return true;
+        }
+    }
+
+    return false;
 }
 
 // Return true if the projects are the same and fals if there is any differences

@@ -13,6 +13,15 @@ export async function getProjects(){
 	return projects;
 }
 
+// Fetch all categories from the database
+export async function getCategories(){
+	console.log("API : Fetching categories form the API...");
+	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+	const categories = await categoriesResponse.json(); //console.log(categories);
+
+	return categories;
+}
+
 // Add a project to the database
 export async function postProject(project){
 	console.log("API : Posting the new project number " + project.id + " to the API");
@@ -58,15 +67,6 @@ export async function deleteProject(projectId){
 	console.log(deleteProjectResponse);
 }
 
-// Fetch all categories from the database
-export async function getCategories(){
-	console.log("API : Fetching categories form the API...");
-	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-	const categories = await categoriesResponse.json(); //console.log(categories);
-
-	return categories;
-}
-
 // Fetch log in response from API depending of log in form
 export async function postLogInInfo(logInInfo){
 	console.log("API : Trying to log in...");
@@ -82,7 +82,9 @@ export async function postLogInInfo(logInInfo){
 }
 
 
-// Backlog 
+// ------- //
+// Backlog //
+// ------- //
 export async function getProject(projectId){
 	// TODO ?
 }
