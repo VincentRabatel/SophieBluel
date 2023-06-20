@@ -2,12 +2,11 @@
 // localStorage get and store functions //
 // ------------------------------------ //
 
-import { Project } from "../data/project.js";
-import { Category } from "../data/category.js";
 
-// ------------------------------------------------------ //
-// The 'projects' array is storing all PUBLISHED projects //
-// ------------------------------------------------------ //
+
+// -------------------------------------------------------------- //
+// The 'projects' array is storing all ALREADY PUBLISHED projects //
+// -------------------------------------------------------------- //
 const projectsStorageId = "projects";
 
 // Return a list of all published projects from localStorage
@@ -20,27 +19,6 @@ export function getProjects(){
 // Store a new list of published projects in the localStorage
 export function storeProjects(projects){
 	window.localStorage.setItem(projectsStorageId, JSON.stringify(projects));
-}
-
-// Add a new Category to the categories array // => NEVER USED FOR NOW
-export function addProjectInProjects(project){
-	const projects = getProjects();
-	const newProjects = addNewItem(project, projects);
-
-	storeProjects(newProjects);
-}
-
-// Completely delete the 'projects' list from the localStorage // => NEVER USED FOR NOW
-export function deleteProjects(){
-	window.localStorage.removeItem(projectsStorageId);
-}
-
-// Return the first available id in the 'projects' array // => NEVER USED FOR NOW
-export function getAvailableIdInProjects(){
-	const projects = getProjects();
-	const availableId = getAvailableId(projects);
-
-	return availableId;
 }
 
 
@@ -195,4 +173,36 @@ function getAvailableId(arr){
 			return parseInt(id + 1);
 		}
 	}
+}
+
+
+
+
+
+
+
+
+// ------- //
+// Backlog //
+// ------- //
+
+// Add a new project to the 'projects' array // => NEVER USED FOR NOW
+export function addProjectInProjects(project){
+	const projects = getProjects();
+	const newProjects = addNewItem(project, projects);
+
+	storeProjects(newProjects);
+}
+
+// Completely delete the 'projects' list from the localStorage // => NEVER USED FOR NOW
+export function deleteProjects(){
+	window.localStorage.removeItem(projectsStorageId);
+}
+
+// Return the first available id in the 'projects' array // => NEVER USED FOR NOW
+export function getAvailableIdInProjects(){
+	const projects = getProjects();
+	const availableId = getAvailableId(projects);
+
+	return availableId;
 }
