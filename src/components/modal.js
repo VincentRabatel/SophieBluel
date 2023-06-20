@@ -1,12 +1,13 @@
 import { Project } from "../data/project.js";
 import { Category } from "../data/category.js";
 
-import * as api from '../hooks/api.js'
 import * as storage from '../hooks/storage.js';
 
 import { updateGallery } from "./gallery.js";
 
-/**************************** MODAL WINDOW *****************************/
+// ------------------------------------ //
+// MODAL WINDOW //
+// ------------------------------------ //
 // Get HTML main elements
 const modal = document.querySelector(".modal-container");
 const modalTitle = document.querySelector(".modal-title");
@@ -75,7 +76,8 @@ function updateModalContent(){
             modalTitle.innerText = "Ajout photo";
             break;
 
-        // Modal window is at 'add project (form is complete)' step // TODO : Useless ?
+        // TODO : Useless ?
+        // Modal window is at 'add project (form is complete)' step
         case 3:
 
             // TODO : back to main page, with the main gallery updated
@@ -98,11 +100,14 @@ function hideElement(element){
 }
 
 
-/************************ PREVIOUS MODAL BUTTON *************************/
+
+// ---------------------------- //
+// PREVIOUS MODAL WINDOW BUTTON //
+// ---------------------------- //
 // Initialize top 'previous' modal button
 function initModalPreviousButton(){
 	// Get modal window's 'previous' button element
-    const previousButton = document.querySelector(".back-button"); //console.log(previousButtonElement);
+    const previousButton = document.querySelector(".back-button");
 
     previousButton.addEventListener('click', function(){
         //console.log("'Previous button' clicked !");
@@ -112,11 +117,14 @@ function initModalPreviousButton(){
 }
 
 
-/************************** CLOSE MODAL BUTTON **************************/
+
+// ------------------------- //
+// CLOSE MODAL WINDOW BUTTON //
+// ------------------------- //
 // Initialize top 'close' modal button
 function initModalCloseButton(){
 	// Get modal window's 'close' button element
-    const closeButton = document.querySelector(".close-button"); //console.log(closeButtonElement);
+    const closeButton = document.querySelector(".close-button");
 
     closeButton.addEventListener('click', function(){
         //console.log("'Close button' clicked !");
@@ -125,7 +133,10 @@ function initModalCloseButton(){
 }
 
 
-/************************** MODAL ADD PROJECT **************************/
+
+// ------------------ //
+// ADD PROJECT BUTTON //
+// ------------------ //
 function initModalAddProject(){
     hideElement(modalAddProject);
 }
@@ -141,12 +152,13 @@ function initModalAddProjectButton(){
 
 
 
-/************************** NEW PROJECT FORM **************************/
-
+// ---------------- //
+// NEW PROJECT FORM //
+// ---------------- //
 // TODO list :
 // - finish to build the Category object
 // - manage when we type an unexisting category
-// - manage the cas when a project already exists
+// - manage the case when a project already exists
 // - choose what we should be doing with the 'project.userId' property
 function initNewProjectForm(){
     initNewProjectPictureInput();
@@ -160,30 +172,22 @@ function initNewProjectForm(){
         event.preventDefault();
 
         const newProjectId = storage.getAvailableIdInProjectsEdited();
-
         const newProjectTitle = event.target.querySelector("[name=title]").value;
 
-
-        // TODO : rework
         const newProjectImageFile = event.target.querySelector("[name=picture]").files[0];
-        //console.log(newProjectImageFile);
 
         // The function URL.revokeObjectURL() is used to tell 
-        // the browser to not keep the ObjectURL in memeory anymore
+        // the browser to not keep the ObjectURL in memory anymore
         //URL.revokeObjectURL(newProjectImageBlobURL);
 
-        const newProjectBlob = new Blob([newProjectImageFile], {type: "image/png"}),
-            url = URL.createObjectURL(newProjectBlob),
+        const newProjectImageBlob = new Blob([newProjectImageFile], {type: "image/png"}),
+            url = URL.createObjectURL(newProjectImageBlob),
             img = new Image();
-        //console.log(newProjectBlob);
         
         const newProjectImageBlobURL = url.toString();
-        //console.log(newProjectImageBlobURL);
-
 
         const newCategoryName = event.target.querySelector("[name=category]").value;
         const newCategoryId = storage.getCategoryId(newCategoryName);
-
         const newCategory = new Category(newCategoryId, newCategoryName);
 
         // Create the newProject object from the form      
@@ -196,8 +200,10 @@ function initNewProjectForm(){
             newCategory
         );
 
+        // Store the new project in 'projectEdited'
         storage.addProjectInProjectsEdited(newProject);
 
+        // Get the full 'projectEdited' array to update the gallery
         const newProjectsEdited = storage.getProjectsEdited();
 
         updateGallery(newProjectsEdited, null);
@@ -205,6 +211,7 @@ function initNewProjectForm(){
 
         closeModal();
 
+        // TODO
         resetNewProjectForm();
     })
 }
@@ -220,7 +227,7 @@ function initNewProjectPictureInput(){
 
     // Check if there is a change in the 'new project picture' input
     newPictureInput.addEventListener('change', function(){
-        const newFile = newPictureInput.files[0]; //console.log(newFile);
+        const newFile = newPictureInput.files[0];
         newPictureInputImg.src = URL.createObjectURL(newFile);
 
         showElement(newPictureInputImg);
@@ -278,42 +285,29 @@ function resetNewProjectForm(){
 }
 
 
-/************************ DELETE GALLERY BUTTON **************************/
-// Initialize 'delete gallery' modal button
-function initModalClearGalleryButton(){
-    deleteGalleryButton.addEventListener('click', function(){
-		//console.log("'Delete gallery' button clicked !");
 
-		// Empty the local storage
-        storage.storeProjectsEdited("");
+// ---------------------- //
+// MODAL WINDOW'S GALLERY //
+// ---------------------- //
 
-		clearModalGallery();
-    }, false);
-}
-
-
-/*************************** MODAL GALLERY ***************************/
 // Initialize the modal gallery from the local storage data
 export function initModalGallery(){
-	// Get the 'projects' array from the local storage
-	const projects = storage.getProjects();
 
-	// Create HTML for every project in 'projects'
+    const projects = storage.getProjects();
+
+	// Create HTML elements for every project in 'projects'
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 
-	// store the 'projectsEdited' array in the local storage for the first time,
-    // that will be used during edit mode
+	// Store the 'projectsEdited' array in the local storage for the first time,
+    // it will be the only array used during edit mode
     storage.storeProjectsEdited(projects);
 }
 
 
 // Update the modal gallery from the local storage data
 function updateModalGallery(projects){
-	// // Get the 'projectsEdited' array from the local storage
-	// const projectsEdited = storage.getProjectsEdited();
-
 	clearModalGallery();
 
 	// Create HTML for every project in 'projectsEdited'
@@ -323,26 +317,11 @@ function updateModalGallery(projects){
 }
 
 
-function deleteModalGalleryProject(projectIdToDelete){
-	//console.log("Delete project number " + projectIdToDelete + " during edit mode");
-
-	// Get the 'projectsEdited' array from the local storage
-	const projectsEdited = storage.getProjectsEdited();
-
-	// Filter the project array with the project to delete
-	const newProjectsEdited = projectsEdited.filter(project => project.id != projectIdToDelete);
-
-	// Update the local storage with the new project array
-    storage.storeProjectsEdited(newProjectsEdited);
-
-    updateGallery(newProjectsEdited, null);
-	updateModalGallery(newProjectsEdited);
-}
-
-
 function clearModalGallery(){
 	// Empty the modal gallery HTML element
 	modalGallery.innerHTML = "";
+
+    updateGallery("", null);
 }
 
 
@@ -368,6 +347,7 @@ function createModalGalleryProject(project){
 	return newProjectElement;
 }
 
+
 function createDeleteButton(projectId){
 	// Create delete button background element
 	const newDeleteButton = document.createElement("div");
@@ -385,4 +365,37 @@ function createDeleteButton(projectId){
 	newDeleteButton.appendChild(newDeleteButtonIcon);
 
 	return newDeleteButton;
+}
+
+
+function deleteModalGalleryProject(projectIdToDelete){
+	// Get the 'projectsEdited' array from the local storage
+	const projectsEdited = storage.getProjectsEdited();
+
+	// Filter the project array with the project to delete
+	const newProjectsEdited = projectsEdited.filter(project => project.id != projectIdToDelete);
+
+	// Update the local storage with the new project array
+    storage.storeProjectsEdited(newProjectsEdited);
+
+    updateGallery(newProjectsEdited, null);
+	updateModalGallery(newProjectsEdited);
+}
+
+
+
+// ----------------------------- //
+// DELETE MODAL WINDOW'S GALLERY //
+// ----------------------------- //
+
+// Initialize 'delete gallery' modal button
+function initModalClearGalleryButton(){
+    deleteGalleryButton.addEventListener('click', function(){
+		//console.log("'Delete gallery' button clicked !");
+
+		// Empty the local storage
+        storage.storeProjectsEdited("");
+
+		clearModalGallery();
+    }, false);
 }

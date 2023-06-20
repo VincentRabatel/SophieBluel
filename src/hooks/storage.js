@@ -13,6 +13,8 @@ const projectsStorageId = "projects";
 export function getProjects(){
 	const projects = JSON.parse(window.localStorage.getItem(projectsStorageId));
 
+	// TODO : security check, is 'projects' different here and in the API ?
+
     return projects;
 }
 
