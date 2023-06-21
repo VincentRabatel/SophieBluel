@@ -2,8 +2,6 @@
 // localStorage get and store functions //
 // ------------------------------------ //
 
-
-
 // -------------------------------------------------------------- //
 // The 'projects' array is storing all ALREADY PUBLISHED projects //
 // -------------------------------------------------------------- //
@@ -153,6 +151,7 @@ export function getLogInInfos(){
 }
 
 
+
 // ----------------- //
 // Generic functions //
 // ----------------- //
@@ -176,11 +175,6 @@ function getAvailableId(arr){
 		}
 	}
 }
-
-
-
-
-
 
 
 

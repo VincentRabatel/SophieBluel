@@ -7,7 +7,7 @@ export class Project  {
         this.imageUrl = imageUrl;
         this.categoryId = categoryId;
         this.userId = userId
-        this.category = new Category;
+        this.category = category;
     }
 
     stringify(){

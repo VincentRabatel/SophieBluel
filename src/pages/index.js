@@ -1,5 +1,5 @@
 // Check log in status
-import * as storage from '../hooks/storage.js';
+import * as storage from '../services/storage.js';
 const logInStatus = storage.checkLogInStatus();
 
 // Initialization of the main gallery

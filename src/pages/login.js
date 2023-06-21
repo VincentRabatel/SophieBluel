@@ -1,5 +1,5 @@
-import * as api from '../hooks/api.js'
-import * as storage from '../hooks/storage.js';
+import * as api from '../services/api.js'
+import * as storage from '../services/storage.js';
 
 // Get logIn form HTML element
 const logInForm = document.querySelector(".login-form"); // console.log(logInForm);

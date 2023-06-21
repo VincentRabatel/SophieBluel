@@ -2,8 +2,8 @@
 // EDIT MODE LOGIC //
 // --------------- //
 
-import * as api from '../hooks/api.js'
-import * as storage from '../hooks/storage.js';
+import * as api from '../services/api.js'
+import * as storage from '../services/storage.js';
 
 import { openModal } from "./modal.js";
 
@@ -79,7 +79,6 @@ async function publishProjects(){
 		if(containsProject(projects, projectsEdited[i]) == false){
 			projectsToAdd.push(projectsEdited[i]);
 		}
-
 	}
 
 	// To fill 'projectsToDelete' we check for every projects in 'projects'
@@ -109,8 +108,9 @@ async function publishProjects(){
 	storage.storeProjects(newProjects);
 	storage.storeProjectsEdited(newProjects);
 
-	// Reset login status
-	storage.storeLogInStatus(false);
+	// TODO list
+	// - reset log in status and log in infos
+	// - reload the page and exit edit mode
 
 	window.alert("Publishing done !");
 }

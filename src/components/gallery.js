@@ -1,8 +1,8 @@
 import { Project } from "../data/project.js";
 import { Category } from "../data/category.js";
 
-import * as api from '../hooks/api.js'
-import * as storage from '../hooks/storage.js';
+import * as api from '../services/api.js'
+import * as storage from '../services/storage.js';
 
 /**************************** HTML FETCH ****************************/
 const galleryElement = document.querySelector(".gallery");

@@ -1,7 +1,7 @@
 import { Project } from "../data/project.js";
 import { Category } from "../data/category.js";
 
-import * as storage from '../hooks/storage.js';
+import * as storage from '../services/storage.js';
 
 import { updateGallery } from "./gallery.js";
 
