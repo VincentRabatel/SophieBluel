@@ -11,8 +11,6 @@ const projectsStorageId = "projects";
 export function getProjects(){
 	const projects = JSON.parse(window.localStorage.getItem(projectsStorageId));
 
-	// TODO : security check, is 'projects' different here and in the API ?
-
     return projects;
 }
 
@@ -80,31 +78,6 @@ export function storeCategories(categories){
 	window.localStorage.setItem(categoriesStorageId, JSON.stringify(categories));
 }
 
-// Add a new Category to the categories array // => NEVER USED FOR NOW
-export function addCategory(category){
-	const categories = getCategories();
-	const newCategories = addNewItem(category, categories);
-
-	storeCategories(newCategories);
-}
-
-// Completely delete the 'categories' list from the localStorage // => NEVER USED FOR NOW
-export function deleteCategories(){
-	window.localStorage.removeItem(categoriesStorageId);
-}
-
-// Return the first available id in the 'categories' array // => NEVER USED FOR NOW
-export function getAvailableIdInCategories(){
-	const categories = getCategories();
-	const availableId = getAvailableId(categories);
-
-	return availableId;
-}
-
-export function getCategoryName(id){
-	// TODO ?
-}
-
 export function getCategoryId(name){
 	//console.log("Testing all categories to find the if ID of category : " + name);
 	const categories = getCategories();
@@ -126,6 +99,7 @@ export function getCategoryId(name){
 // ------------- //
 // Log in status //
 // ------------- //
+// Store and return login infos as a bool
 const logInStatusStorageId = "logInStatus";
 
 export function storeLogInStatus(logInStatus){
@@ -138,6 +112,7 @@ export function checkLogInStatus(){
 }
 
 
+// Store and return login infos as Object { userId: , token: }
 const logInInfosStorageId = "logInInfos";
 
 export function storeLogInInfos(logInInfos){
@@ -182,6 +157,8 @@ function getAvailableId(arr){
 // Backlog //
 // ------- //
 
+/*
+
 // Add a new project to the 'projects' array // => NEVER USED FOR NOW
 export function addProjectInProjects(project){
 	const projects = getProjects();
@@ -202,3 +179,32 @@ export function getAvailableIdInProjects(){
 
 	return availableId;
 }
+
+
+
+// Add a new Category to the categories array // => NEVER USED FOR NOW
+export function addCategory(category){
+	const categories = getCategories();
+	const newCategories = addNewItem(category, categories);
+
+	storeCategories(newCategories);
+}
+
+// Completely delete the 'categories' list from the localStorage // => NEVER USED FOR NOW
+export function deleteCategories(){
+	window.localStorage.removeItem(categoriesStorageId);
+}
+
+// Return the first available id in the 'categories' array // => NEVER USED FOR NOW
+export function getAvailableIdInCategories(){
+	const categories = getCategories();
+	const availableId = getAvailableId(categories);
+
+	return availableId;
+}
+
+export function getCategoryName(id){
+	// TODO ?
+}
+
+*/

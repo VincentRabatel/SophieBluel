@@ -155,12 +155,8 @@ function initModalAddProjectButton(){
 // ---------------- //
 // NEW PROJECT FORM //
 // ---------------- //
-// TODO list :
-// - finish to build the Category object
-// - manage when we type an unexisting category
-// - manage the case when a project already exists
-// - choose what we should be doing with the 'project.userId' property
 function initNewProjectForm(){
+    // Inputs initializations
     initNewProjectPictureInput();
     initNewProjectTitleInput();
     initNewProjectCategoryInput();
@@ -186,6 +182,8 @@ function initNewProjectForm(){
         
         const newProjectImageBlobURL = url.toString();
 
+        const newUserId = storage.getLogInInfos().userId;
+
         const newCategoryName = event.target.querySelector("[name=category]").value;
         const newCategoryId = storage.getCategoryId(newCategoryName);
         const newCategory = new Category(newCategoryId, newCategoryName);
@@ -196,9 +194,11 @@ function initNewProjectForm(){
             newProjectTitle,
             newProjectImageBlobURL,
             newCategoryId,
-            "1",
+            newUserId,
             newCategory
         );
+
+        console.log(newProject)
 
         // Store the new project in 'projectEdited'
         storage.addProjectInProjectsEdited(newProject);
