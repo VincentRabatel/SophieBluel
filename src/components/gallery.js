@@ -11,7 +11,7 @@ export async function initGallery(){
 	// because blob urls of image files won't load the image correctly
 
 	// Get the 'projects' list from the localStorage and fetch the API if null
-	const projects = /*await storage.getProjectsEdited() ?? await storage.getProjects() ?? */await api.getProjects();
+	const projects = /* await storage.getProjectsEdited() ?? await storage.getProjects() ?? */ await api.getProjects();
 
 	// Store the project array in the local storage
 	storage.storeProjects(projects);
@@ -40,8 +40,8 @@ function createGallery(projects){
 	}
 }
 
-// Get rid of everything in the gallery
-function emptyGallery() {
+// Empty the gallery HTML element
+export function emptyGallery() {
 	galleryElement.innerHTML = "";
 }
 
@@ -82,9 +82,7 @@ export async function initFilters(){
 	updateFilterButtonsColor(0);
 }
 
-// --------------------- //
-// Filters buttons logic //
-// --------------------- //
+// Filters buttons logic
 let lastFilterId = 0;
 function filterProjects(projects, filterId){
 	let projectsFiltered;

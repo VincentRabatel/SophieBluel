@@ -4,7 +4,7 @@ import { Category } from "../data/category.js";
 import * as api from '../services/api.js';
 import * as storage from '../services/storage.js';
 
-import { updateGallery } from "./gallery.js";
+import { updateGallery, emptyGallery } from "./gallery.js";
 
 // ------------ //
 // MODAL WINDOW //
@@ -283,8 +283,8 @@ function resetNewProjectForm(){
 // ---------------------- //
 
 // Initialize the modal gallery from the local storage data
-export function initModalGallery(){
-    const projects = storage.getProjectsEdited() ?? storage.getProjects();
+export async function initModalGallery(){
+    const projects = /* await storage.getProjectsEdited() ?? await storage.getProjects() ?? */ await api.getProjects();
 
 	// Create HTML elements for every project in 'projects'
 	projects.forEach(project => {
@@ -299,7 +299,7 @@ export function initModalGallery(){
 
 // Update the modal gallery from the local storage data
 function updateModalGallery(projects){
-	clearModalGallery();
+	emptyModalGallery();
 
 	// Create HTML for every project in 'projectsEdited'
 	projects.forEach(project => {
@@ -307,9 +307,8 @@ function updateModalGallery(projects){
 	})
 }
 
-
-function clearModalGallery(){
-	// Empty the modal gallery HTML element
+// Empty the modal gallery HTML element
+function emptyModalGallery(){
 	modalGallery.innerHTML = "";
 }
 
@@ -388,16 +387,24 @@ async function deleteModalGalleryProject(projectIdToDelete){
 // DELETE MODAL WINDOW'S GALLERY //
 // ----------------------------- //
 
-// TODO : apply clearModalGallery() to clearGallery()
-
 // Initialize 'delete gallery' modal button
 function initModalClearGalleryButton(){
     deleteGalleryButton.addEventListener('click', function(){
-		//console.log("'Delete gallery' button clicked !");
-
 		// Empty the local storage
-        storage.storeProjectsEdited("");
+        storage.storeProjectsEdited(""); // TEMP
 
 		clearModalGallery();
     }, false);
+}
+
+async function clearModalGallery(){
+    const projects = await api.getProjects();
+
+    for(let i = 0; i < projects.length + 1 ; i++){
+        await api.deleteProject(i);
+        console.log("del" + i)
+    }
+
+    emptyGallery();
+    emptyModalGallery();
 }
