@@ -9,7 +9,7 @@ import * as storage from './storage.js';
 
 // Fetch all projects from API
 export async function getProjects(){
-	//console.log("API : Fetching projects form the API...");
+	console.log("API : Fetching projects form the API...");
 
 	const projectsResponse = await fetch("http://localhost:5678/api/works");
 	const projectsJSON = await projectsResponse.json();
@@ -39,7 +39,7 @@ export async function getProjects(){
 
 // Fetch all categories from the database
 export async function getCategories(){
-	//console.log("API : Fetching categories form the API...");
+	console.log("API : Fetching categories form the API...");
 
 	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
 	const categoriesJSON = await categoriesResponse.json();
@@ -62,7 +62,7 @@ export async function getCategories(){
 
 // Add a project to the database
 export async function postProject(project){
-	//console.log("API : Posting the new project number " + project.id + " to the API");
+	console.log("API : Posting the new project number " + project.id + " to the API");
 
 	// Create a blob storing the project's image 
 	const imageBlob = await fetch(project.imageUrl).then(r => r.blob());
@@ -90,7 +90,7 @@ export async function postProject(project){
 
 // Delete a project from the database
 export async function deleteProject(projectId){
-	//console.log("API : Delete the project number " + projectId + " from the API");
+	console.log("API : Delete the project number " + projectId + " from the API");
 
 	// Get log in info to be able to use the auth token in the fetch()
 	const logInInfo = storage.getLogInInfos();
@@ -107,7 +107,7 @@ export async function deleteProject(projectId){
 
 // Fetch log in response from API depending of log in form
 export async function postLogInInfo(logInInfo){
-	//console.log("API : Trying to log in...");
+	console.log("API : Trying to log in...");
 
 	const logInResponse = await fetch("http://localhost:5678/api/users/login", {
 		method: 'POST',

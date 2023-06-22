@@ -1,6 +1,7 @@
 import { Project } from "../data/project.js";
 import { Category } from "../data/category.js";
 
+import * as api from '../services/api.js';
 import * as storage from '../services/storage.js';
 
 import { updateGallery } from "./gallery.js";
@@ -356,7 +357,8 @@ function createDeleteButton(projectId){
 }
 
 
-function deleteModalGalleryProject(projectIdToDelete){
+async function deleteModalGalleryProject(projectIdToDelete){
+    /* OLD
 	// Get the 'projectsEdited' array from the local storage
 	const projectsEdited = storage.getProjectsEdited();
 
@@ -368,6 +370,16 @@ function deleteModalGalleryProject(projectIdToDelete){
 
     updateGallery(newProjectsEdited, null);
 	updateModalGallery(newProjectsEdited);
+    */
+
+    await api.deleteProject(projectIdToDelete);
+    
+    const projects = await api.getProjects();
+
+    storage.storeProjects(projects); // TEMP
+
+    updateModalGallery(projects);
+    updateGallery(projects, null);
 }
 
 
@@ -375,6 +387,8 @@ function deleteModalGalleryProject(projectIdToDelete){
 // ----------------------------- //
 // DELETE MODAL WINDOW'S GALLERY //
 // ----------------------------- //
+
+// TODO : apply clearModalGallery() to clearGallery()
 
 // Initialize 'delete gallery' modal button
 function initModalClearGalleryButton(){
