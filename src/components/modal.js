@@ -292,8 +292,7 @@ function resetNewProjectForm(){
 
 // Initialize the modal gallery from the local storage data
 export function initModalGallery(){
-
-    const projects = storage.getProjects();
+    const projects = storage.getProjectsEdited() ?? storage.getProjects();
 
 	// Create HTML elements for every project in 'projects'
 	projects.forEach(project => {

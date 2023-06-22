@@ -7,8 +7,11 @@ import * as storage from '../services/storage.js';
 const galleryElement = document.querySelector(".gallery");
 
 export async function initGallery(){
+	// TODO : problem when reloading the page using the 'projectsEdited' array
+	// because blob urls of image files won't load the image correctly
+	
 	// Get the 'projects' list from the localStorage and fetch the API if null
-	const projects = storage.getProjects() ?? await api.getProjects();
+	const projects = await storage.getProjectsEdited() ?? await storage.getProjects() ?? await api.getProjects();
 
 	// Store the project array in the local storage
 	storage.storeProjects(projects);
@@ -129,7 +132,7 @@ function createFilterButton(filterId, name){
 	
 	// Add event listnener
 	newFilterButtonElement.addEventListener('click', function(){
-		const projects = storage.getProjects();
+		const projects = storage.getProjectsEdited() ?? storage.getProjects();
 
 		updateGallery(projects, filterId);
 		updateFilterButtonsColor(filterId);
