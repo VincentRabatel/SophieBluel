@@ -89,9 +89,6 @@ async function publishProjects(){
 		}
 	}
 
-	//console.log(projectsToAdd);
-	//console.log(projectsToDelete);
-
 	// Call the api for every project to add to the database
 	for(let i = 0; i < projectsToAdd.length; i++){
 		await api.postProject(projectsToAdd[i]);

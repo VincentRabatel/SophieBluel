@@ -2,8 +2,7 @@ import * as api from '../services/api.js'
 import * as storage from '../services/storage.js';
 
 // Get logIn form HTML element
-const logInForm = document.querySelector(".login-form"); // console.log(logInForm);
-
+const logInForm = document.querySelector(".login-form");
 // Add event listener to log in form
 logInForm.addEventListener("submit", function (event) {
     // Disable default behaviour of the web browser
@@ -19,13 +18,7 @@ logInForm.addEventListener("submit", function (event) {
 });
 
 async function logInSubmit(logInInfo){
-    const response = await fetch("http://localhost:5678/api/users/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(logInInfo)
-    });
+    const response = await api.postLogInInfo(logInInfo);
    
     switch(response.status){
         // STATUS == Connected
@@ -48,8 +41,6 @@ async function logInSubmit(logInInfo){
             }
 
             // Store log in info in the local storage
-            // TODO : write dedicated functions in storage.js
-            // TODO : use the now stored .userId everywhere needed
             storage.storeLogInStatus(true);
             storage.storeLogInInfos(responseInfo);
 

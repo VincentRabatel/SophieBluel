@@ -124,10 +124,14 @@ export async function postLogInInfo(logInInfo){
 // ------- //
 // Backlog //
 // ------- //
+
+/*
 export async function getProject(projectId){
-	// TODO ?
+
 }
 
 export async function getCategory(categoryId){
-	// TODO ?
+
 }
+
+*/

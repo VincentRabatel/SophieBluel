@@ -5,9 +5,9 @@ import * as storage from '../services/storage.js';
 
 import { updateGallery } from "./gallery.js";
 
-// ------------------------------------ //
+// ------------ //
 // MODAL WINDOW //
-// ------------------------------------ //
+// ------------ //
 // Get HTML main elements
 const modal = document.querySelector(".modal-container");
 const modalTitle = document.querySelector(".modal-title");
@@ -74,15 +74,6 @@ function updateModalContent(){
             hideElement(addProjectButton);
             hideElement(deleteGalleryButton);
             modalTitle.innerText = "Ajout photo";
-            break;
-
-        // TODO : Useless ?
-        // Modal window is at 'add project (form is complete)' step
-        case 3:
-
-            // TODO : back to main page, with the main gallery updated
-
-            modalTitle.innerText = "Ajout photo"
             break;
 
         default:
