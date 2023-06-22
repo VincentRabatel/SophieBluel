@@ -3,8 +3,9 @@ import * as storage from '../services/storage.js';
 const logInStatus = storage.checkLogInStatus();
 
 // Initialization of the main gallery
-import { initGallery } from "../components/gallery.js";
+import { initGallery, initFilters } from "../components/gallery.js";
 initGallery();
+initFilters();
 
 // Initialization of 'Edit Mode' if user is logged in
 import { initEditMode } from "../components/edit.js";

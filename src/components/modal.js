@@ -320,8 +320,6 @@ function updateModalGallery(projects){
 function clearModalGallery(){
 	// Empty the modal gallery HTML element
 	modalGallery.innerHTML = "";
-
-    updateGallery("", null);
 }
 
 
