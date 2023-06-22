@@ -61,8 +61,9 @@ export async function getCategories(){
 }
 
 // Add a project to the database
-export async function postProject(project){
-	console.log("API : Posting the new project number " + project.id + " to the API");
+export async function postProject(projectData){
+	/* OLD
+	//console.log("API : Posting the new project number " + project.id + " to the API");
 
 	// Create a blob storing the project's image 
 	const imageBlob = await fetch(project.imageUrl).then(r => r.blob());
@@ -73,6 +74,7 @@ export async function postProject(project){
 	projectData.append("image", imageBlob);
 	projectData.append("title", project.title);
 	projectData.append("category", project.categoryId);
+	*/
 
 	// Get log in info to be able to use the auth token in the fetch()
 	const logInInfo = storage.getLogInInfos();

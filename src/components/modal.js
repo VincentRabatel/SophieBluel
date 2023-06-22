@@ -1,14 +1,16 @@
-import { Project } from "../data/project.js";
-import { Category } from "../data/category.js";
+// ------------ //
+// MODAL WINDOW //
+// ------------ //
 
 import * as api from '../services/api.js';
 import * as storage from '../services/storage.js';
 
 import { updateGallery, emptyGallery } from "./gallery.js";
 
-// ------------ //
-// MODAL WINDOW //
-// ------------ //
+// --------------------------- //
+// MODAL WINDOW INITIALIZATION //
+// --------------------------- //
+
 // Get HTML main elements
 const modal = document.querySelector(".modal-container");
 const modalTitle = document.querySelector(".modal-title");
@@ -155,11 +157,12 @@ function initNewProjectForm(){
 
     const newProjectForm = document.querySelector(".new-project-form");
 
-    newProjectForm.addEventListener("submit", function (event) {
+    newProjectForm.addEventListener("submit", async function (event) {
         // Disable default behaviour of the web browser
         event.preventDefault();
 
-        const newProjectId = storage.getAvailableIdInProjectsEdited();
+        /* OLD
+        const newProjectId = storage.getAvailableIdInProjects();
         const newProjectTitle = event.target.querySelector("[name=title]").value;
 
         const newProjectImageFile = event.target.querySelector("[name=picture]").files[0];
@@ -189,9 +192,31 @@ function initNewProjectForm(){
             newUserId,
             newCategory
         );
+        */
+        
+        const imageFile = event.target.querySelector("[name=picture]").files[0];
+        const imageBlob = new Blob([imageFile], {type: "image/png"});
+    
+        const title = event.target.querySelector("[name=title]").value;
+        const categoryName = event.target.querySelector("[name=category]").value;
+        const categoryId = storage.getCategoryId(categoryName);
 
-        console.log(newProject)
+        const projectData = new FormData();
 
+        projectData.append("image", imageBlob);
+        projectData.append("title", title);
+        projectData.append("category", categoryId);
+
+        await api.postProject(projectData);
+        
+        const projects = await api.getProjects();
+
+        storage.storeProjects(projects); // TEMP
+
+        updateModalGallery(projects);
+        updateGallery(projects, null);
+
+        /* OLD
         // Store the new project in 'projectEdited'
         storage.addProjectInProjectsEdited(newProject);
 
@@ -201,6 +226,7 @@ function initNewProjectForm(){
         updateGallery(newProjectsEdited, null);
         updateModalGallery(newProjectsEdited);
 
+        */
         closeModal();
 
         // TODO
@@ -210,7 +236,7 @@ function initNewProjectForm(){
 
 // Initialize new project 'picture' input
 function initNewProjectPictureInput(){
-    const newPictureInput = document.querySelector("#newPicture");
+    const newPictureInput = document.querySelector("#newPicture"); // TODO : find another way to query this
     const newPictureInputDefault = document.querySelector(".input-file-default");
     const newPictureInputImg = document.querySelector(".input-file-img");
 
@@ -291,9 +317,11 @@ export async function initModalGallery(){
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
 
+    /* OLD
 	// Store the 'projectsEdited' array in the local storage for the first time,
     // it will be the only array used during edit mode
     storage.storeProjectsEdited(projects);
+    */
 }
 
 
@@ -391,7 +419,7 @@ async function deleteModalGalleryProject(projectIdToDelete){
 function initModalClearGalleryButton(){
     deleteGalleryButton.addEventListener('click', function(){
 		// Empty the local storage
-        storage.storeProjectsEdited(""); // TEMP
+        //storage.storeProjectsEdited(""); // TEMP
 
 		clearModalGallery();
     }, false);

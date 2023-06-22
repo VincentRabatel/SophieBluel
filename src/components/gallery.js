@@ -20,6 +20,12 @@ export async function initGallery(){
 	createGallery(projects);
 }
 
+// Generate the gallery with an array of projects
+function createGallery(projects){
+	for(let project of projects){
+		createProjectElement(project);
+	}
+}
 
 
 // ------------------------------ //
@@ -29,13 +35,6 @@ export async function updateGallery(projects, filterId){
 	emptyGallery();
 
 	for(let project of filterProjects(projects, filterId)){
-		createProjectElement(project);
-	}
-}
-
-// Generate the gallery with an array of projects
-function createGallery(projects){
-	for(let project of projects){
 		createProjectElement(project);
 	}
 }

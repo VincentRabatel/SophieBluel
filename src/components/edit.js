@@ -7,7 +7,6 @@ import * as storage from '../services/storage.js';
 
 import { openModal } from "./modal.js";
 
-
 // ----------------------- //
 // EDIT MODE ELEMENTS INIT //
 // ----------------------- //
