@@ -166,6 +166,7 @@ function initNewProjectForm(){
         const imageBlob = new Blob([imageFile], {type: "image/png"});
     
         const title = event.target.querySelector("[name=title]").value;
+        
         const categoryName = event.target.querySelector("[name=category]").value;
         const categoryId = storage.getCategoryId(categoryName);
 
@@ -228,8 +229,8 @@ function initNewProjectCategoryInput(){
     // Get the category input element
     const newCategoryInput = document.querySelector("#category");
     
-    // Fetch categories in the local storage
-	const categories = storage.getCategories();
+    // Fetch categories from the API
+	const categories = api.getCategories();
 
     // Fill the category input with the one option for each category
     categories.forEach(category => {

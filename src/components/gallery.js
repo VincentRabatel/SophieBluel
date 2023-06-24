@@ -1,5 +1,4 @@
 import * as api from '../services/api.js'
-import * as storage from '../services/storage.js';
 
 // ----------------------------------- //
 // First initialisation of the gallery //
@@ -21,24 +20,7 @@ function createGallery(projects){
 	}
 }
 
-
-// ------------------------------ //
-// Update the gallery when needed //
-// ------------------------------ //
-export async function updateGallery(projects, filterId){
-	emptyGallery();
-
-	for(let project of filterProjects(projects, filterId)){
-		createProjectElement(project);
-	}
-}
-
-// Empty the gallery HTML element
-export function emptyGallery() {
-	galleryElement.innerHTML = "";
-}
-
-// Create a project HTML element
+// Create a project HTML element for the gallery
 function createProjectElement(project){
 	// Create HTML
 	const newProjectElement = document.createElement('figure');
@@ -56,6 +38,22 @@ function createProjectElement(project){
 }
 
 
+// ------------------------------ //
+// Update the gallery when needed //
+// ------------------------------ //
+export async function updateGallery(projects, filterId){
+	emptyGallery();
+
+	for(let project of filterProjects(projects, filterId)){
+		createProjectElement(project);
+	}
+}
+
+// Empty the gallery HTML element
+export function emptyGallery() {
+	galleryElement.innerHTML = "";
+}
+
 
 // ----------------------------------- //
 // First initialisation of the filters //
@@ -63,40 +61,13 @@ function createProjectElement(project){
 const filtersElement = document.querySelector(".filters");
 
 export async function initFilters(){
-	// Get the 'categories' list from the localStorage and fetch the API if null
-	const categories = storage.getCategories() ?? await api.getCategories();
-
-	// Store the categories array in the local storage
-	storage.storeCategories(categories);
+	// Get the 'categories' list from the the API
+	const categories = await api.getCategories();
 
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
 
 	updateFiltersButtonsColor(0);
-}
-
-// Filters buttons logic
-let lastFilterId = 0;
-function filterProjects(projects, filterId){
-	let projectsFiltered;
-
-	// If we pass 'null' here we keep the filter unchanged
-	if (filterId === null) {
-		filterId = lastFilterId;
-	}
-
-	// If it's the 'all' filter
-	if (filterId === 0) {
-		projectsFiltered = projects;
-
-	// If it's another filter
-	} else {
-		projectsFiltered = projects.filter(project => project.categoryId == filterId);
-	}
-
-	lastFilterId = filterId;
-	
-	return projectsFiltered;
 }
 
 // Generate all filters buttons with an array of categories
@@ -134,9 +105,35 @@ function createFilterButton(filterId, name){
 	return newFilterButtonElement;
 }
 
+// --------------------- //
+// Filters buttons logic //
+// --------------------- //
+let lastFilterId = 0;
+function filterProjects(projects, filterId){
+	let projectsFiltered;
+
+	// If we pass 'null' here we keep the filter unchanged
+	if (filterId === null) {
+		filterId = lastFilterId;
+	}
+
+	// If it's the 'all' filter
+	if (filterId === 0) {
+		projectsFiltered = projects;
+
+	// If it's another filter
+	} else {
+		projectsFiltered = projects.filter(project => project.categoryId == filterId);
+	}
+
+	lastFilterId = filterId;
+	
+	return projectsFiltered;
+}
+
 // Update filters buttons colors when clicked
-function updateFiltersButtonsColor(selectedID){
-	const categories = storage.getCategories();
+async function updateFiltersButtonsColor(selectedID){
+	const categories = await api.getCategories();
 
 	for(let i = 0; i <= categories.length; i++){
 		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
