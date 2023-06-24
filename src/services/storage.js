@@ -9,6 +9,7 @@ const projectsStorageId = "projects";
 
 // Return a list of all published projects from localStorage
 export function getProjects(){
+	console.trace("STORAGE : Getting projects form the local storage");
 	const projects = JSON.parse(window.localStorage.getItem(projectsStorageId));
 
     return projects;
@@ -16,47 +17,8 @@ export function getProjects(){
 
 // Store a new list of published projects in the localStorage
 export function storeProjects(projects){
+	console.trace("STORAGE : Storing projects in the the local storage");
 	window.localStorage.setItem(projectsStorageId, JSON.stringify(projects));
-}
-
-
-
-// -------------------------------------------------------------------- //
-// The 'projectsEdited' array is storing all projects BEFORE PUBLISHING //
-// -------------------------------------------------------------------- //
-const projectsEditedStorageId = "projectsEdited";
-
-// Return a list of all projects of the Edit Mode (not yet published)
-export function getProjectsEdited(){
-	const projectsEdited = JSON.parse(window.localStorage.getItem(projectsEditedStorageId));
-
-    return projectsEdited;
-}
-
-// Store a new list of edited projects in the localStorage (not yet published)
-export function storeProjectsEdited(projectsEdited){
-	window.localStorage.setItem(projectsEditedStorageId, JSON.stringify(projectsEdited));
-}
-
-// Add a new project to the 'projectsEdited' array
-export function addProjectInProjectsEdited(project){
-	const projectsEdited = getProjectsEdited();
-	const newProjectsEdited = addNewItem(project, projectsEdited);
-
-	storeProjectsEdited(newProjectsEdited);
-}
-
-// Completely delete the 'projectsEdited' list from the localStorage
-export function deleteProjectsEdited(){
-	window.localStorage.removeItem(projectsEditedStorageId);
-}
-
-// Return the first available id in the 'projectsEdited' array
-export function getAvailableIdInProjectsEdited(){
-	const projectsEdited = getProjectsEdited();
-	const availableId = getAvailableId(projectsEdited);
-
-	return availableId;
 }
 
 
@@ -159,6 +121,10 @@ function getAvailableId(arr){
 
 /*
 
+// -------------------------------------------------------------- //
+// The 'projects' array is storing all ALREADY PUBLISHED projects //
+// -------------------------------------------------------------- //
+
 // Add a new project to the 'projects' array // => NEVER USED FOR NOW
 export function addProjectInProjects(project){
 	const projects = getProjects();
@@ -181,6 +147,54 @@ export function getAvailableIdInProjects(){
 }
 
 
+// -------------------------------------------------------------------- //
+// The 'projectsEdited' array is storing all projects BEFORE PUBLISHING //
+// -------------------------------------------------------------------- //
+const projectsEditedStorageId = "projectsEdited";
+
+// Return a list of all projects of the Edit Mode (not yet published)
+export function getProjectsEdited(){
+	console.trace("STORAGE : Getting projects edited form the local storage");
+	const projectsEdited = JSON.parse(window.localStorage.getItem(projectsEditedStorageId));
+
+    return projectsEdited;
+}
+
+// Store a new list of edited projects in the localStorage (not yet published)
+export function storeProjectsEdited(projectsEdited){
+	console.trace("STORAGE : Storing edited projects in the the local storage");
+	window.localStorage.setItem(projectsEditedStorageId, JSON.stringify(projectsEdited));
+}
+
+// Add a new project to the 'projectsEdited' array
+export function addProjectInProjectsEdited(project){
+	console.trace("STORAGE : Adding a new project in edited projects array");
+	const projectsEdited = getProjectsEdited();
+	const newProjectsEdited = addNewItem(project, projectsEdited);
+
+	storeProjectsEdited(newProjectsEdited);
+}
+
+// Completely delete the 'projectsEdited' list from the localStorage
+export function deleteProjectsEdited(){
+	console.trace("STORAGE : Deleting the edited project array");
+	window.localStorage.removeItem(projectsEditedStorageId);
+}
+
+// Return the first available id in the 'projectsEdited' array
+export function getAvailableIdInProjectsEdited(){
+	console.trace("STORAGE : Getting an available ID in the edited project array");
+	const projectsEdited = getProjectsEdited();
+	const availableId = getAvailableId(projectsEdited);
+
+	return availableId;
+}
+
+
+
+// ------------------------------------------------ //
+// The 'categories' array is storing all categories //
+// ------------------------------------------------ //
 
 // Add a new Category to the categories array // => NEVER USED FOR NOW
 export function addCategory(category){
