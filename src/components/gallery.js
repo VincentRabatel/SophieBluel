@@ -7,14 +7,8 @@ import * as storage from '../services/storage.js';
 const galleryElement = document.querySelector(".gallery");
 
 export async function initGallery(){
-	// TODO : problem when reloading the page using the 'projectsEdited' array
-	// because blob urls of image files won't load the image correctly
-
-	// Get the 'projects' list from the localStorage and fetch the API if null
-	const projects = /* await storage.getProjectsEdited() ?? await storage.getProjects() ?? */ await api.getProjects();
-
-	// Store the project array in the local storage
-	storage.storeProjects(projects);
+	// Get the 'projects' list from the API
+	const projects = await api.getProjects();
 
 	// Generate the gallery with the list of projects
 	createGallery(projects);
@@ -78,7 +72,7 @@ export async function initFilters(){
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
 
-	updateFilterButtonsColor(0);
+	updateFiltersButtonsColor(0);
 }
 
 // Filters buttons logic
@@ -129,10 +123,10 @@ function createFilterButton(filterId, name){
 	
 	// Add event listnener
 	newFilterButtonElement.addEventListener('click', async function(){
-		const projects = /* storage.getProjectsEdited() ?? storage.getProjects() ?? */ await api.getProjects();
+		const projects = await api.getProjects();
 
 		updateGallery(projects, filterId);
-		updateFilterButtonsColor(filterId);
+		updateFiltersButtonsColor(filterId);
 	}, false);
 
 	filtersElement.appendChild(newFilterButtonElement);
@@ -141,7 +135,7 @@ function createFilterButton(filterId, name){
 }
 
 // Update filters buttons colors when clicked
-function updateFilterButtonsColor(selectedID){
+function updateFiltersButtonsColor(selectedID){
 	const categories = storage.getCategories();
 
 	for(let i = 0; i <= categories.length; i++){

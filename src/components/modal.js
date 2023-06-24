@@ -160,40 +160,8 @@ function initNewProjectForm(){
     newProjectForm.addEventListener("submit", async function (event) {
         // Disable default behaviour of the web browser
         event.preventDefault();
-
-        /* OLD
-        const newProjectId = storage.getAvailableIdInProjects();
-        const newProjectTitle = event.target.querySelector("[name=title]").value;
-
-        const newProjectImageFile = event.target.querySelector("[name=picture]").files[0];
-
-        // The function URL.revokeObjectURL() is used to tell 
-        // the browser to not keep the ObjectURL in memory anymore
-        //URL.revokeObjectURL(newProjectImageBlobURL);
-
-        const newProjectImageBlob = new Blob([newProjectImageFile], {type: "image/png"}),
-            url = URL.createObjectURL(newProjectImageBlob),
-            img = new Image();
-        
-        const newProjectImageBlobURL = url.toString();
-
-        const newUserId = storage.getLogInInfos().userId;
-
-        const newCategoryName = event.target.querySelector("[name=category]").value;
-        const newCategoryId = storage.getCategoryId(newCategoryName);
-        const newCategory = new Category(newCategoryId, newCategoryName);
-
-        // Create the newProject object from the form      
-        const newProject = new Project(
-            newProjectId,
-            newProjectTitle,
-            newProjectImageBlobURL,
-            newCategoryId,
-            newUserId,
-            newCategory
-        );
-        */
-        
+       
+        // Get new project informations
         const imageFile = event.target.querySelector("[name=picture]").files[0];
         const imageBlob = new Blob([imageFile], {type: "image/png"});
     
@@ -201,32 +169,22 @@ function initNewProjectForm(){
         const categoryName = event.target.querySelector("[name=category]").value;
         const categoryId = storage.getCategoryId(categoryName);
 
+        // Build the form data to be send to the API
         const projectData = new FormData();
 
         projectData.append("image", imageBlob);
         projectData.append("title", title);
         projectData.append("category", categoryId);
 
+        // Post the new project
         await api.postProject(projectData);
         
+        // Get the updated projects list to update the gallery
         const projects = await api.getProjects();
-
-        storage.storeProjects(projects); // TEMP
 
         updateModalGallery(projects);
         updateGallery(projects, null);
 
-        /* OLD
-        // Store the new project in 'projectEdited'
-        storage.addProjectInProjectsEdited(newProject);
-
-        // Get the full 'projectEdited' array to update the gallery
-        const newProjectsEdited = storage.getProjectsEdited();
-
-        updateGallery(newProjectsEdited, null);
-        updateModalGallery(newProjectsEdited);
-
-        */
         closeModal();
 
         // TODO
@@ -308,24 +266,18 @@ function resetNewProjectForm(){
 // MODAL WINDOW'S GALLERY //
 // ---------------------- //
 
-// Initialize the modal gallery from the local storage data
+// Initialize the modal gallery with data from the API
 export async function initModalGallery(){
-    const projects = /* await storage.getProjectsEdited() ?? await storage.getProjects() ?? */ await api.getProjects();
+    const projects = await api.getProjects();
 
 	// Create HTML elements for every project in 'projects'
 	projects.forEach(project => {
 		modalGallery.appendChild(createModalGalleryProject(project));
 	})
-
-    /* OLD
-	// Store the 'projectsEdited' array in the local storage for the first time,
-    // it will be the only array used during edit mode
-    storage.storeProjectsEdited(projects);
-    */
 }
 
 
-// Update the modal gallery from the local storage data
+// Update the modal gallery with a new array of projects
 function updateModalGallery(projects){
 	emptyModalGallery();
 
@@ -374,7 +326,6 @@ function createDeleteButton(projectId){
 	newDeleteButtonIcon.classList.add("fa-solid", "fa-trash-can");
 
 	newDeleteButton.addEventListener('click', function(){
-		//console.log("'Delete project' button clicked !");
 		deleteModalGalleryProject(projectId);
 	}, false);
 
@@ -385,25 +336,9 @@ function createDeleteButton(projectId){
 
 
 async function deleteModalGalleryProject(projectIdToDelete){
-    /* OLD
-	// Get the 'projectsEdited' array from the local storage
-	const projectsEdited = storage.getProjectsEdited();
-
-	// Filter the project array with the project to delete
-	const newProjectsEdited = projectsEdited.filter(project => project.id != projectIdToDelete);
-
-	// Update the local storage with the new project array
-    storage.storeProjectsEdited(newProjectsEdited);
-
-    updateGallery(newProjectsEdited, null);
-	updateModalGallery(newProjectsEdited);
-    */
-
     await api.deleteProject(projectIdToDelete);
     
     const projects = await api.getProjects();
-
-    storage.storeProjects(projects); // TEMP
 
     updateModalGallery(projects);
     updateGallery(projects, null);
@@ -418,9 +353,6 @@ async function deleteModalGalleryProject(projectIdToDelete){
 // Initialize 'delete gallery' modal button
 function initModalClearGalleryButton(){
     deleteGalleryButton.addEventListener('click', function(){
-		// Empty the local storage
-        //storage.storeProjectsEdited(""); // TEMP
-
 		clearModalGallery();
     }, false);
 }
