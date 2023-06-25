@@ -168,10 +168,10 @@ function initNewProjectForm(){
         const title = event.target.querySelector("[name=title]").value;
         
         const categoryName = event.target.querySelector("[name=category]").value;
-        const categoryId = storage.getCategoryId(categoryName);
+        const categoryId = await getCategoryId(categoryName);
 
         // Build the form data to be send to the API
-        const projectData = new FormData();
+        const projectData = new FormData(); console.log(projectData)
 
         projectData.append("image", imageBlob);
         projectData.append("title", title);
@@ -225,12 +225,12 @@ function initNewProjectTitleInput(){
 }
 
 // Initialize new project 'category' input
-function initNewProjectCategoryInput(){
+async function initNewProjectCategoryInput(){
     // Get the category input element
     const newCategoryInput = document.querySelector("#category");
     
     // Fetch categories from the API
-	const categories = api.getCategories();
+	const categories = await api.getCategories();
 
     // Fill the category input with the one option for each category
     categories.forEach(category => {
@@ -259,6 +259,21 @@ function checkNewProjectValidity(){
 // Reset the new project form after a new project is added
 function resetNewProjectForm(){
     // TODO
+}
+
+async function getCategoryId(name){
+	const categories = await api.getCategories();
+	
+	let categoryId;
+
+	categories.forEach(category => {
+		//console.log("Trying category : " + category.name + " and name " + name);
+		if(category.name == name){
+			categoryId = parseInt(category.id);
+		}
+	});
+
+	return categoryId;
 }
 
 
@@ -293,7 +308,6 @@ function emptyModalGallery(){
 	modalGallery.innerHTML = "";
 }
 
-
 function createModalGalleryProject(project){
 	// Create container element
 	const newProjectElement = document.createElement("figure");
@@ -315,7 +329,6 @@ function createModalGalleryProject(project){
 
 	return newProjectElement;
 }
-
 
 function createDeleteButton(projectId){
 	// Create delete button background element
@@ -358,6 +371,7 @@ function initModalClearGalleryButton(){
     }, false);
 }
 
+// Clear the gallery and the modal gallery of every project when clicking on button
 async function clearModalGallery(){
     const projects = await api.getProjects();
 
