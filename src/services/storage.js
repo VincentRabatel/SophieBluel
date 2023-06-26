@@ -2,22 +2,6 @@
 // localStorage get and store functions //
 // ------------------------------------ //
 
-export function getCategoryId(name){
-	console.trace("Testing all categories to find the if ID of category : " + name);
-	const categories = getCategories();
-	
-	let categoryId;
-
-	categories.forEach(category => {
-		//console.log("Trying category : " + category.name + " and name " + name);
-		if(category.name == name){
-			categoryId = parseInt(category.id);
-		}
-	});
-
-	return categoryId;
-}
-
 // ------------- //
 // Log in status //
 // ------------- //

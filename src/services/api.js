@@ -11,28 +11,34 @@ import * as storage from './storage.js';
 export async function getProjects(){
 	console.trace("API : Fetching projects form the API...");
 
-	const projectsResponse = await fetch("http://localhost:5678/api/works");
-	const projectsJSON = await projectsResponse.json();
-	
 	const projects = [];
 
-	projectsJSON.forEach(project => {
-		// Create the 'project' object      
-		project = new Project(
-			project.id,
-			project.title,
-			project.imageUrl,
-			project.categoryId,
-			project.userId,
-			new Category(
-				project.category.id,
-				project.category.name
-			)
-		);
+	try{
+		const projectsResponse = await fetch("http://localhost:5678/api/works");
+		const projectsJSON = await projectsResponse.json();
 
-		// Add the 'project' to the array storing all projects
-		projects.push(project);
-	});
+		projectsJSON.forEach(project => {
+			// Create the 'project' object      
+			project = new Project(
+				project.id,
+				project.title,
+				project.imageUrl,
+				project.categoryId,
+				project.userId,
+				new Category(
+					project.category.id,
+					project.category.name
+				)
+			);
+	
+			// Add the 'project' to the array storing all projects
+			projects.push(project);
+		});
+	
+	} catch (error) {
+		// Failed to fetch the projects
+		window.alert('There was an error while loading projects, please reload the page', error);
+	}
 
 	return projects;
 }
@@ -41,21 +47,27 @@ export async function getProjects(){
 export async function getCategories(){
 	console.trace("API : Fetching categories form the API...");
 
-	const categoriesResponse = await fetch("http://localhost:5678/api/categories");
-	const categoriesJSON = await categoriesResponse.json();
-
 	const categories = [];
 
-	categoriesJSON.forEach(category => {
-		// Create the 'category' object
-		category = new Category(
-			category.id,
-			category.name
-		)
-		
-		// Add the 'category' to the array storing all categories
-		categories.push(category);
-	});
+	try {
+		const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+		const categoriesJSON =  await categoriesResponse.json();
+	
+		categoriesJSON.forEach(category => {
+			// Create the 'category' object
+			category = new Category(
+				category.id,
+				category.name
+			)
+			
+			// Add the 'category' to the array storing all categories
+			categories.push(category);
+		});
+	
+	} catch (error) {
+		// Failed to fetch the categories
+		window.alert('There was an error while loading categories, please reload the page', error);
+	}
 
 	return categories;
 }

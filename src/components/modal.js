@@ -1,15 +1,9 @@
-// ------------ //
-// MODAL WINDOW //
-// ------------ //
-
 import * as api from '../services/api.js';
-import * as storage from '../services/storage.js';
-
 import { updateGallery, emptyGallery } from "./gallery.js";
 
-// --------------------------- //
-// MODAL WINDOW INITIALIZATION //
-// --------------------------- //
+// ---------------------------------------- //
+// First initialization of the modal window //
+// ---------------------------------------- //
 
 // Get HTML main elements
 const modal = document.querySelector(".modal-container");
@@ -171,7 +165,7 @@ function initNewProjectForm(){
         const categoryId = await getCategoryId(categoryName);
 
         // Build the form data to be send to the API
-        const projectData = new FormData(); console.log(projectData)
+        const projectData = new FormData();
 
         projectData.append("image", imageBlob);
         projectData.append("title", title);

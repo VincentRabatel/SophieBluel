@@ -14,7 +14,7 @@ logInForm.addEventListener("submit", function (event) {
         password: event.target.querySelector("[name=password]").value
     };
 
-    logInSubmit(logInInfo); //console.log(logInInfo);
+    logInSubmit(logInInfo);
 });
 
 async function logInSubmit(logInInfo){
@@ -30,14 +30,12 @@ async function logInSubmit(logInInfo){
         
             let responseInfo;
         
-            // Wait for the ReadableStream to be fully read befor to continue
+            // Wait for the ReadableStream to be fully read before to continue
             while (true) {
                 const { value, done } = await reader.read();
                 if (done) break;
         
                 responseInfo = JSON.parse(value);
-        
-                console.log("Received", responseInfo);
             }
 
             // Store log in info in the local storage
