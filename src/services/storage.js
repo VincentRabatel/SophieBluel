@@ -12,9 +12,13 @@ export function storeLogInStatus(logInStatus){
 	window.localStorage.setItem(logInStatusStorageId, logInStatus);
 }
 
-export function checkLogInStatus(){
+export function getLogInStatus(){
 	const logInStatus = window.localStorage.getItem(logInStatusStorageId);
 	return logInStatus;
+}
+
+export function clearLogInStatus(){
+	window.localStorage.removeItem(logInStatusStorageId);
 }
 
 
@@ -29,6 +33,10 @@ export function getLogInInfos(){
 	const logInInfos = JSON.parse(window.localStorage.getItem(logInInfosStorageId));
 
 	return logInInfos;
+}
+
+export function clearLogInInfos(){
+	window.localStorage.removeItem(logInInfosStorageId);
 }
 
 

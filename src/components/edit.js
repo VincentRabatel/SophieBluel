@@ -1,8 +1,3 @@
-// --------------- //
-// EDIT MODE LOGIC //
-// --------------- //
-
-import * as api from '../services/api.js'
 import * as storage from '../services/storage.js';
 
 import { openModal } from "./modal.js";
@@ -14,29 +9,28 @@ import { openModal } from "./modal.js";
 export function initEditMode(){
 	initPublishButton();
 	initEditButton();
-	
+}
+
+export function openEditMode(){
 	const editModeElements = fetchEditModeElements();
-	updateEditModeElements(true, editModeElements);
+
+	editModeElements.forEach(element => {
+		element.classList.remove("edit-hidden");
+	});
+}
+
+function closeEditMode(){
+	const editModeElements = fetchEditModeElements();
+
+	editModeElements.forEach(element => {
+		element.classList.add("edit-hidden");
+	});
 }
 
 // Return all HTML elements affected by Edit Mode status
 function fetchEditModeElements(){
 	const editModeElements = document.querySelectorAll(".edit-block");
 	return editModeElements;
-}
-
-// Update CCS classes of Edit Mode elements depending of Log in status 
-function updateEditModeElements(logInStatus, editModeElements){
-	if(logInStatus == true){
-		editModeElements.forEach(element => {
-			element.classList.remove("edit-hidden");
-		});
-
-	} else {
-		editModeElements.forEach(element => {
-			element.classList.add("edit-hidden");
-		});
-	}
 }
 
 
@@ -65,52 +59,24 @@ function initPublishButton(){
 
 // This function is called when clicking on the 'publish' button
 async function publishProjects(){
-	const projects = storage.getProjects();
-	const projectsEdited = storage.getProjectsEdited();
 
-	// We prepare two array of projects to add and to delete before to use the api
-	const projectsToAdd = [];
-	const projectsToDelete = [];
+	// Publish what ?
 
-	// To fill 'projectsToAdd' we check for every projects in 'projectsEdited'
-	// if it already exists in 'projects'  
-	for(let i = 0; i < projectsEdited.length; i++){
-		if(containsProject(projects, projectsEdited[i]) == false){
-			projectsToAdd.push(projectsEdited[i]);
-		}
-	}
+	// Reset log in status and log in infos
+	storage.clearLogInInfos();
+	storage.clearLogInStatus();
 
-	// To fill 'projectsToDelete' we check for every projects in 'projects'
-	// if it already DOESN'T exist in 'projects'
-	for(let i = 0; i < projects.length; i++){
-		if(containsProject(projectsEdited, projects[i]) == false){
-			projectsToDelete.push(projects[i]);
-		}
-	}
-
-	// Call the api for every project to add to the database
-	for(let i = 0; i < projectsToAdd.length; i++){
-		await api.postProject(projectsToAdd[i]);
-	}
-
-	// Call the api for every project to delete from the database
-	for(let i = 0; i < projectsToDelete.length; i++){
-		await api.deleteProject(projectsToDelete[i].id);
-	}
-
-	// Reset the local storage after database update
-	const newProjects = await api.getProjects(); console.log(newProjects);
-
-	storage.storeProjects(newProjects);
-	storage.storeProjectsEdited(newProjects);
-
-	// TODO list
-	// - reset log in status and log in infos
-	// - reload the page and exit edit mode
+	// Close edit mode
+	closeEditMode();
 
 	window.alert("Publishing done !");
 }
 
+
+// ------- //
+// Backlog //
+// ------- //
+/*
 // Returns true if the given project exists in the array
 function containsProject(list, project) {
     for (let i = 0; i < list.length; i++) {
@@ -135,3 +101,4 @@ function compareProjects(projectA, projectB){
 
 	return true;
 }
+*/
