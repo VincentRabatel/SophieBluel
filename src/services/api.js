@@ -121,19 +121,3 @@ export async function postLogInInfo(logInInfo){
 
 	return logInResponse;
 }
-
-
-// ------- //
-// Backlog //
-// ------- //
-
-/*
-export async function getProject(projectId){
-
-}
-
-export async function getCategory(categoryId){
-
-}
-
-*/

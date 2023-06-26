@@ -71,34 +71,3 @@ async function publishProjects(){
 
 	window.alert("Publishing done !");
 }
-
-
-// ------- //
-// Backlog //
-// ------- //
-/*
-// Returns true if the given project exists in the array
-function containsProject(list, project) {
-    for (let i = 0; i < list.length; i++) {
-        if (list[i].title === project.title) {
-			return true;
-        }
-    }
-
-    return false;
-}
-
-// Returns true if the projects are the same and fals if there is any differences
-function compareProjects(projectA, projectB){
-
-	if(projectA.id != projectB.id){
-		return false;
-	} else if(projectA.title != projectB.title){
-		return false;
-	} else if(projectA.imageUrl != projectB.imageUrl) {
-		return false;
-	}
-
-	return true;
-}
-*/

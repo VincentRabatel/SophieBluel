@@ -1,4 +1,5 @@
 import * as api from '../services/api.js';
+
 import { updateGallery, emptyGallery } from "./gallery.js";
 
 // ---------------------------------------- //
