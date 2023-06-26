@@ -17,6 +17,7 @@ const deleteGalleryButton = document.querySelector('input[value="Supprimer la ga
 const validateProjectButton = document.querySelector('input[value="Valider"]');
 
 export function initModal(){
+    initModalOverlay();
     initModalPreviousButton();
     initModalCloseButton();
 	
@@ -377,4 +378,16 @@ async function clearModalGallery(){
 
     emptyGallery();
     emptyModalGallery();
+}
+
+
+
+
+// ---------------------- //
+// Modal's window overlay //
+// ---------------------- //
+function initModalOverlay(){
+    const overlay = document.querySelector(".modal-overlay");
+
+    overlay.addEventListener('click', closeModal);
 }

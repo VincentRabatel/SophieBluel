@@ -452,7 +452,7 @@ footer nav ul {
 	top: 0;
 }
 
-.overlay {
+.modal-overlay {
 	position: absolute;
 	width: 100%;
 	height: 100%;
