@@ -26,7 +26,7 @@
 	<body>
 		<!-- Header -->
 		<header>
-			<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 			<nav>
 				<ul>
 					<li><a href="./index.html#portfolio">projet</a></li>
@@ -44,9 +44,17 @@
 
                 <label for="email">E-mail</label>
                 <input class="login-form__email" type="email" name="email" id="email">
+				<div class="login-error edit-hidden" id="login-error-email">
+					<i class="fa-solid fa-circle-exclamation"></i>
+					<span>Identifiant inconnu</span>
+				</div>
 
-                <label for="name">Mot de passe</label>
+                <label for="password">Mot de passe</label>
                 <input class="login-form__password" type="password" name="password" id="password">
+				<div class="login-error edit-hidden" id="login-error-password">
+					<i class="fa-solid fa-circle-exclamation"></i>
+					<span>Mot de passe incorrect</span>
+				</div>
 
                 <input id="log-in" type="submit" value="Se connecter" class="rnd-green-button">
             </form>

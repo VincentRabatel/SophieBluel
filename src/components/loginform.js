@@ -23,9 +23,15 @@ export function initLogInForm(){
 async function submitLogInForm(logInInfo){
     const response = await api.postLogInInfo(logInInfo);
    
+    const errorPassword = document.querySelector("#login-error-password");
+    const errorEmail = document.querySelector("#login-error-email");
+
     switch(response.status){
         // STATUS == Connected
         case 200 :
+            errorPassword.classList.add("edit-hidden");
+            errorEmail.classList.add("edit-hidden");
+
             // Create a reader to read the response as ReadableStream
             const reader = response.body
                 .pipeThrough(new TextDecoderStream())
@@ -51,12 +57,18 @@ async function submitLogInForm(logInInfo){
     
         // STATUS == Not authorized
         case 401 :
-            window.alert("Not Authorized");
+            errorPassword.classList.remove("edit-hidden");
+            errorEmail.classList.add("edit-hidden");
+            
+            //window.alert("Mot de passe incorrect");
         break;
         
         // STATUS == User not found
         case 404 :
-            window.alert("User not found");
+            errorPassword.classList.add("edit-hidden");
+            errorEmail.classList.remove("edit-hidden");
+
+            //window.alert("Identifiant inconnu");
         break;
     }
 }

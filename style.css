@@ -346,6 +346,11 @@ form textarea {
 	margin : 7px auto 28px auto;
 }
 
+.login-error {
+	color: #d93025;
+	margin-bottom: 30px;
+}
+
 /************************** FOOTER **************************/
 footer {
 	height: 60px;
