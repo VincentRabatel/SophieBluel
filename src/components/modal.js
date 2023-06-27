@@ -1,6 +1,6 @@
 import * as api from '../services/api.js';
 
-import { updateGallery, emptyGallery } from "./gallery.js";
+import { updateGallery, emptyGallery, refreshGalleryCategories, refreshGalleryProjects } from "./gallery.js";
 
 // ---------------------------------------- //
 // First initialization of the modal window //
@@ -182,6 +182,9 @@ function initNewProjectForm(){
         updateModalGallery(projects);
         updateGallery(projects, null);
 
+        refreshGalleryProjects();
+        refreshGalleryCategories();
+
         closeModal();
 
         // TODO
@@ -336,7 +339,7 @@ function createDeleteButton(projectId){
 	newDeleteButtonIcon.classList.add("fa-solid", "fa-trash-can");
 
 	newDeleteButton.addEventListener('click', function(){
-		deleteModalGalleryProject(projectId);
+		deleteProject(projectId);
 	}, false);
 
 	newDeleteButton.appendChild(newDeleteButtonIcon);
@@ -345,10 +348,13 @@ function createDeleteButton(projectId){
 }
 
 
-async function deleteModalGalleryProject(projectIdToDelete){
+async function deleteProject(projectIdToDelete){
     await api.deleteProject(projectIdToDelete);
     
     const projects = await api.getProjects();
+
+    refreshGalleryProjects();
+    refreshGalleryCategories();
 
     updateModalGallery(projects);
     updateGallery(projects, null);

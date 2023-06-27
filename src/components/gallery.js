@@ -1,20 +1,34 @@
 import * as api from '../services/api.js'
 
+// ---------------------------------------------------- //
+// Gallery's variables to store projects and categories //
+// ---------------------------------------------------- //
+let projects = [];
+let categories = [];
+
+export async function refreshGalleryProjects(){
+	projects = await api.getProjects();
+}
+
+export async function refreshGalleryCategories(){
+	categories = await api.getCategories();
+}
+
 // ----------------------------------- //
 // First initialisation of the gallery //
 // ----------------------------------- //
 const galleryElement = document.querySelector(".gallery");
 
+// This function is called in index.js
 export async function initGallery(){
-	// Get the 'projects' list from the API
-	const projects = await api.getProjects();
+	projects = await api.getProjects();
 
 	// Generate the gallery with the list of projects
-	createGallery(projects);
+	createGallery();
 }
 
 // Generate the gallery with an array of projects
-function createGallery(projects){
+function createGallery(){
 	for(let project of projects){
 		createProjectElement(project);
 	}
@@ -41,7 +55,7 @@ function createProjectElement(project){
 // ------------------------------ //
 // Update the gallery when needed //
 // ------------------------------ //
-export async function updateGallery(projects, filterId){
+export function updateGallery(projects, filterId){
 	emptyGallery();
 
 	for(let project of filterProjects(projects, filterId)){
@@ -60,9 +74,9 @@ export function emptyGallery() {
 // ----------------------------------- //
 const filtersElement = document.querySelector(".filters");
 
+// This function is called in index.js
 export async function initFilters(){
-	// Get the 'categories' list from the the API
-	const categories = await api.getCategories();
+	categories = await api.getCategories();
 
 	// Generate the filters buttons with an array of categories
 	createFilters(categories);
@@ -93,9 +107,7 @@ function createFilterButton(filterId, name){
 	newFilterButtonElement.classList.add("filter");
 	
 	// Add event listnener
-	newFilterButtonElement.addEventListener('click', async function(){
-		const projects = await api.getProjects();
-
+	newFilterButtonElement.addEventListener('click', function(){
 		updateGallery(projects, filterId);
 		updateFiltersButtonsColor(filterId);
 	}, false);
@@ -104,6 +116,7 @@ function createFilterButton(filterId, name){
 
 	return newFilterButtonElement;
 }
+
 
 // --------------------- //
 // Filters buttons logic //
@@ -132,11 +145,8 @@ function filterProjects(projects, filterId){
 }
 
 // Update filters buttons colors when clicked
-async function updateFiltersButtonsColor(selectedID){
-	const categories = await api.getCategories();
-
+function updateFiltersButtonsColor(selectedID){
 	for(let i = 0; i <= categories.length; i++){
-		//console.log("Updading the button with the id " + i + " compared to selected id of " + selectedID);
 		let filter = document.getElementById("filter-" + i.toString());
 
 		if(i == selectedID){
