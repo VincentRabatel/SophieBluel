@@ -138,18 +138,26 @@
 
 					<form class="new-project-form" action="#" method="post">
 						<!-- New project's picture file input -->
-						<label class="input-file" for="newPicture">
+						<div class="input-file-container">
+
+							<!-- Default visual container -->
 							<div class="input-file-default">
 								<img class="input-file-bkg" src="./assets/vectors/frame.svg" alt="">
 								<h3>+ Ajouter une photo</h3>
 								<span>jpg, png : 4mo max</span>
 							</div>
-							<img class="input-file-img" src="" alt="">
-						</label>
-						<input type="file" name="picture" id="newPicture" accept=".jpg,.png">
+
+							<!-- Image added by the user -->
+							<img class="input-file-img" src="#" alt="">
+
+							<!-- Clickable input to add a new picture -->
+							<label class="input-file" for="newPicture"></label>
+							<input type="file" name="picture" id="newPicture" accept=".jpg,.png">
+						</div>
+
 
 						<!-- New project's title input -->
-						<label for="title">Titre</label>
+						<label for="newTitle">Titre</label>
 						<input type="text" name="title" id="newTitle">
 
 						<!-- New project's category input -->

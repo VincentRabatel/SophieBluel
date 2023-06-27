@@ -149,6 +149,7 @@ li:hover {
 }
 
 
+
 /**************************** COMMONS ****************************/
 /* Round green buttons */
 .rnd-green-button {
@@ -273,7 +274,6 @@ li:hover {
 
 form {
 	text-align: left;
-	/* margin-top: 38px; */
 	display: flex;
 	flex-direction: column;
 }
@@ -460,13 +460,8 @@ footer nav ul {
 }
 
 .modal {
-	/* width: 30%; */
-	/* min-width: 300px; */
 	width: auto;
 	max-width: 630px;
-
-	/* height: 50%;
-	max-height: 731px; */
 
 	position: absolute;
 	top: 50%; left: 50%;
@@ -480,7 +475,6 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-items: space-between;
 }
 
 
@@ -557,10 +551,6 @@ footer nav ul {
 	font-size: 9px;
 }
 
-.modal-gallery-project .move-icon {
-	/* TO DO */
-}
-
 /*** Modal window's titles ***/
 .modal h2 {
 	margin-bottom: 46px;
@@ -607,18 +597,14 @@ footer nav ul {
 	cursor: pointer;
 }
 
+
+
+/***************************************************/
 /**** Modal form to add a picture to the galery ****/
-.modal-add-project form {
+/***************************************************/
 
-}
-
-/* Note : it's difficult to style a input type=file directly in CSS
-so we hide it and style the label instead */
-input[type="file"] {
-	display: none;
-}
-
-.modal-add-project .input-file {
+/* Main container for the file input */
+.modal-add-project .input-file-container {
 	width: 420px;
 	height: 169px;
 
@@ -627,35 +613,50 @@ input[type="file"] {
 	border-radius: 3px;
 
 	margin-bottom: 30px;
-	cursor: pointer;
 
 	display: flex;
-	justify-content: center;
-}
-
-.input-file-default {
-	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
 
-.modal-add-project .input-file .input-file-bkg {
-	width: 58px;
+/* 	
+	Note : it's difficult to style a input type="file" with CSS
+	so we hide it and style the label instead, see :
+	https://stackoverflow.com/questions/572768/styling-an-input-type-file-button
+*/
+
+/* This is the <input> */
+.new-project-form input[type="file"] {
+	display: none;
+}
+
+/* and this is the label */
+.new-project-form .input-file {
+	display: block;
+	z-index: 10;
+
+	width: 100%;
+	height: 100%;
+
+	cursor: pointer;
+}
+
+/* Main container for default visual (before adding a picture) */
+.new-project-form .input-file-default {
+	position: absolute;
+}
+
+.new-project-form .input-file-default .input-file-bkg {
 	height: 46px;
+
 	color: #B9C5CC;
+
+	width: 100%;
+	margin: auto;
 	margin-bottom: 21px;
 }
 
-.modal-add-project .input-file .input-file-img {
-	position: absolute;
-
-	width: inherit;
-	height: inherit;
-	object-fit: contain;
-}
-
-.modal-add-project .input-file h3 {
+.new-project-form .input-file-default h3 {
 	color: #306685;
 	font-size: 14px;
 	font-weight: 500;
@@ -665,34 +666,42 @@ input[type="file"] {
 	border-radius: 50px;
 	background-color: #CBD6DC;
 
+	text-align: center;
+
 	margin-bottom: 7px;
 }
 
-.modal-add-project .input-file span {
+.new-project-form .input-file-default span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	font-weight: 400;
 	color: #444444;
+
+	display: block;
+	text-align: center;
 }
 
+/* Image added by the user */
+.new-project-form .input-file-img {
+	position: absolute;
 
-.modal-add-project input[type="text"] {
+	width: inherit;
+	height: inherit;
+	object-fit: contain;
+}
+
+/* Text input to add a title to the new project */
+.new-project-form input[type="text"] {
 	margin-bottom: 21px;
 }
 
-.modal-add-project select {
+/* Select and options to choose a category for the new project */
+.new-project-form select {
 	margin-bottom: 47px;
 }
 
-.modal input[value="Valider"] {
-	height: 36px;
-	width: 237px;
-
-	margin : 38px auto 55px auto;
-}
-
 /* TODO: NOT WORKING */
-.modal-add-project option {
+.new-project-form option {
 	font-family: 'Work Sans';
 	font-size: 14px;
 
@@ -700,8 +709,19 @@ input[type="file"] {
 	padding-left: 16px;
 	padding-right: 16px;
 
-	border-radius: none;
+	border-radius: 0px;
 }
+
+/* Round green button to validate the form and send it to API */
+.new-project-form input[value="Valider"] {
+	height: 36px;
+	width: 237px;
+
+	margin : 38px auto 55px auto;
+}
+
+
+
 
 .edit-hidden {
 	display: none;
