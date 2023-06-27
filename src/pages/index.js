@@ -8,14 +8,18 @@ await initGallery();
 await initFilters();
 
 // Initialization of 'Edit Mode' if user is logged in
-import { initEditMode, openEditMode } from "../components/edit.js";
+import { initEditMode, openEditMode, initLoginNavTab } from "../components/edit.js";
 if (logInStatus){
     initEditMode();
     openEditMode();
 }
+
+// Initialisation of the 'login' or 'logout' nav tab
+initLoginNavTab(logInStatus);
 
 // Initialization of the modal window if user is logged in
 import { initModal } from "../components/modal.js";
 if (logInStatus){
     initModal();
 }
+

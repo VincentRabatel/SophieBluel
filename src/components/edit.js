@@ -2,9 +2,9 @@ import * as storage from '../services/storage.js';
 
 import { openModal } from "./modal.js";
 
-// ----------------------- //
-// EDIT MODE ELEMENTS INIT //
-// ----------------------- //
+// ------------------------------------ //
+// Initialization of Edit Mode elements //
+// ------------------------------------ //
 // Initialize edit mode if user logged in, this function is called in index.js
 export function initEditMode(){
 	initPublishButton();
@@ -35,7 +35,7 @@ function fetchEditModeElements(){
 
 
 // ----------- //
-// EDIT BUTTON //
+// Edit button //
 // ----------- //
 function initEditButton(){
 	// Get 'publish' button element
@@ -47,7 +47,7 @@ function initEditButton(){
 
 
 // -------------- //
-// PUBLISH BUTTON //
+// Publish button //
 // -------------- //
 function initPublishButton(){
 	// Get 'publish' button element
@@ -62,7 +62,7 @@ async function publishProjects(){
 
 	// Publish what ?
 
-	// Reset log in status and log in infos
+	// Reset login status and login infos
 	storage.clearLogInInfos();
 	storage.clearLogInStatus();
 
@@ -70,4 +70,39 @@ async function publishProjects(){
 	closeEditMode();
 
 	window.alert("Publishing done !");
+}
+
+
+// ---------------------- //
+// Login & logout nav tab //
+// ---------------------- //
+export function initLoginNavTab(logInStatus){
+	const loginNavTab = document.querySelector(".login-nav-tab");
+
+	if (logInStatus){
+		loginNavTab.innerText = "logout";
+
+		loginNavTab.addEventListener('click', function(event) {
+			event.preventDefault();
+
+			// Reset login status and login infos
+			storage.clearLogInInfos();
+			storage.clearLogInStatus();
+	
+			// Close edit mode
+			closeEditMode();
+
+			initLoginNavTab(false);
+		})
+
+	} else {
+		loginNavTab.innerText = "login";
+
+		loginNavTab.addEventListener('click', function(event) {
+			event.preventDefault();
+
+			// Move to the login page
+			window.location = "login.html";
+		})
+	}
 }
