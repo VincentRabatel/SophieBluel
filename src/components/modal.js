@@ -377,10 +377,13 @@ function initModalClearGalleryButton(){
 async function clearModalGallery(){
     const projects = await api.getProjects();
 
-    for(let i = 0; i < projects.length + 1 ; i++){
-        await api.deleteProject(i);
-        console.log("del" + i)
+    for(let i = 0; i < projects.length; i++){
+        await api.deleteProject(i + 1);
+        console.log("del" + (i + 1))
     }
+
+    refreshGalleryProjects();
+    refreshGalleryCategories();
 
     emptyGallery();
     emptyModalGallery();
